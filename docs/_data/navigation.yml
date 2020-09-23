@@ -17,4 +17,4 @@
     - name: FAQ
       link: ./pages/docs/faq/
 - name: Über
-  link: ./pages/about/index/
+  link: /about/
