@@ -36,3 +36,21 @@ services:
         container_name: "node-red"
         ports:
             - "1880:1880"
+    hermes-led:
+        container_name: hermes-led
+        build:
+            context: ./hermes-led/
+            dockerfile: ./Dockerfile
+        volumes:
+            - ./rhasspy/profiles/de:/tmp/rhasspy
+        environment:
+            - TZ=Europe/Berlin
+            - HLC_ARGUMENTS=--hardware=respeaker4 --pathToConfig=/tmp/rhasspy/profile.json --engine=rhasspy --mqttServer=localhost
+        devices:
+            - /dev/gpiomem:/dev/gpiomem
+            - /dev/mem:/dev/mem
+            - /dev/spidev0.0:/dev/spidev0.0
+            - /dev/spidev0.1:/dev/spidev0.1
+        restart: unless-stopped
+        privileged: true
+        network_mode: host
