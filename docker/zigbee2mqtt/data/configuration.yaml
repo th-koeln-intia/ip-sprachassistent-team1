@@ -1,0 +1,10 @@
+homeassistant: false
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://mosquitto'
+serial:
+  port: /dev/ttyACM0
+devices:
+  '0x00178801023ddbe9':
+    friendly_name: '0x00178801023ddbe9'

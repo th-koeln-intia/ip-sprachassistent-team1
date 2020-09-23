@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+    rhasspy:
+        image: "rhasspy/rhasspy"
+        container_name: rhasspy
+        restart: unless-stopped
+        volumes:
+            - "./rhasspy/profiles:/profiles"
+            - "/etc/localtime:/etc/localtime:ro"
+        ports:
+            - "12101:12101"
+        devices:
+            - "/dev/snd:/dev/snd"
+        command: --user-profiles /profiles --profile de
+    mosquitto:
+        image: "arm32v6/eclipse-mosquitto"
+        container_name: mosquitto
+        restart: unless-stopped
+        ports:
+            - "1883:1883"
+            - "9001:9001"
+    zigbee2mqtt:
+        image: "koenkk/zigbee2mqtt"
+        container_name: "zigbee2mqtt"
+        restart: always
+        volumes:
+            - "./zigbee2mqtt/data:/app/data"
+            - "/run/udev:/run/udev:ro"
+        devices:
+            - "/dev/ttyACM0:/dev/ttyACM0"
+        environment:
+            - "TZ=Europe/Amsterdam"
+        privileged: true
+    nodered:
+        image: nodered/node-red:latest
+        container_name: "node-red"
+        ports:
+            - "1880:1880"
