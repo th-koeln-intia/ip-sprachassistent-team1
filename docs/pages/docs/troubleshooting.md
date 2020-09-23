@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting
+permalink: /docs/troubleshooting/
 subtitle: Troubleshooting
 layout: page
 show_sidebar: false

@@ -1,5 +1,6 @@
 ---
 title: Installation
+permalink: /getting-started/installation/
 subtitle: Installation
 layout: page
 show_sidebar: false

@@ -1,5 +1,6 @@
 ---
 title: Dokumentation
+permalink: /docs/
 subtitle: Dokumentation
 layout: page
 show_sidebar: false

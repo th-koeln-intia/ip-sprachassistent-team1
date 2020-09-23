@@ -1,5 +1,6 @@
 ---
 title: Features
+permalink: /docs/features/
 subtitle: Features
 layout: page
 show_sidebar: false

@@ -1,5 +1,6 @@
 ---
 title: FAQ
+permalink: /docs/faq/
 subtitle: FAQ
 layout: page
 show_sidebar: false

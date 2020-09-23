@@ -1,20 +1,20 @@
 - name: Getting Started
-  link: ./pages/getting-started/index/
+  link: /getting-started/index/
   dropdown:
     - name: Einführung
-      link: ./pages/getting-started/introduction/
+      link: /getting-started/introduction/
     - name: Voraussetzungen
-      link: ./pages/getting-started/requirements/
+      link: /getting-started/requirements/
     - name: Installation
-      link: ./pages/getting-started/installation/
+      link: /getting-started/installation/
 - name: Dokumentation
-  link: ./pages/docs/index/
+  link: /docs/
   dropdown:
     - name: Features
-      link: ./pages/docs/features/
+      link: /docs/features/
     - name: Troubleshooting
-      link: ./pages/docs/troubleshooting/
+      link: /docs/troubleshooting/
     - name: FAQ
-      link: ./pages/docs/faq/
+      link: /docs/faq/
 - name: Über
   link: /about/
