@@ -1,5 +1,5 @@
 - name: Getting Started
-  link: /getting-started/index/
+  link: /getting-started/
   dropdown:
     - name: Einführung
       link: /getting-started/introduction/

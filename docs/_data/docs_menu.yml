@@ -1,21 +1,8 @@
 - label: Dokumentation
   items:
-    - name: Getting Started
-      link: /getting-started/index/
-      items:
-        - name: Start
-          link: /getting-started/index/
-        - name: Einführung
-          link: /getting-started/introduction/
-        - name: Voraussetzungen
-          link: /getting-started/requirements/
-        - name: Installation
-          link: /getting-started/installation/
     - name: Dokumentation
-      link: #
+      link: /docs/
       items:
-      - name: Start
-        link: /docs/index/
       - name: Features
         link: /docs/features/
       - name: Troubleshooting
