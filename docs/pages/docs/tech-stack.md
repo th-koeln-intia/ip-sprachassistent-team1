@@ -24,32 +24,32 @@ Zur Entwicklung wurde folgende Hardware benutzt, die hier als Referenz dient:
 
 ## Rhasspy
 
-Rhasspy ist ein Open Source Dienst, welcher es ermöglicht einen eigenen Sprachassistenten zu entwickeln. Der Service liefert einige Dienste von Haus aus mit. Die verwendeten sind hier im Folgenden aufgelistet und erläutert
+[Rhasspy](https://rhasspy.readthedocs.io/) ist ein Open Source Dienst, welcher es ermöglicht einen eigenen Sprachassistenten zu entwickeln. Der Service liefert einige Dienste von Haus aus mit. Die verwendeten sind hier im Folgenden aufgelistet und erläutert
 
 ### Rhasspy Raven
 
-Raven ist ein Dienst zur Erkennung des Wake-Words. Ein Wake-Word ist das Wort, welches den Sprachassistenten "weckt" und signalisiert, dass das folgende gesprochene interpretiert werden soll.
+[Rhasspy Raven](https://github.com/rhasspy/rhasspy-wake-raven-hermes/) ist ein Dienst zur Erkennung des Wake-Words. Ein Wake-Word ist das Wort, welches den Sprachassistenten "weckt" und signalisiert, dass das folgende gesprochene interpretiert werden soll.
 Raven benötigt ein Training um das Wake-Word zu erkennen - hierzu werden drei Audiodateien händisch aufgenommen und gespeichert. Raven bietet auch die Möglichkeit einige Parameter wie Sensitivität und die Anzahl der übereinstimmenden Trainingsdateien zu definieren.
 Es lassen sich auch unterschiedliche Wake-Words erstellen.
 
 ### Pocketsphinx
 
-Pocketsphinx ist der Dienst, der unsere gesprochene Sprache transkribiert. Die Umwandlung erfolgt dabei komplett offline. Pocketsphinx bietet auch einige Parameter zur Feinabstimmung - insbesondere den Start- und Stopp-Zeitpunkt des Transkribierens.
+[Pocketsphinx](https://github.com/rhasspy/rhasspy-asr-pocketsphinx-hermes) ist der Dienst, der unsere gesprochene Sprache transkribiert. Die Umwandlung erfolgt dabei komplett offline. Pocketsphinx bietet auch einige Parameter zur Feinabstimmung - insbesondere den Start- und Stopp-Zeitpunkt des Transkribierens.
 Das Wörterbuch sowie die entsprechende Aussprache lässt sich hier über Textdateien definieren und ergänzen.
 
 Beim ersten Start ist ein Download notwendig. 
 
 ### Fsticuffs
 
-Fsticuffs wird verwendet um Sätze bzw. Befehle zu erkennen, die gesprochen werden. Alle möglichen Befehle müssen definiert werden. Nach eigener Aussage ist Fsticuffs dafür extrem performant.
+[Fsticuffs](https://github.com/rhasspy/rhasspy-nlu-hermes) wird verwendet um Sätze bzw. Befehle zu erkennen, die gesprochen werden. Alle möglichen Befehle müssen definiert werden. Nach eigener Aussage ist Fsticuffs dafür extrem performant.
 
 ### Espeak
 
-Espeak ist ein Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
+[Espeak](http://espeak.sourceforge.net/) ([Rhasspy GitHub](https://github.com/rhasspy/rhasspy-tts-cli-hermes)) ist ein Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
 
 ### Rhasspy (Dialogue Management)
 
-Der hauseigene Dialogue Manager von Rhasspy kümmert sich um die Sitzungsverwaltung. Dieser Service stellt einen Vermittler dar, der die anderen Services benachrichtigt, sobald diese mit ihrer Arbeit beginnen sollen. 
+Der hauseigene [Rhasspy Dialogue Manager](https://github.com/rhasspy/rhasspy-dialogue-hermes) kümmert sich um die Sitzungsverwaltung. Dieser Service stellt einen Vermittler dar, der die anderen Services benachrichtigt, sobald diese mit ihrer Arbeit beginnen sollen. 
 
 //TODO bisschen ausführlicher, evtl. mit Beispiel
 
