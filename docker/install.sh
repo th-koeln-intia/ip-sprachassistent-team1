@@ -19,3 +19,5 @@ git clone https://github.com/respeaker/seeed-voicecard.git
 cd seeed-voicecard
 ./install.sh --compat-kernel
 cp ./conf/asound.conf > /etc/asound.conf
+
+echo "Please reboot to apply changes"
