@@ -8,7 +8,6 @@ if [[ "$EUID" -ne 0 ]]
 fi
 
 raspi-config nonint do_spi 0
-cat .conf/asound.conf > /etc/asound.conf
 apt-get -y update
 apt-get -y upgrade
 apt-get install -y git libffi-dev libssl-dev python3 python3-pip
@@ -19,3 +18,4 @@ pip3 -v install docker-compose
 git clone https://github.com/respeaker/seeed-voicecard.git
 cd seeed-voicecard
 ./install.sh --compat-kernel
+cat .conf/asound.conf > /etc/asound.conf
