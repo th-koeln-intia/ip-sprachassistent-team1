@@ -71,6 +71,10 @@ Weitere Informationen: [https://mqtt.org/](https://mqtt.org/)
 
 [Mosquitto](https://mosquitto.org/) ist eine Open Source implementierung des MQTT Brokers, der von der [Eclipse Foundation](https://www.eclipse.org/) entwickelt wird.
 
+### MQTT Explorer
+
+Der [MQTT Explorer](http://mqtt-explorer.com/) eignet sich hervorragend dafür seinen MQTT-Broker zu debuggen. Er bietet eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu versenden.
+
 ## Docker
 
 Um die implementierten Anwendungen isoliert laufen zu lassen, verwenden wir [Docker](https://www.docker.com/).
