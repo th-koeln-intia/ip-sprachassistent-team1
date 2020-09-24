@@ -75,6 +75,10 @@ Weitere Informationen: [https://mqtt.org/](https://mqtt.org/)
 
 Der [MQTT Explorer](http://mqtt-explorer.com/) eignet sich hervorragend dafür seinen MQTT-Broker zu debuggen. Er bietet eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu versenden.
 
+## Node-Red
+
+[Node-Red](https://nodered.org/) ist eine visuelle Programmierumgebung, die es ermöglicht Abläufe zu definieren. 
+
 ## Docker
 
 Um die implementierten Anwendungen isoliert laufen zu lassen, verwenden wir [Docker](https://www.docker.com/).
