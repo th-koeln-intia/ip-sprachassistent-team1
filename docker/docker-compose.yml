@@ -42,7 +42,7 @@ services:
         #build:
         #    context: ./hermes-led/
         #    dockerfile: ./Dockerfile
-        image: thund/hermes-led:0.0.1
+        image: thund/hermes-led:0.0.2
         volumes:
             - ./rhasspy/profiles/de:/tmp/rhasspy
         environment:

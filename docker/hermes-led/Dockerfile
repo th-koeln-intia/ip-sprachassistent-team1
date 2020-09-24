@@ -1,8 +1,7 @@
-FROM python:3.8-slim-buster
+FROM python:3.8-slim
 
 ARG USER=docker
 ARG FOLDER=/home/$USER
-ARG VENV=venv
 ARG FOLDER_NAME=hermesLedControl
 
 RUN set -ex && adduser --uid 1000 --disabled-password --gecos '' $USER && \
@@ -12,31 +11,26 @@ RUN set -ex && adduser --uid 1000 --disabled-password --gecos '' $USER && \
 
 WORKDIR /home/docker
 RUN set -ex && \
-	apt-get update && apt-get install -y \
+	apt-get update && apt-get install -y --no-install-recommends \
 	git \
 	wget \
 	tar \
+	gcc \
 	mosquitto \
 	mosquitto-clients \
 	portaudio19-dev \
 	python3-numpy \
 	python3-pip && \
-	rm -rf /var/lib/apt/lists/* && \
-	pip3 --no-cache-dir install virtualenv
-RUN set -ex && \
 	mkdir -p ${FOLDER_NAME} && \
 	wget https://api.github.com/repos/project-alice-assistant/HermesLedControl/tarball/v2.0.9 -O tarball.tar.gz && \
 	tar -xvf tarball.tar.gz -C ${FOLDER_NAME} --strip-components=1 && \
 	rm tarball.tar.gz && \
 	mkdir -p ${FOLDER}/${FOLDER_NAME}/logs && \
-	chown -R ${USER} ${FOLDER}/${FOLDER_NAME}
+	chown -R ${USER} ${FOLDER}/${FOLDER_NAME} && \
+	rm -rf /var/lib/apt/lists/* && \
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 USER $USER
-
-RUN set -ex && \
-	virtualenv -p python3 ${FOLDER}'/'${FOLDER_NAME}'/'${VENV}
-
-ENV PATH="${FOLDER}'/'${FOLDER_NAME}'/'${VENV}/bin:$PATH"
 
 RUN	pip3 --no-cache-dir install RPi.GPIO && \
 	pip3 --no-cache-dir install spidev && \
