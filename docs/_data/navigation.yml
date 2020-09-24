@@ -10,6 +10,8 @@
 - name: Dokumentation
   link: /docs/
   dropdown:
+    - name: Tech-Stack
+      link: /docs/tech-stack/
     - name: Features
       link: /docs/features/
     - name: Troubleshooting
