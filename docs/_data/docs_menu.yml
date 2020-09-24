@@ -1,0 +1,13 @@
+- label: Dokumentation
+  items:
+    - name: Dokumentation
+      link: /docs/
+      items:
+      - name: Tech-Stack
+        link: /docs/tech-stack/
+      - name: Features
+        link: /docs/features/
+      - name: Troubleshooting
+        link: /docs/troubleshooting/
+      - name: FAQ
+        link: /docs/faq/

@@ -1,0 +1,22 @@
+- name: Getting Started
+  link: /getting-started/
+  dropdown:
+    - name: Einführung
+      link: /getting-started/introduction/
+    - name: Voraussetzungen
+      link: /getting-started/requirements/
+    - name: Installation
+      link: /getting-started/installation/
+- name: Dokumentation
+  link: /docs/
+  dropdown:
+    - name: Tech-Stack
+      link: /docs/tech-stack/
+    - name: Features
+      link: /docs/features/
+    - name: Troubleshooting
+      link: /docs/troubleshooting/
+    - name: FAQ
+      link: /docs/faq/
+- name: Über
+  link: /about/
