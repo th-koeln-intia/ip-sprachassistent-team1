@@ -26,6 +26,16 @@ sudo ./install.sh
 Über das install script werden die nativen Abhängigkeiten für das Projekt installiert sowie die notwendigen Konfigurationsschritte des Betriebssystems durchgeführt.
 Das ganze kann sehr lange (20min) dauern. Der Kernel wird mit einem Treiber ergänzt, es ist daher ratsam nicht nochmal nach der installation den Befehl `apt-get upgrade` auszuführen.
 
+Das Skript führt die folgenden Schritte durch:
+* SPI auf dem Raspberry Pi aktiveren
+* docker installieren
+* Nutzer `pi` zur docker-Gruppe hinzufügen
+* docker-compose installieren
+* Respeaker 4-Mic-Array Treiber installieren
+* Vordefinierte `asound` Konfiguration setzen
+
+Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
+
 Um die Umgebungsvariablen für Docker zu setzen, ist es sinnvoll eine `.env` Datei anzulegen, beispielsweise:
 
 ```env
