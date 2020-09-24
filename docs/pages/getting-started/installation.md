@@ -42,7 +42,7 @@ Um die Umgebungsvariablen für Docker zu setzen, ist es sinnvoll eine `.env` Dat
 ZIGBEE_DEVICE_PATH=/dev/ttyACM0
 ```
 
-Jetzt kann die Docker-Umgebung gestartet werden. Auch dieser Schritt kann sehr lange dauern, denn es wird ein Docker Image gebaut.
+Jetzt kann die Docker-Umgebung gestartet werden. Auch dieser Schritt kann sehr lange dauern, ~~denn es wird ein Docker Image gebaut~~ (Image auf Docker Hub ausgelagert).
 
 ```sh
 docker-compose --env-file ./.env up -d

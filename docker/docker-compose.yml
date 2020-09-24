@@ -22,7 +22,7 @@ services:
     zigbee2mqtt:
         image: "koenkk/zigbee2mqtt"
         container_name: "zigbee2mqtt"
-        restart: always
+        restart: unless-stopped
         volumes:
             - "./zigbee2mqtt/data:/app/data"
             - "/run/udev:/run/udev:ro"
@@ -34,18 +34,20 @@ services:
     nodered:
         image: nodered/node-red:latest
         container_name: "node-red"
+        restart: unless-stopped
         ports:
             - "1880:1880"
     hermes-led:
         container_name: hermes-led
-        build:
-            context: ./hermes-led/
-            dockerfile: ./Dockerfile
+        #build:
+        #    context: ./hermes-led/
+        #    dockerfile: ./Dockerfile
+        image: thund/hermes-led:0.0.1
         volumes:
             - ./rhasspy/profiles/de:/tmp/rhasspy
         environment:
             - TZ=Europe/Berlin
-            - HLC_ARGUMENTS=--hardware=respeaker4 --pathToConfig=/tmp/rhasspy/profile.json --engine=rhasspy --mqttServer=localhost
+            - HLC_ARGUMENTS=--hardware=respeaker4 --pathToConfig=/tmp/rhasspy/profile.json --engine=rhasspy --mqttServer=mosquitto
         devices:
             - /dev/gpiomem:/dev/gpiomem
             - /dev/mem:/dev/mem
@@ -53,4 +55,3 @@ services:
             - /dev/spidev0.1:/dev/spidev0.1
         restart: unless-stopped
         privileged: true
-        network_mode: host
