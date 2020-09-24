@@ -18,4 +18,6 @@ pip3 -v install docker-compose
 git clone https://github.com/respeaker/seeed-voicecard.git
 cd seeed-voicecard
 ./install.sh --compat-kernel
-cat .conf/asound.conf > /etc/asound.conf
+cp ./conf/asound.conf > /etc/asound.conf
+
+echo "Please reboot to apply changes"
