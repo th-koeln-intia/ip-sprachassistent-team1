@@ -27,7 +27,7 @@ services:
             - "./zigbee2mqtt/data:/app/data"
             - "/run/udev:/run/udev:ro"
         devices:
-            - "/dev/ttyACM0:/dev/ttyACM0"
+            - "${ZIGBEE_DEVICE_PATH}:/dev/ttyACM0"
         environment:
             - "TZ=Europe/Amsterdam"
         privileged: true
