@@ -1,0 +1,18 @@
+style: is-light
+height: is-medium
+items:
+  - title: Dokumentation
+    icon: fa-book
+    call_to_action_name: Dokumentation
+    call_to_action_link: /docs/
+  - title: Getting Started
+    icon: fa-wrench
+    call_to_action_name: Getting Started
+    call_to_action_link: /getting-started/
+  - title: GitHub
+    icon: fa-github
+    icon_brand: true
+    description: >
+      Wir sind auf GitHub
+    call_to_action_name: GitHub Repository
+    call_to_action_link: https://github.com/th-koeln-intia/ip-sprachassistent-team1
