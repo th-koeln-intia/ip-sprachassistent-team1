@@ -254,3 +254,6 @@ dmypy.json
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode
+
+# Fix some IDEA files are not ignored
+.idea/
