@@ -16,6 +16,9 @@ services:
         image: "arm32v6/eclipse-mosquitto"
         container_name: mosquitto
         restart: unless-stopped
+        volumes:
+            - "./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+            - "./mosquitto/log:/mosquitto/log"
         ports:
             - "1883:1883"
             - "9001:9001"
