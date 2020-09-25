@@ -38,6 +38,8 @@ services:
         image: nodered/node-red:latest
         container_name: "node-red"
         restart: unless-stopped
+        volumes: 
+            - "./node-red/data:/data"
         ports:
             - "1880:1880"
     hermes-led:
