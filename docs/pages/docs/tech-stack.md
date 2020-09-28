@@ -83,3 +83,30 @@ Der [MQTT Explorer](http://mqtt-explorer.com/) eignet sich hervorragend dafür s
 
 Um die implementierten Anwendungen isoliert laufen zu lassen, verwenden wir [Docker](https://www.docker.com/).
 Wie man Deep Thought mit Docker startet ist [hier](/getting-started/installation) (//TODO Anchor) beschrieben.
+
+### Docker Image `hermes-led`
+
+Das Docker Image `hermes-led` stellt eine Schnittstelle zwischen ReSpeaker Treiber zu MQTT dar. Es ist für ARM-Geräte auf [Docker Hub](https://hub.docker.com/r/thund/hermes-led) zu finden.
+
+Damit das Image verwendet werden kann, müssen dem Container einige Geräte übergeben werden, das ganze geschiet über die entsprechenden Dateideskriptoren `/dev/gpiomem`, `/dev/mem`, `/dev/spidevv0.0` und `/dev/spidev0.1`. 
+
+Der Container startet `HermesLedControl` und kann über die Umgebungsvariable `HLC_ARGUMENTS` parametisiert werden. Die zur Verfügung stehenden Parameter finden sich [hier](https://github.com/project-alice-assistant/HermesLedControl/wiki/Arguments-customization).
+Eine Beispielkonfiguration, wie sie in Deep Thought verwendet wird sieht folgendermaßen aus. Wir verwenden hier das ReSpeaker 4-Mic-Array, übergeben unsere Rhasspy-Konfiguration und unseren den MQTT-Broker.
+
+```yml
+hermes-led:
+    container_name: hermes-led
+    image: thund/hermes-led:0.0.1
+    volumes:
+        - ./rhasspy/profiles/de:/tmp/rhasspy
+    environment:
+        - TZ=Europe/Berlin
+        - HLC_ARGUMENTS=--hardware=respeaker4 --pathToConfig=/tmp/rhasspy/profile.json --engine=rhasspy --mqttServer=mosquitto
+    devices:
+        - /dev/gpiomem:/dev/gpiomem
+        - /dev/mem:/dev/mem
+        - /dev/spidev0.0:/dev/spidev0.0
+        - /dev/spidev0.1:/dev/spidev0.1
+    restart: unless-stopped
+    privileged: true
+```
