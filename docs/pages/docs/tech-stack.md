@@ -82,4 +82,4 @@ Der [MQTT Explorer](http://mqtt-explorer.com/) eignet sich hervorragend dafür s
 ## Docker
 
 Um die implementierten Anwendungen isoliert laufen zu lassen, verwenden wir [Docker](https://www.docker.com/).
-Wie man das Projekt (//TODO Projektname) mit Docker startet ist [hier](/getting-started/installation) (//TODO Anchor) beschrieben.
+Wie man Deep Thought mit Docker startet ist [hier](/getting-started/installation) (//TODO Anchor) beschrieben.
