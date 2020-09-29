@@ -53,6 +53,15 @@ Ein eigenes Training ist hier erstmall nicht sinnvoll was aus der
 [Dokumentation](https://cmusphinx.github.io/wiki/tutorialam/) auch hervorgeht, denn wir haben weder genügend Zeit noch 
 genug Daten dafür.
 
+Das Speech-To-Text-System ist hierbei auf dem Raspberry Pi ziemlich langsam - es ist allerdings möglich die Aufgabe auf
+ein leistungsstärkeres System zu übertragen.
+(//TODO Wann ist es sinnvoll?) 
+
+Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents (`sentences.ini`) gepflegt 
+sein, weil aus dieser ein Sprachmodell erstellt wird. Das bedeutet es können noch so viele Wörter im Wörterbuch stehen, 
+Pocketsphinx erkennt nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
+remote-Instanz bloß der Speech-To-Text Dienst läuft.
+
 Wir sehen folgende Konfigurationsbasis vor:
 
 ```json
