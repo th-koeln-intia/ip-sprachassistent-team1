@@ -85,8 +85,8 @@ Um die Wake Words zu testen werden diese in Rhasspy eingesprochen. Die folgende 
             "default": {},
             "kassandra": {},
             "pixie": {},
-            "obelix": {}
-            //TODO alle Wake Words
+            "obelix": {},
+            "miriam": {}
         },
         "minimum_matches": "1",
         "probability_threshold": "0.5",
@@ -115,14 +115,28 @@ Das Wake Word `Kassandra` eignet sich in der Konfiguration nicht als Wake Word. 
 
 `Miriam` hat sich auch als sehr zuverlässig erwiesen. Der Konsonant `r` hilft bei der Differenzierung zwischen Wörtern wie `Amsterdamm`, `Kilogramm`, `Potsdam` oder einfach bloß `Iam`. Allerdings ist der Name Miriam weit vertreten und könnte eine richtig negative Aktivierung hervorrufen.
 
+5. **Trixie**
+
+Während einem Meeting im Discord ist aufgefallen, dass sich Rhasspy oft aktiviert hat - das Wake Word `Pixie` reagiert scheinbar auch auf Phrasen wie `Irgendwie` oder Ähnliches.
+Als Abhilfe wurde das Wake Word `Trixie` verwendet, welches aufgrund des markanten `r`-Lauts bessere Ergebnisse erzielt hat.  
 
 ## Fazit zum Wake Word
 
-//TODO anpassen mit anderen Wake Words
-//Fazit ist auf dem Stand vom 28.06.20 um 16:35
-Von allen vorherigen Vorschlägen hat sich `Pixie` als am gebrauchstauglichsten gezeigt, auch wenn der Fokus von Rhasspy Raven auf der Endung `-ixie` liegt, so ist diese im Alltag so selten, dass eine Überschneidung verschwindend gering ist. Wir kombinieren das Wake-Word mit einer Begrüßung wie `Hey`, `Hi`, `Okay` oder `Hallo`, so dass unsere Empfehlung für das Wake Word `Hey, Pixie` lautet.
+Unsere Empfehlung für das Wake Word lautet `Hey, Trixie` mit der folgenden Konfiguration:
 
+```json
+"minimum_matches": "1",
+"probability_threshold": "0.58",
+```
 
 ## Sonstige Bemerkungen
 
 Während des testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist und Hintergrundgeräusche wie einen Fernseher erkennt. Es wird versucht aus der Sprache dort einen Intent zu ziehen. Vielleicht ist es sinnvoll über ein anderes Audio-Recording zu überlegen, wie z.B. [SoX](http://sox.sourceforge.net/)
+
+Wenn ein höherer Wert für `minimum_matches` gewählt wird, resultiert das in folgende Meldung und ermöglicht keine Aktivierung mehr:
+
+```
+rhasspy        | [DEBUG:2020-09-29 08:56:29,593] rhasspy-wake-raven: Enter refractory for 2.0 second(s)
+rhasspy        | [DEBUG:2020-09-29 08:56:31,795] rhasspy-wake-raven: Exiting refractory period
+```
+
