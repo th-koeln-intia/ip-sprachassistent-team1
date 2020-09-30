@@ -57,17 +57,14 @@ Jetzt beginnt der schwierige Prozess: Das Suchen geeigneter Wörter. Die folgend
    
    Ein bekannter Comiccharakter aus den Comics "Asterix". Der Vorteil dieses Namens liegt in seiner Personifizierung, die Gespräche mit dem Sprachassistenten persönlicher machen sowie seine phonetische Eindeutigkeit. So existieren nahezu keine Wörter mit ähnlicher Endung - lediglich "-helix", was kein wirklich alltagsgebräuchlicher Begriff ist.
    Genauso existiert kein Reim mit gleicher Silbenanzahl, allerdings dafür die Wörter `nix`, `fix` und `nichts`, die hier problematisch werden könnten.
-
 2. **Pixie**
    
     Auch hier liegt eine Personifizierung vor.
     Die phoentische Eindeutigkeit ist hier allerdings etwas schwieriger und umfangreicher zu bestimmen, weil die Endung `-ixie` auf unterschiedliche Weisen geschrieben wie `-ichsi`, `-iksi`, `-iksy`, `-igsi` in der Aussprache identisch oder gleich sind.
-
 3. **Kassandra**
 
     Auch hier liegt eine Personifizierung vor.
     Der Gedanke hierbei ist, dass die Spracherkennung dieses Wort durch die deutliche Aussprache des `Kass` besser erkennt, auch wenn die Endung viele ähnliche Wörter suggerieren könnte.
-
 4. **Miriam**
 
     Auch hier wieder Personifizierung
@@ -125,8 +122,10 @@ Als Abhilfe wurde das Wake Word `Trixie` verwendet, welches aufgrund des markant
 Unsere Empfehlung für das Wake Word lautet `Hey, Trixie` mit der folgenden Konfiguration:
 
 ```json
-"minimum_matches": "1",
-"probability_threshold": "0.58",
+{
+  "minimum_matches": "1",
+  "probability_threshold": "0.58"
+}
 ```
 
 ## Sonstige Bemerkungen
