@@ -25,6 +25,15 @@
         "system": "espeak"
     },
     "wake": {
+        "raven": {
+            "keywords": {
+                "heytrixie": {}
+            },
+            "minimum_matches": "1",
+            "probability_threshold": "0.58",
+            "vad_sensitivity": "1"
+        },
         "system": "raven"
+
     }
 }
