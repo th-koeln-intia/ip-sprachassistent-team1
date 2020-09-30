@@ -53,23 +53,24 @@ Um die phonetische eindeutigkeit zu prüfen bieten sich auch Suchmaschinen, die 
 
 Jetzt beginnt der schwierige Prozess: Das Suchen geeigneter Wörter. Die folgenden Wörter sind während des Prozesses in die engere Auswahl gekommen.
 
-1. **Obelix**
-   
+1. **Obelix** <br />
    Ein bekannter Comiccharakter aus den Comics "Asterix". Der Vorteil dieses Namens liegt in seiner Personifizierung, die Gespräche mit dem Sprachassistenten persönlicher machen sowie seine phonetische Eindeutigkeit. So existieren nahezu keine Wörter mit ähnlicher Endung - lediglich "-helix", was kein wirklich alltagsgebräuchlicher Begriff ist.
    Genauso existiert kein Reim mit gleicher Silbenanzahl, allerdings dafür die Wörter `nix`, `fix` und `nichts`, die hier problematisch werden könnten.
-2. **Pixie**
+   <br />
    
+2. **Pixie** <br />
     Auch hier liegt eine Personifizierung vor.
     Die phoentische Eindeutigkeit ist hier allerdings etwas schwieriger und umfangreicher zu bestimmen, weil die Endung `-ixie` auf unterschiedliche Weisen geschrieben wie `-ichsi`, `-iksi`, `-iksy`, `-igsi` in der Aussprache identisch oder gleich sind.
-3. **Kassandra**
-
+    <br />
+    
+3. **Kassandra** <br />
     Auch hier liegt eine Personifizierung vor.
     Der Gedanke hierbei ist, dass die Spracherkennung dieses Wort durch die deutliche Aussprache des `Kass` besser erkennt, auch wenn die Endung viele ähnliche Wörter suggerieren könnte.
-4. **Miriam**
-
+    <br />
+    
+4. **Miriam** <br />
     Auch hier wieder Personifizierung
     Es gibt überraschend wenig Wörter, die auf `-iam` enden, vielleicht ist das ein Ansatz.
-
 
 ## Test der Wake Words
 
@@ -95,27 +96,39 @@ Um die Wake Words zu testen werden diese in Rhasspy eingesprochen. Die folgende 
 
 Hierbei haben sich für die Wake Words folgendes ergeben:
 
-1. **Obelix**
+1. **Obelix** <br />
+Das Wake Word `Obelix` hat sich in der Konfiguration nicht als Wake Word geeignet. Beim Test lies es sich nahezu 
+einfacher durch die Kombinationen `oben nichts` bzw `oben nix` auslösen als durch die Aussprache von `Obelix`. 
+Desweiteren hat sich beim Test gezeigt, dass man bei dem Wort dazu verleitet wird es in einer höheren Geschwindigkeit 
+auszusprechen, was je nach Training unterschiedliche resultate haben kann.
+<br /> 
 
-Das Wake Word `Obelix` hat sich in der Konfiguration nicht als Wake Word geeignet. Beim Test lies es sich nahezu einfacher durch die Kombinationen `oben nichts` bzw `oben nix` auslösen als durch die Aussprache von `Obelix`. Desweiteren hat sich beim Test gezeigt, dass man bei dem Wort dazu verleitet wird es in einer höheren Geschwindigkeit auszusprechen, was je nach Training unterschiedliche resultate haben kann. 
+2. **Pixie** <br />
+Das Wake Word `Pixie` hat sich bei dem Test sehr gut geschlagen und konnte sehr genau erkannt werden. Selbst eine 
+undeutliche, genuschelte Aussprache oder eine Aussprache mit Pullover vor dem Mund konnte erkannt werden. Es hat sich 
+allerdings gezeigt, dass Rhasspy Raven sehr stark auf die Endung `-ixie` fokussiert ist und diese schon zur Aktivierung 
+ausreicht. Auch ein höherer `probability_thereshold` Wert zeigt hier keine Abhilfe. Es wird auch auf Phrasen wie 
+`Schick sie` reagiert.
+<br />
 
-2. **Pixie**
+3. **Kassandra** <br />
+Das Wake Word `Kassandra` eignet sich in der Konfiguration nicht als Wake Word. Beim Test hat sich gezeigt, dass die 
+Aussprache jedes mal leicht unterschiedlich ist und es stark davon abhängig ist wie "hart" man das doppel-s ausspricht 
+bzw. betont. Selbst mit einem geringen `probability_thereshold` Wert von `0.1` ist es immer noch schwierig den 
+Sprachassistenten mit unterschiedlichen Aussprachen zu aktivieren.
+<br />
 
-Das Wake Word `Pixie` hat sich bei dem Test sehr gut geschlagen und konnte sehr genau erkannt werden. Selbst eine undeutliche, genuschelte Aussprache oder eine Aussprache mit Pullover vor dem Mund konnte erkannt werden. Es hat sich allerdings gezeigt, dass Rhasspy Raven sehr stark auf die Endung `-ixie` fokussiert ist und diese schon zur Aktivierung ausreicht. Auch ein höherer `probability_thereshold` Wert zeigt hier keine Abhilfe. 
-Es wird auch auf Phrasen wie `Schick sie` reagiert.
+4. **Miriam** <br />
+`Miriam` hat sich auch als sehr zuverlässig erwiesen. Der Konsonant `r` hilft bei der Differenzierung zwischen Wörtern 
+wie `Amsterdamm`, `Kilogramm`, `Potsdam` oder einfach bloß `Iam`. Allerdings ist der Name Miriam weit vertreten und 
+könnte eine richtig negative Aktivierung hervorrufen.
+<br />
 
-3. **Kassandra**
-
-Das Wake Word `Kassandra` eignet sich in der Konfiguration nicht als Wake Word. Beim Test hat sich gezeigt, dass die Aussprache jedes mal leicht unterschiedlich ist und es stark davon abhängig ist wie "hart" man das doppel-s ausspricht bzw. betont. Selbst mit einem geringen `probability_thereshold` Wert von `0.1` ist es immer noch schwierig den Sprachassistenten mit unterschiedlichen Aussprachen zu aktivieren.
-
-4. **Miriam**
-
-`Miriam` hat sich auch als sehr zuverlässig erwiesen. Der Konsonant `r` hilft bei der Differenzierung zwischen Wörtern wie `Amsterdamm`, `Kilogramm`, `Potsdam` oder einfach bloß `Iam`. Allerdings ist der Name Miriam weit vertreten und könnte eine richtig negative Aktivierung hervorrufen.
-
-5. **Trixie**
-
-Während einem Meeting im Discord ist aufgefallen, dass sich Rhasspy oft aktiviert hat - das Wake Word `Pixie` reagiert scheinbar auch auf Phrasen wie `Irgendwie` oder Ähnliches.
-Als Abhilfe wurde das Wake Word `Trixie` verwendet, welches aufgrund des markanten `r`-Lauts bessere Ergebnisse erzielt hat.  
+5. **Trixie** <br />
+Während einem Meeting im Discord ist aufgefallen, dass sich Rhasspy oft aktiviert hat - das Wake Word `Pixie` reagiert 
+scheinbar auch auf Phrasen wie `Irgendwie` oder Ähnliches.
+Als Abhilfe wurde das Wake Word `Trixie` verwendet, welches aufgrund des markanten `r`-Lauts bessere Ergebnisse erzielt 
+hat.  
 
 ## Fazit zum Wake Word
 
