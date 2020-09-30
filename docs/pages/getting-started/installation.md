@@ -7,24 +7,12 @@ show_sidebar: false
 menubar: getting-started_menu
 ---
 
-# Installation
+## Requirements installieren
+Zuerst müssen die grundlegenden Dinge wie z.B. Git und Docker installiert werden.
+Wenn es sich um eine frische Raspberry-Installation handelt, kann man hierzu das install.sh Skript mit sudo Rechten ausführen.
 
-## Installation mit Docker
 
-Für die gegebene Hardware existiert eine Docker-Umgebung, die zum Schnelleinstieg verwendet werden kann.
-Im Repository unter `/docker` finden sich die benötigten Daten.
-
-Um mit einem frisch aufgesetzten Raspbian Image zu starten sind folgende Schritte notwendig:
-
-```sh
-git clone https://github.com/th-koeln-intia/ip-sprachassistent-team1
-cd ip/sprachassistent-team1/docker
-sudo chmod +x install.sh
-sudo ./install.sh
-``` 
-
-Über das install script werden die nativen Abhängigkeiten für das Projekt installiert sowie die notwendigen Konfigurationsschritte des Betriebssystems durchgeführt.
-Das ganze kann sehr lange (20min) dauern. Der Kernel wird mit einem Treiber ergänzt, es ist daher ratsam nicht nochmal nach der installation den Befehl `apt-get upgrade` auszuführen.
+Handelt es sich allerdings um eine ältere Raspberry-Installation, sollte man die Schritte aus der install.sh manuell ausführen, um sicherzustellen dass keine bestehenden Installationen überschrieben werden oder es zu einer falschen Konfiguration kommt.
 
 Das Skript führt die folgenden Schritte durch:
 * SPI auf dem Raspberry Pi aktiveren
@@ -36,17 +24,18 @@ Das Skript führt die folgenden Schritte durch:
 
 Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
 
-Um die Umgebungsvariablen für Docker zu setzen, ist es sinnvoll eine `.env` Datei anzulegen, beispielsweise:
+## Sprachassistenten installieren
+Wenn alle Requirements erfolgreich installiert wurden, kann man mit der Installation des eigentlichen Sprachassistenten beginnen. Zuerst muss man die Umgebungsvariablen für die docker-compose Datei seinen Bedürfnissen anpassen. Hierfür legt man auf Basis der ./docker/.env.example eine Datei ./docker/.env an und bearbeitet diese anschließend mit dem Editor seiner Wahl.
 
-```env
-ZIGBEE_DEVICE_PATH=/dev/ttyACM0
-```
+```cp ./docker/.env.example ./docker/.env```
 
-Jetzt kann die Docker-Umgebung gestartet werden. Auch dieser Schritt kann sehr lange dauern, ~~denn es wird ein Docker Image gebaut~~ (Image auf Docker Hub ausgelagert).
+Anschließend kann man mit docker-compose alle Services starten:
 
-```sh
-docker-compose --env-file ./.env up -d
-```
+```cd ./docker```
+
+```docker-compose up -d```
+
+Der Sprachassistent ist nun zur Benutzung bereit. Alle verfügbaren Features findet man [hier](/docs/features) 
 
 | Service     |                         URL                          |
 | ----------- | :--------------------------------------------------: |
