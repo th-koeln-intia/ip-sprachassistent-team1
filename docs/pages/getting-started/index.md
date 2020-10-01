@@ -7,4 +7,4 @@ show_sidebar: false
 menubar: getting-started_menu
 ---
 
-Hello From Getting started
+Auf den Folgenden Seiten finden sich Hinweise und Anleitungen zum Starten des Sprachassistenten Deep Thought.

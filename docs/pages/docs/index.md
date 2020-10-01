@@ -7,10 +7,4 @@ show_sidebar: false
 menubar: docs_menu
 ---
 
-Hello From Index.
-
-```java
-public static void main(String[] args) {
-    System.out.println("Hello, World!");
-}
-```
+Auf den Folgenden Seiten finden sich die Entwicklungsdokumentation des Sprachassistenten Deep Thought.
