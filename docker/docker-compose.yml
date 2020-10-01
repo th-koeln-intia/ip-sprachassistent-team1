@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+    rhasspy:
+        image: "rhasspy/rhasspy"
+        container_name: rhasspy
+        restart: unless-stopped
+        volumes:
+            - "./rhasspy/profiles:/profiles"
+            - "/etc/localtime:/etc/localtime:ro"
+        ports:
+            - "12101:12101"
+        devices:
+            - "/dev/snd:/dev/snd"
+        command: --user-profiles /profiles --profile de
+    mosquitto:
+        image: "arm32v6/eclipse-mosquitto"
+        container_name: mosquitto
+        restart: unless-stopped
+        volumes:
+            - "./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+            - "./mosquitto/log:/mosquitto/log"
+        ports:
+            - "1883:1883"
+            - "9001:9001"
+    zigbee2mqtt:
+        image: "koenkk/zigbee2mqtt"
+        container_name: "zigbee2mqtt"
+        restart: unless-stopped
+        volumes:
+            - "./zigbee2mqtt/data:/app/data"
+            - "/run/udev:/run/udev:ro"
+        devices:
+            - "${ZIGBEE_DEVICE_PATH}:/dev/ttyACM0"
+        environment:
+            - "TZ=Europe/Amsterdam"
+        privileged: true
+    nodered:
+        image: nodered/node-red:latest
+        container_name: "node-red"
+        restart: unless-stopped
+        volumes: 
+            - "./node-red/data/flows.json:/data/flows.json"
+            - "./node-red/data/flows_cred.json:/data/flows_cred.json"
+            - "./node-red/data/settings.js:/data/settings.js"
+        ports:
+            - "1880:1880"
+    hermes-led:
+        container_name: hermes-led
+        #build:
+        #    context: ./hermes-led/
+        #    dockerfile: ./Dockerfile
+        image: thund/hermes-led:0.0.2
+        volumes:
+            - ./rhasspy/profiles/de:/tmp/rhasspy
+        environment:
+            - TZ=Europe/Berlin
+            - HLC_ARGUMENTS=--hardware=respeaker4 --pathToConfig=/tmp/rhasspy/profile.json --engine=rhasspy --mqttServer=mosquitto
+        devices:
+            - /dev/gpiomem:/dev/gpiomem
+            - /dev/mem:/dev/mem
+            - /dev/spidev0.0:/dev/spidev0.0
+            - /dev/spidev0.1:/dev/spidev0.1
+        restart: unless-stopped
+        privileged: true
