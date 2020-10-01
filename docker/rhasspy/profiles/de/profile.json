@@ -1,0 +1,39 @@
+{
+    "dialogue": {
+        "system": "rhasspy"
+    },
+    "intent": {
+        "system": "fsticuffs"
+    },
+    "microphone": {
+        "arecord": {
+            "device": "default:CARD=seeed4micvoicec"
+        },
+        "system": "arecord"
+    },
+    "mqtt": {
+        "enabled": "true",
+        "host": "mosquitto"
+    },
+    "sounds": {
+        "system": "aplay"
+    },
+    "speech_to_text": {
+        "system": "pocketsphinx"
+    },
+    "text_to_speech": {
+        "system": "espeak"
+    },
+    "wake": {
+        "raven": {
+            "keywords": {
+                "heytrixie": {}
+            },
+            "minimum_matches": "1",
+            "probability_threshold": "0.58",
+            "vad_sensitivity": "1"
+        },
+        "system": "raven"
+
+    }
+}
