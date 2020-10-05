@@ -39,9 +39,7 @@ services:
         container_name: "node-red"
         restart: unless-stopped
         volumes: 
-            - "./node-red/data/flows.json:/data/flows.json"
-            - "./node-red/data/flows_cred.json:/data/flows_cred.json"
-            - "./node-red/data/settings.js:/data/settings.js"
+            - "./node-red/data/:/data/"
         ports:
             - "1880:1880"
     hermes-led:
