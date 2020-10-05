@@ -9,7 +9,7 @@ mqtt_password = os.getenv('MQTT_PASSWORD', None)
 
 client = mqtt.Client()
 
-logger = logging.getLogger('__name__')
+logger = logging.getLogger('mqtt')
 
 
 def on_connect(client, userdata, flags, rc):

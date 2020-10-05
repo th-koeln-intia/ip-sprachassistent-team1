@@ -1,7 +1,7 @@
 import json
 import logging
 
-logger = logging.getLogger('__name__')
+logger = logging.getLogger('pocketsphinx_asr')
 
 
 def on_asr_activation(client, userdata, msg):

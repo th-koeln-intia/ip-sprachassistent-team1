@@ -1,7 +1,7 @@
 import json
 import logging
 
-logger = logging.getLogger('__name__')
+logger = logging.getLogger('rhasspy_raven')
 
 
 def on_wakeword_detection(client, userdata, msg):
