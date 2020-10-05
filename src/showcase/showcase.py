@@ -2,19 +2,12 @@ from .mqtt import mqtt
 from .wake_word import wake_word
 from .asr import asr
 import logging
+import coloredlogs
 
 
 def setup_logger():
-    logger = logging.getLogger('__name__')
-    logger.setLevel(logging.DEBUG)
-
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter(fmt='[%(levelname)s]\t %(asctime)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    ch.setFormatter(formatter)
-
-    logger.addHandler(ch)
+    logger = logging.getLogger('showcase')
+    coloredlogs.install(level='DEBUG')
 
 
 def setup():
