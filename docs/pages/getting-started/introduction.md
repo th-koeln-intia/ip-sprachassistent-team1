@@ -8,7 +8,7 @@ menubar: getting-started_menu
 ---
 
 Dieses Projekt des Sprachassistenten "Deep Thought" ist als Informatikprojekt im Rahmen des Forschungsprojekts
-[INTIA](https://intia.de) entstanden. Das Projekt beschäftigt sich damit digitale Hilfen zur Alltagsbewältigung
+[INTIA](https://dites.web.th-koeln.de/forschung/projekte/intia/) entstanden. Das Projekt beschäftigt sich damit digitale Hilfen zur Alltagsbewältigung
 von Kindern und Jugendlichen mit Förderbedarf zu entwickeln. weitere Informationen hierzu auf der verlinkten Webseite.
  
 Das Projektziel von "Deep Thought" ist es hierbei einen Open-Source Sprachassistenten als Proof-of-Concept umzusetzen um
