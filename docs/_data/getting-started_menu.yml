@@ -5,7 +5,5 @@
       items:
         - name: Einführung
           link: /getting-started/introduction/
-        - name: Voraussetzungen
-          link: /getting-started/requirements/
         - name: Installation
           link: /getting-started/installation/
