@@ -49,18 +49,18 @@ Das Wörterbuch sowie die entsprechende Aussprache lässt sich hier über Textda
 
 Beim ersten Start wird ein Download eines von vortrainierten akustischen Modells sowie Wörterbuch benötigt.
 Es handelt sich dabei um die [CMU Sphinx](https://sourceforge.net/projects/cmusphinx/) Datenbank.
-Ein eigenes Training ist hier erstmall nicht sinnvoll was aus der 
+Ein eigenes Training ist hier erstmal nicht sinnvoll was aus der 
 [Dokumentation](https://cmusphinx.github.io/wiki/tutorialam/) auch hervorgeht, denn wir haben weder genügend Zeit noch 
 genug Daten dafür.
 
 Das Speech-To-Text-System ist hierbei auf dem Raspberry Pi ziemlich langsam - es ist allerdings möglich die Aufgabe auf
-ein leistungsstärkeres System zu übertragen.
-(//TODO Wann ist es sinnvoll?) 
+ein leistungsstärkeres System zu übertragen. Besonders beim Language Model Mixing (siehe nächsten Abschnitt) ist die Hardware des Rhaspberry zu schwach und es wird ausdrücklich empfohlen die Berechnung über einen Server laufen zu lassen.
 
 Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents (`sentences.ini`) gepflegt 
 sein, weil aus dieser ein Sprachmodell erstellt wird. Das bedeutet es können noch so viele Wörter im Wörterbuch stehen, 
-Pocketsphinx erkennt nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
-remote-Instanz bloß der Speech-To-Text Dienst läuft.
+Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
+remote-Instanz bloß der Speech-To-Text Dienst läuft. Dieses Verhalten kann man abändern, indem man den Wert `mix_weight` bei PocketSphinx erhöht.
+Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der `sentences.ini` eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.
 
 Wir sehen folgende Konfigurationsbasis vor:
 
@@ -136,7 +136,7 @@ eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu 
 ## Docker
 
 Um die implementierten Anwendungen isoliert laufen zu lassen, verwenden wir [Docker](https://www.docker.com/).
-Wie man Deep Thought mit Docker startet ist [hier](/getting-started/installation) (//TODO Anchor) beschrieben.
+Wie man Deep Thought mit Docker startet ist [hier](/getting-started/installation) beschrieben.
 
 ### Docker Image `hermes-led`
 
