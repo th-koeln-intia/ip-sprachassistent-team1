@@ -177,11 +177,11 @@ lokal zu installieren.
 
 Lokale Testversion hosten:
 
-```export JEKYLL_VERSION=3.8```
-
-```cd ./docs```
-
-```docker run --rm -p 4000:4000 --volume="/$(PWD):/srv/jekyll" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll serve```
+```sh
+export JEKYLL_VERSION=3.8
+cd ./docs
+docker run --rm -p 4000:4000 --volume="/$(PWD):/srv/jekyll" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll serve
+```
 
 Die Dokumentation ist anschließend unter [http://localhost:4000](http://localhost:4000) aufrufbar.
 
