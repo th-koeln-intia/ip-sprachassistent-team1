@@ -1,6 +1,20 @@
-from mqtt import mqtt
-from wake_word import wake_word
-from asr import asr
+from .mqtt import mqtt
+from .wake_word import wake_word
+from .asr import asr
+import logging
+
+
+def setup_logger():
+    logger = logging.getLogger('__name__')
+    logger.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(fmt='[%(levelname)s] %(asctime)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    ch.setFormatter(formatter)
+
+    logger.addHandler(ch)
 
 
 def setup():
@@ -18,5 +32,5 @@ def setup():
     client.loop_forever()
 
 
-if __name__ == '__main__':
-    setup()
+setup_logger()
+setup()

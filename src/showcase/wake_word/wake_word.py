@@ -1,16 +1,19 @@
 import json
+import logging
+
+logger = logging.getLogger('__name__')
 
 
 def on_wakeword_detection(client, userdata, msg):
     payload = json.loads(msg.payload)
-    print("Detected Wake Word:")
-    print("\tMatches Recording: " + payload['modelId'])
-    print("\tDetected On: " + msg.topic)
+    logger.info("Detected Wake Word: (recording=%s)", payload['modelId'])
+    logger.debug("Payload (%s): %s", msg.topic, payload)
 
 
 def on_wakeword_activation(client, userdata, msg):
-    print("Wake Word Activation")
+    logger.info("Wake Word service activated")
 
 
 def on_wakeword_deactivation(client, userdata, msg):
-    print("Wake Word Deactivation")
+    logger.info("Wake Word service deactivated")
+

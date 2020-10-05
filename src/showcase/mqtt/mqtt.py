@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import os
+import logging
 
 mqtt_host = os.getenv('MQTT_HOST', 'raspberrypi')
 mqtt_port = os.getenv('MQTT_PORT', 1883)
@@ -8,9 +9,11 @@ mqtt_password = os.getenv('MQTT_PASSWORD', None)
 
 client = mqtt.Client()
 
+logger = logging.getLogger('__name__')
+
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected to MQTT Broker with result code: " + str(rc))
+    logger.info("Connected to MQTT Broker (result_code=%s)", str(rc))
 
 
 def connect():
