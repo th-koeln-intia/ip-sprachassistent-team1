@@ -50,14 +50,14 @@ Nachdem die Services gestartet sind, sind sie unter folgenden Adressen erreichba
 
 Damit der Sprachassistent perfekt auf die eigene Stimme eingestellt ist, muss nach dem ersten Start das Wake-Word eingesprochen werden. Hierzu öffnet man die Rhasspy Oberfläche [http://raspberrypi:12101](http://raspberrypi:12101) und klickt auf das Ausrufezeichen, um den Wake-Word Manager zu öffnen.
 
-![WakeWord1](../../assets/wword_1.png)
+![WakeWord1](../../assets/wword_1.PNG)
 
 Anschließend muss das Wake-Word eingesprochen werden. Hierzu klickt man auf den Record Knopf neben Example 1 und sagt "Hey, Trixie". Das ganze wiederholt man für Example 2 und Example 3.
 
-![Wakeword2](../../assets/wword_2.png)
+![Wakeword2](../../assets/wword_2.PNG)
 
 Wenn man mit den Sprachaufnahmen zufrieden ist müssen diese noch gespeichert werden. Hierzu scrollt man fast bis ans Ende der Seite und klickt dort auf "Save Settings".
 
-![Wakeword3](../../assets/wword_3.png)
+![Wakeword3](../../assets/wword_3.PNG)
 
 Der Sprachassistent ist nun zur Benutzung bereit. Alle verfügbaren Features findet man [hier](/docs/features) 
