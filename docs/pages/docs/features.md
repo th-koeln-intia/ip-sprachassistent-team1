@@ -173,6 +173,7 @@ Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist un
 ## Analyse der Störgeräusche
 
 Im Folgenden sind einige Beispiele zu Störgeräuschen inkl. Soundsample zu finden.
+Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arecord -Dac108 -f S32_LE -r 16000 -c 4`
 
 | Störgeräusch | Vorhanden? | Beispielsound |
 | ------------ | ---------- | --------- |
