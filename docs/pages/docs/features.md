@@ -7,7 +7,13 @@ show_sidebar: false
 menubar: docs_menu
 ---
 
-# Wake Word
+# 📖 Inhaltsverzeichnis
+
+| Feature                  | Beschreibung                               |
+| ------------------------ | ------------------------------------------ |
+| [Wake Word](#-wake-word) | Das Aktivierungswort des Sprachassistenten |
+
+# 🎙 Wake Word
 
 Das Wake Word oder auch Hot Word bzw. Aktivierungswort ist das wort, welches den Sprachassistenten Deep Thought aktiviert. Das Wake Word ist durch den Nutzer festzulegen und muss eingesprochen werden.
 
@@ -24,18 +30,18 @@ Ein ideales Wake Word soll
 
 Es existieren diverse Sprachassistenten mit unterschiedlichen Wake Words auf den Markt. In der folgenden Tabelle sind die gängigen aufgelistet:
 
-| Sprachassistent                | Wake Word                                                         |
-| ------------------------------ | ----------------------------------------------------------------- |
-| Alexa                          | "Alexa" <br /> "Amazon" <br /> "Computer" <br /> "Echo"   |
-| Google Assistent               | "Hey, Google" <br /> "Okay, Google"                           |
-| Siri                           | "Hey, Siri"                                                     |
-| Bixby                          | "Hey, Bixbi"                                                    |
-| Cortana                        | "Hey, Cortana"                                                  |
+| Sprachassistent                | Wake Word                                                   |
+| ------------------------------ | ----------------------------------------------------------- |
+| Alexa                          | "Alexa" <br /> "Amazon" <br /> "Computer" <br /> "Echo"     |
+| Google Assistent               | "Hey, Google" <br /> "Okay, Google"                         |
+| Siri                           | "Hey, Siri"                                                 |
+| Bixby                          | "Hey, Bixbi"                                                |
+| Cortana                        | "Hey, Cortana"                                              |
 | Hallo Magenta                  | "Hallo, Magenta" <br /> "Hey, Magenta" <br /> "Hi, Magenta" |
-| Intelligent Personal Assistent | "Hey, BMW"                                                      |
-| MBUX                           | "Hey, Mercedes"                                                 |
-| Jasper                         | "Jasper"                                                        |
-| Snips                          | "Hey, Snips"                                                    |
+| Intelligent Personal Assistent | "Hey, BMW"                                                  |
+| MBUX                           | "Hey, Mercedes"                                             |
+| Jasper                         | "Jasper"                                                    |
+| Snips                          | "Hey, Snips"                                                |
 
 Es scheint üblich zu sein das Wake word mit einer Begrüßung zu verbinden - möglicherweise werden so falsch positive erkennungen, wenn der Name beiläufig im Alltag erwähnt wird unterbunden. Das wird auch durch den folgenden [Artikel](https://picovoice.ai/tips/choosing-a-wake-word/) bestätigt.
 
