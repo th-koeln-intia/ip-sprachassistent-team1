@@ -5,14 +5,19 @@ items:
     icon: fa-book
     call_to_action_name: Dokumentation
     call_to_action_link: /docs/
+    description: >
+      Hier findet sich die Entwicklungsdokumentation des Projekts inklusive allen Entscheidungsprozessen sowie Schwierigkeiten, die während der Entwicklung aufgetreten sind.
+      Die Dokumentation soll helfen, die praxistauglichkeit zu evaluieren.
   - title: Getting Started
     icon: fa-wrench
     call_to_action_name: Getting Started
     call_to_action_link: /getting-started/
+    description: >
+      Hier ist die Benutzeranleitung zu finden. Wie startet man den Sprachassistenten? Welche Konfigurationsschritte sind nötig?
   - title: GitHub
     icon: fa-github
     icon_brand: true
     description: >
-      Wir sind auf GitHub
+      Deep Thought ist ein Open-Source Projekt. Alle relevanten Dateien sind in einem öffentlichen GitHub Repositry zu Hause.
     call_to_action_name: GitHub Repository
     call_to_action_link: https://github.com/th-koeln-intia/ip-sprachassistent-team1
