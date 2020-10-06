@@ -9,9 +9,10 @@ menubar: docs_menu
 
 # 📖 Inhaltsverzeichnis
 
-| Feature                  | Beschreibung                               |
-| ------------------------ | ------------------------------------------ |
-| [Wake Word](#-wake-word) | Das Aktivierungswort des Sprachassistenten |
+| Feature                                                          | Beschreibung                                                                         |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           |
+| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen |
 
 # 🎙 Wake Word
 
@@ -149,8 +150,6 @@ Unsere Empfehlung für das Wake Word lautet `Hey, Trixie` mit der folgenden Konf
 
 ## Sonstige Bemerkungen
 
-Während des testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist und Hintergrundgeräusche wie einen Fernseher erkennt. Es wird versucht aus der Sprache dort einen Intent zu ziehen. Vielleicht ist es sinnvoll über ein anderes Audio-Recording zu überlegen, wie z.B. [SoX](http://sox.sourceforge.net/)
-
 Wenn ein höherer Wert für `minimum_matches` gewählt wird, resultiert das in folgende Meldung und ermöglicht keine Aktivierung mehr:
 
 ```
@@ -158,3 +157,69 @@ rhasspy        | [DEBUG:2020-09-29 08:56:29,593] rhasspy-wake-raven: Enter refra
 rhasspy        | [DEBUG:2020-09-29 08:56:31,795] rhasspy-wake-raven: Exiting refractory period
 ```
 
+# 🔊 Hintergrungeräuschreduzierung
+
+Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist und Hintergrundgeräusche wie einen Fernseher erkennt. Es wird versucht aus der Sprache dort einen Intent zu ziehen. Im Folgenden wird der Prozess zur Suche einer geeigneten Möglichkeit zur Reduzierung der Störgeräusche beschrieben.
+
+## Was ist als Störgeräusche / Hintergrundgeräusch zu bewerten?
+
+* Störgeräusche der Hardware
+  * Grundrauschen
+  * Geräusche der Hardware
+* Hintergrundgeräusche
+  * Bspw. Vogelgezwitscher, schreiendes Kind, Musik
+  * Menschliche Unterhaltungen 
+
+## Analyse der Störgeräusche
+
+Im Folgenden sind einige Beispiele zu Störgeräuschen inkl. Soundsample zu finden.
+
+| Störgeräusch | Vorhanden? | Beispielsound |
+| ------------ | ---------- | --------- |
+| Grundrauschen | ✅ | [Sound](/assets/grundrauschen.wav) | 
+| Tastaturtippen (< 1m) | ✅ | [Sound]('/assets/tippen.wav') | 
+| Fernsehr (5-7m, laut) | ✅ | [Sound]('/assets/fernseher_laut.wav') | 
+| Fernsehr (5-7m, zimmerlautstärke) | ✅ | [Sound]('/assets/fernseher_zimmerlautstaerke.wav') | 
+| Musik (< 1m, zimmerlautstärke) | ✅ | [Sound]('/assets/musik_zimmerlautstaerke.wav') | 
+| Musik (< 1m, laut) | ✅ | [Sound]('/assets/musik_laut.wav') | 
+
+## Bestandsaufnahme der Möglichkeiten
+
+Rhasspy hat hierzu keine geeignete eigene Funktion und da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren.
+
+Rhasspy bietet da von Haus aus die Möglichkeiten [arecord](https://alsa-project.org/wiki/Main_Page) und [pyaudio](https://pypi.org/project/PyAudio/) zusätzlich gibt es die Möglichkeit die Audioaufnahme über ein lokales Command zu machen sowie eine HTTP API zu verwenden. Es ist also möglich weitere Tools zu verwenden. 
+
+## Marktanalyse
+
+Welche weiteren Tools gibt es, die die Möglichkeit bieten Hintergrundgeräusche zu reduzieren
+* [SoX](http://sox.sourceforge.net/)
+* [krisp](https://krisp.ai/de/)
+* [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
+
+## Analyse der einzelnen Tools
+
+### arecord
+
+Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist das ganze sehr schlecht dokumentiert. Daher verwenden wir im Folgenden nicht das mitglieferte `arcord` von Rhasspy, sondern weichen auf ein `Local Command` aus. Die Folgende Konfiguration in der `profile.json` ist äquivalent zu der mitgelieferten.
+
+```json
+"microphone": {
+    "arecord": {
+        "device": "default:CARD=seeed4micvoicec"
+    },
+    "command": {
+        "list_arguments": [],
+        "sample_rate": 16000,
+        "sample_width": 2,
+        "channels": 1,
+        "list_program": "arecord -L",
+        "record_arguments": [],
+        "record_program": "arecord -q -r 16000 -f S16_LE -c 1 -t raw -D default:CARD=seeed4micvoicec",
+        "test_arguments": [],
+        "test_program": "arecord -q -D {} -r 16000 -f S16_LE -c 1 -t raw"
+    },
+    "system": "command"
+}
+```
+
+Jetzt können die Parameter auch selbst angepasst werden.
