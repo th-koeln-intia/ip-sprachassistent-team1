@@ -26,5 +26,5 @@ def on_asr_stop_listen(client, userdata, msg):
 
 def on_asr_text_captured(client, userdata, msg):
     payload = json.loads(msg.payload)
-    logger.info("ASR service starts listening (session=%s, text=%s)", payload['sessionId'], payload['text'])
+    logger.info("ASR service captured text (session=%s, text=%s)", payload['sessionId'], payload['text'])
     logger.debug("Payload (%s): %s", msg.topic, payload)
