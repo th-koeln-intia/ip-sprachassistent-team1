@@ -62,22 +62,6 @@ Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der `
 remote-Instanz bloß der Speech-To-Text Dienst läuft. Dieses Verhalten kann man abändern, indem man den Wert `mix_weight` bei PocketSphinx erhöht.
 Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der `sentences.ini` eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.
 
-Wir sehen folgende Konfigurationsbasis vor:
-
-```json
-//TODO Konfiguration hinzufügen, das hier ist nur ein Beispiel
-"command": {
-    "webrtcvad": {
-      "skip_sec": 0,
-      "min_sec": 1,
-      "speech_sec": 0.3,
-      "silence_sec": 0.5,
-      "before_sec": 0.5,
-      "vad_mode": 3
-    }
-  }
-```  
-
 ### Fsticuffs
 
 [Fsticuffs](https://github.com/rhasspy/rhasspy-nlu-hermes) wird verwendet um Sätze bzw. Befehle zu erkennen, die 
@@ -94,8 +78,6 @@ Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
 Der hauseigene [Rhasspy Dialogue Manager](https://github.com/rhasspy/rhasspy-dialogue-hermes) kümmert sich um die 
 Sitzungsverwaltung. Dieser Service stellt einen Vermittler dar, der die anderen Services benachrichtigt, sobald diese 
 mit ihrer Arbeit beginnen sollen. 
-
-//TODO bisschen ausführlicher, evtl. mit Beispiel
 
 ## MQTT
 Bei dem Message Queuing Telemetry Transport (MQTT) handelt es sich um ein Client-Server-Netzwerkprotokoll. Es eignet 
