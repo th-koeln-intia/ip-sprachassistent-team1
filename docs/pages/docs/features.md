@@ -178,11 +178,11 @@ Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arec
 | Störgeräusch | Vorhanden? | Beispielsound |
 | ------------ | ---------- | --------- |
 | Grundrauschen | ✅ | [Sound](/assets/grundrauschen.wav) | 
-| Tastaturtippen (< 1m) | ✅ | [Sound]('/assets/tippen.wav') | 
-| Fernsehr (5-7m, laut) | ✅ | [Sound]('/assets/fernseher_laut.wav') | 
-| Fernsehr (5-7m, zimmerlautstärke) | ✅ | [Sound]('/assets/fernseher_zimmerlautstaerke.wav') | 
-| Musik (< 1m, zimmerlautstärke) | ✅ | [Sound]('/assets/musik_zimmerlautstaerke.wav') | 
-| Musik (< 1m, laut) | ✅ | [Sound]('/assets/musik_laut.wav') | 
+| Tastaturtippen (< 1m) | ✅ | [Sound](/assets/tippen.wav) | 
+| Fernsehr (5-7m, laut) | ✅ | [Sound](/assets/fernseher_laut.wav) | 
+| Fernsehr (5-7m, zimmerlautstärke) | ✅ | [Sound](/assets/fernseher_zimmerlautstaerke.wav) | 
+| Musik (< 1m, zimmerlautstärke) | ✅ | [Sound](/assets/musik_zimmerlautstaerke.wav) | 
+| Musik (< 1m, laut) | ✅ | [Sound](/assets/musik_laut.wav) | 
 
 ## Bestandsaufnahme der Möglichkeiten
 
