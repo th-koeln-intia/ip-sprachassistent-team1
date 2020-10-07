@@ -330,13 +330,13 @@ In SoX kann man das über den `compand` Effekt erreichen. Die Erklärung der Dok
 #### `sox_noisy_tv_silent.wav`
 
 ```sh
-sox sox_noisy_tv_silent.wav silent_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -9 0 0.1
+sox sox_noisy_tv_silent.wav silent_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 #### `sox_noisy_tv_normal.wav`
 
 ```sh
-sox sox_noisy_tv_normal.wav normal_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -9 0 0.1
+sox sox_noisy_tv_normal.wav normal_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 #### `sox_noisy_tv_loud.wav`
@@ -356,3 +356,27 @@ Im Folgenden finden sich die hier verwendeten Beispieldateien:
 | [sox_noisy_tv_silent.wav](/assets/sox_noisy_tv_silent.wav) | [silent_compand.wav](/assets/silent_compand.wav) |
 | [sox_noisy_tv_normal.wav](/assets/sox_noisy_tv_normal.wav) | [normal_compand.wav](/assets/normal_compand.wav) |
 | [sox_noisy_tv_loud.wav](/assets/sox_noisy_tv_loud.wav)     | [loud_compand.wav](/assets/loud_compand.wav)     |
+
+### Schritt 3: Verbindung von arecord mit SoX und Einbindung in Rhasspy
+
+Im dritten und letzen Schritt werden wir versuchen die Ergebnisse aus den vorherigen Schritten "live" anzuwenden.
+Unabhängig von der Tatsache, dass das Noise Gate aus [Schritt 2](#schritt-2-hintergrundgeräusche-reduzieren) bereits das Grundrauschen entfernt, möchten wir gerne ausprobieren, ob es möglich ist auf ein Audiosignal "live" zwei Effekte anzuwenden.
+
+Wir setzen die Kommandos aus den obigen Schritten zusammen.
+
+**Grundrauschen entfernen**
+Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen und in `record.wav` speichern.
+```sh
+arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
+```
+
+**Grundrauschen + Noise Gate**
+Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen, Noise Gate anwenden und in `record.wav` speichern.
+```sh
+arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+
+### Fazit
+
+Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne künstliche Intelligenzen möglich. Hier gilt es allerdings zu beachten, dass der Test unter idealen Bedingungen durchgeführt wurde und nicht auf jede Situation getestet wurde. Wenn eine Filterung wirklich angestrebt werden sollte, ist ein intensiver Praxistest von Nöten.
