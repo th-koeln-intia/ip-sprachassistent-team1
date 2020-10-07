@@ -65,5 +65,9 @@ services:
         build: 
             context: ../src/api
             dockerfile: ../../docker/flask/Dockerfile
+        environment:
+            - FLASK_DEBUG=${FLASK_DEBUG}
         ports:
             - "5000:5000"
+        volumes:
+            - ../src/api:/code
