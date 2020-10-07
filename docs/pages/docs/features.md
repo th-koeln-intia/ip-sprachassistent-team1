@@ -366,12 +366,14 @@ Wir setzen die Kommandos aus den obigen Schritten zusammen.
 
 **Grundrauschen entfernen**
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen und in `record.wav` speichern.
+Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) ergeben hat.
 ```sh
 arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
 ```
 
 **Grundrauschen + Noise Gate**
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen, Noise Gate anwenden und in `record.wav` speichern.
+Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) und für das Noise Gate die Werte, die sich aus [Schritt 2 der Analyse](#schritt-2-hintergrundgeräusche-reduzieren) für einen leisen Fernseher ergeben haben.
 ```sh
 arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
