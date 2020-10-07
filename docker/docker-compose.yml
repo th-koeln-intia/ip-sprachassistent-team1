@@ -60,3 +60,10 @@ services:
             - /dev/spidev0.1:/dev/spidev0.1
         restart: unless-stopped
         privileged: true
+    flask:
+        container_name: flask
+        build: 
+            context: ../src/api
+            dockerfile: ../../docker/flask/Dockerfile
+        ports:
+            - "5000:5000"
