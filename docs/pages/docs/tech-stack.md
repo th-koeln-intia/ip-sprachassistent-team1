@@ -167,4 +167,8 @@ docker run --rm -p 4000:4000 --volume="/$(PWD):/srv/jekyll" -it jekyll/jekyll:$J
 
 Die Dokumentation ist anschließend unter [http://localhost:4000](http://localhost:4000) aufrufbar.
 
+## Flask
+
+Die API welche die Logik der Intents steuert wird mit dem Python-Framework [Flask](https://flask.palletsprojects.com/en/1.1.x/) umgesetzt. Wir haben bei der Implementierung der API drauf geachtet die einzelnen Features (Lichtsteuerung, Wecker, etc.) in einzelne Module zu schreiben.
+
 
