@@ -68,6 +68,7 @@ services:
         environment:
             - FLASK_DEBUG=${FLASK_DEBUG}
         ports:
+            #TODO: remove in production to avoid external access
             - "5000:5000"
         volumes:
             - ../src/api:/code
