@@ -7,3 +7,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     return 'Hello World23!'
+
+import alarm
+import light
