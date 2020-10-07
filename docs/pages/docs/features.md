@@ -175,14 +175,14 @@ Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist un
 Im Folgenden sind einige Beispiele zu Störgeräuschen inkl. Soundsample zu finden.
 Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arecord -Dac108 -f S32_LE -r 16000 -c 4`
 
-| Störgeräusch | Vorhanden? | Beispielsound |
-| ------------ | ---------- | --------- |
-| Grundrauschen | ✅ | [Sound](/assets/grundrauschen.wav) | 
-| Tastaturtippen (< 1m) | ✅ | [Sound](/assets/tippen.wav) | 
-| Fernsehr (5-7m, laut) | ✅ | [Sound](/assets/fernseher_laut.wav) | 
-| Fernsehr (5-7m, zimmerlautstärke) | ✅ | [Sound](/assets/fernseher_zimmerlautstaerke.wav) | 
-| Musik (< 1m, zimmerlautstärke) | ✅ | [Sound](/assets/musik_zimmerlautstaerke.wav) | 
-| Musik (< 1m, laut) | ✅ | [Sound](/assets/musik_laut.wav) | 
+| Störgeräusch                      | Vorhanden? | Beispielsound                                    |
+| --------------------------------- | ---------- | ------------------------------------------------ |
+| Grundrauschen                     | ✅          | [Sound](/assets/grundrauschen.wav)               |
+| Tastaturtippen (< 1m)             | ✅          | [Sound](/assets/tippen.wav)                      |
+| Fernsehr (5-7m, laut)             | ✅          | [Sound](/assets/fernseher_laut.wav)              |
+| Fernsehr (5-7m, zimmerlautstärke) | ✅          | [Sound](/assets/fernseher_zimmerlautstaerke.wav) |
+| Musik (< 1m, zimmerlautstärke)    | ✅          | [Sound](/assets/musik_zimmerlautstaerke.wav)     |
+| Musik (< 1m, laut)                | ✅          | [Sound](/assets/musik_laut.wav)                  |
 
 ## Bestandsaufnahme der Möglichkeiten
 
@@ -254,7 +254,7 @@ Dazu kann mit PulseAudio ein Modul namens `module-echo-cancel` verwendet werden.
 
 Zu dem Thema existiert eine [Publizierung](https://www.researchgate.net/publication/282446599_Removing_Noise_from_Speech_Signals_Using_Different_Approaches_of_Artificial_Neural_Networks) ("Removing Noise from Speech Signals Using Different Approaches of Artificial Neural Networks", Omaima Al-Allaf, 2015, University of Jordan, 10.5815/ijitcs.2015.07.02) welche weitere Möglichkeiten zur reduzierung von Hintergrundgeräuschen behandelt, die auf Basis künstlicher Intelligenzen agieren. 
 
-## Fazit
+### Fazit der Analyse
 
 Es ist schwierig hier eine befriedigende Lösung für alle Use-Cases und Anforderungen zu finden. 
 
@@ -265,3 +265,94 @@ Das Filtern des Grundrauschens ist prinzipiell möglich, resultiert allerdings l
 Das angesprochene Sprachmustertraining ist grundsätzlich die sinnvollste Lösung, denn so ist es möglich die Sprache des Benutzers zu erkennen und nur auf dessen Anweisungen zu reagieren. Genauso könnte hier erkannt werden, wann genau der Benutzer aufhört zu sprechen und was genau er gesagt hat, sodass Störgeräusche eines Fernsehers kein Problem darstellen sollten. Wie bereits angesprochen fehlen uns hierzu allerdings die technischen Möglichkeiten, Trainingsdaten und vor allem die Zeit. Auch ist die Lösung nicht sinnvoll, wenn das Gerät ohne weiteren Konfigurationsaufwand schnell für viele unterschiedliche Benutzer einsatzbereit sein soll.
 
 Wir werden uns somit auf das Filtern des Grundrauschens sowie eine etwaige minimale Anpassung der Schwellwerte und weiterer Parameter mit SoX und arecord/ALSA beschränken. Das ganze müssen wir auch fortlaufend unter unterschiedlichen Bedinungen testen und ggf. anpassen.
+
+## Experimentelle Implementierung von SoX in Verbindung mit arecord
+
+SoX installieren:
+
+```sh
+sudo apt install sox #TODO in install.sh integrieren, falls tauglich
+```
+
+### Schritt 1: Grundrauschen filtern
+
+10 Sekunden Grundrauschen aufzeichnen. Für die experimentelle Implementierung habe ich im gleichen Schritt noch eine Test-Sprachaufnahme gemacht:
+
+```sh
+ arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 noise.wav
+ arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_sound_noisy.wav
+```
+
+Jetzt kann SoX aus der `noise.wav` Datei ein Profil erstellen, was dann später verwendet werden kann. Das geschiet mit
+
+```sh
+sox noise.wav -n noiseprof noise.prof
+```
+
+Jetzt können wir das Profil auf die Test-Datei anwenden und mit den Parametern ein wenig experimentieren. Beim Testen hat sich ein Wert von `0.21` als perfekt erwiesen.
+
+```sh
+sox sox_sound_noisy.wav sox_sound_noisered.wav noisered noise.prof 0.21
+```
+
+Zum Vergleich sind die beiden Dateien [sox_sound_noisy.wav](/assets/sox_sound_noisy.wav) und [sox_sound_noisered.wav](/assets/sox_sound_noisered.wav)
+
+Wie man sieht funktioniert es mit Sox hervorragend das Grundrauschen zu entfernen, die Sprache ist um einiges klarer.
+
+
+### Schritt 2: Hintergrundgeräusche reduzieren
+
+Wir spielen hier ein wenig mit den Funktionen von SoX und versuchen die Geräusche eines Fernsehers im Hintergrund herauszufiltern.
+
+Dazu nehmen wir verschiedene Sounds zum testen auf:
+
+```sh
+ arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_silent.wav
+ arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_normal.wav
+ arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_loud.wav
+```
+
+Betrachtet man jetzt die Frequenzen der einzelnen Dateien, so fällt aus, dass zumindest das Filtern eines leisen und möglicherweise auch in zimmerlautstärke eingestellten Fernsehers möglich sein sollte.
+
+**Frequenz `sox_noisy_tv_silent.wav` (Channel1)**
+![frequency_noisy_tv_silent](/assets/frequency_silent_tv.png)
+
+**Frequenz `sox_noisy_tv_normal.wav` (Channel1)**
+![frequency_noisy_tv_normal](/assets/frequency_normal_tv.png)
+
+**Frequenz `sox_noisy_tv_loud.wav` (Channel1)**
+![frequency_noisy_tv_loud](/assets/frequency_loud_tv.png)
+
+Das Ziel ist es also die "kleinen Wellen" auszublenden und die "großen Wellen" unverändert wiederzugeben. Hierzu eignet sich ein [Noise Gate](https://en.wikipedia.org/wiki/Noise_gate). Dieser Schritt würde je nach Einstellung auch das Grundrauschen herausfiltern.
+In SoX kann man das über den `compand` Effekt erreichen. Die Erklärung der Dokumenation ist für Laien nicht ganz so leicht zu verstehen, aber es gibt einen [Post auf Sourceforge](https://sourceforge.net/p/sox/mailman/sox-users/thread/6BD30DC3-1EB7-4B3B-B866-C0777B464A3A%40senortoad.com/#msg23427259) der die Funktionsweise hervorragend in einfachen Worten erläutert.
+
+
+#### `sox_noisy_tv_silent.wav`
+
+```sh
+sox sox_noisy_tv_silent.wav silent_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -9 0 0.1
+```
+
+#### `sox_noisy_tv_normal.wav`
+
+```sh
+sox sox_noisy_tv_normal.wav normal_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -9 0 0.1
+```
+
+#### `sox_noisy_tv_loud.wav`
+
+```sh
+sox sox_noisy_tv_loud.wav loud_compand.wav compand 0.1,0.1 -inf,-33.1,-inf,-33,-33 0 -90 0.1
+```
+
+An dieser Datei sieht man, dass es nicht immer möglich ist über ein noise gate ein perfektes Ergebnis zu erzielen.
+
+#### Beispieldateien
+
+Im Folgenden finden sich die hier verwendeten Beispieldateien:
+
+| Unbehandelt                                                | Noise Gate                                       |
+| ---------------------------------------------------------- | ------------------------------------------------ |
+| [sox_noisy_tv_silent.wav](/assets/sox_noisy_tv_silent.wav) | [silent_compand.wav](/assets/silent_compand.wav) |
+| [sox_noisy_tv_normal.wav](/assets/sox_noisy_tv_normal.wav) | [normal_compand.wav](/assets/normal_compand.wav) |
+| [sox_noisy_tv_loud.wav](/assets/sox_noisy_tv_loud.wav)     | [loud_compand.wav](/assets/loud_compand.wav)     |
