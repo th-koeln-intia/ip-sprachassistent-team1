@@ -188,9 +188,11 @@ Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arec
 
 Rhasspy hat hierzu keine geeignete eigene Funktion und da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren.
 
+Rhasspy bietet da von Haus aus die Möglichkeiten [arecord](https://alsa-project.org/wiki/Main_Page) und [pyaudio](https://pypi.org/project/PyAudio/) zusätzlich gibt es die Möglichkeit die Audioaufnahme über ein lokales Command zu machen sowie eine HTTP API zu verwenden. Es ist also möglich weitere Tools zu verwenden. 
+
 Wie bereits im [Tech-Stack](/docs/tech-stack/#pocketsphinx) erwähnt, wäre ein eigenes Training des Sprachmodells nicht sinnvoll und läge nicht im Rahmen der Möglichkeiten. Desweiteren sehen wir es als Vorteil an, wenn jeder Nutzer gleichbehandelt wird und die Möglichkeit hat Deep Thought zu benutzen ohne ein eigenes Training zu erfahren. Das reduziert auch den Aufwand, der bei der Erstinstallation aufgebracht werden müsste.
 
-Rhasspy bietet da von Haus aus die Möglichkeiten [arecord](https://alsa-project.org/wiki/Main_Page) und [pyaudio](https://pypi.org/project/PyAudio/) zusätzlich gibt es die Möglichkeit die Audioaufnahme über ein lokales Command zu machen sowie eine HTTP API zu verwenden. Es ist also möglich weitere Tools zu verwenden. 
+Problematisch hierbei ist es vermutlich ohne ein Sprachmustertraining eine adäquate Lösung zu finden, die auch Hintergrundgeräusche mit Sprache - wie z.B. den Fernseher - herausfiltert. 
 
 ## Marktanalyse
 
@@ -225,11 +227,41 @@ Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist d
 }
 ```
 
-Jetzt können die Parameter auch selbst angepasst werden.
+Jetzt können die Parameter auch selbst angepasst werden. Leider bietet `arecord` hier keine weiteren Möglichkeiten zur Filterung. (//TODO Warum ist sie dann hier? -- ggf. woanders unterbringen)
+
+### Pyaudio
+
+Genauso wie bei [arecord](#arecord) bietet Rhasspy nicht gerade zugängliche Möglichkeiten die Parameter einzustellen. Man müsste hier also auch auf ein local command ausweichen. PyAudio bietet auch keine weiteren Möglichkeiten zur Filterung.
 
 ### krisp
 
 [Krisp](https://krisp.ai/de/) ist eine kommerzielle Lösung, die zuverlässig auf Basis von künstlicher Intelligenz und mit jeder erdenklichen Hardware funktionieren soll. Die Lösung fällt leider sehr schnell raus denn es handelt sich hierbei erstens nicht um eine Open-Source Lösung, die dem Ansatz dieses Projekts widersprechen würde und zweitens sind - selbst wenn man über den letzten Punkt hinwegschauen würde - in der kostenlosen Version lediglich 120min/Woche möglich. Das ist insbesondere insofern problematisch, als dass das Mikrofon nach dem [Hermes-Protokoll](https://docs.snips.ai/reference/hermes) die Daten permanent in ein MQTT-Topic published. Es ist also die unbegrenzte Version von Nöten.
 
+### SoX
 
+Mit [SoX](http://sox.sourceforge.net/) ist es möglich die normalen Hintergrundgeräusche herauszufiltern. Dazu wird das Grundrauschen aufgenommen und und ein sogenanntes `noiseprof` davon angelegt. Über die Funktion `noisered` kann SoX dann einen Audioeingang so modulieren, dass dieses Grundrauschen herausgefiltert wird.
+Die Methode ist nur für das Grundrauschen praktikabel und ermöglicht keine tiefergreifende Filterung.
+Zusätzlich ist es mit dem Tool möglich einen Schwellwert festzulegen um etwaige leise Töne herauszufiltern. Unter Grundlage der beispielhaften [Samples](#analyse-der-störgeräusche) ist das allerdings nicht weiter praktikabel, denn hier müsste ein recht hoher Schwellwert gewählt werden, sodass auch leise gesprochene Sprachkommandos nicht mehr erkannt werden können.
 
+SoX eignet sich somit nur zur Filterung des Grundrauschens.
+
+### PulseAudio
+
+Ähnlich wie [SoX](#sox) bietet [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/) lediglich die Möglichkeit statische Hintergrundgeräusche herauszufiltern sowie eine Anpassung von Schwellwerten. 
+Dazu kann mit PulseAudio ein Modul namens `module-echo-cancel` verwendet werden. Dieses Modul basiert anders als SoX nicht auf einer Beispieldatei, sondern wird über eine Reihe von [Parametern](https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting#Enable_Echo/Noise-Cancellation) gesteuert.
+
+### Weitere Möglichkeiten auf Basis von AI/KI/NN
+
+Zu dem Thema existiert eine [Publizierung](https://www.researchgate.net/publication/282446599_Removing_Noise_from_Speech_Signals_Using_Different_Approaches_of_Artificial_Neural_Networks) ("Removing Noise from Speech Signals Using Different Approaches of Artificial Neural Networks", Omaima Al-Allaf, 2015, University of Jordan, 10.5815/ijitcs.2015.07.02) welche weitere Möglichkeiten zur reduzierung von Hintergrundgeräuschen behandelt, die auf Basis künstlicher Intelligenzen agieren. 
+
+## Fazit
+
+Es ist schwierig hier eine befriedigende Lösung für alle Use-Cases und Anforderungen zu finden. 
+
+Als Beispiel macht es nur Sinn einen hohen Schwellwert für die Audioaufnahme bzw. Mikrofonaktivierung zu wählen, wenn der Sprachassistent nahe am Benutzer steht bzw. man davon ausgehen kann, dass dieser in einer bestimmten Lautstärke sprechen wird. Dieser Wert müsste für die beste User Experience pro Benutzer festgelegt werden und fest im System verankert sein, sodass die Bedienung des Sprachassistenten nur von einem einzigen Benutzer sinnvoll möglich wäre. 
+
+Das Filtern des Grundrauschens ist prinzipiell möglich, resultiert allerdings lediglich in einer klareren Audioqualität. Weitere Störgeräusche sind hiervon nicht betroffen. Sinnvoll ist es vermutlich trotzdem, denn der Speech-To-Text Service könnte so zuverlässiger und robuster werden.
+
+Das angesprochene Sprachmustertraining ist grundsätzlich die sinnvollste Lösung, denn so ist es möglich die Sprache des Benutzers zu erkennen und nur auf dessen Anweisungen zu reagieren. Genauso könnte hier erkannt werden, wann genau der Benutzer aufhört zu sprechen und was genau er gesagt hat, sodass Störgeräusche eines Fernsehers kein Problem darstellen sollten. Wie bereits angesprochen fehlen uns hierzu allerdings die technischen Möglichkeiten, Trainingsdaten und vor allem die Zeit. Auch ist die Lösung nicht sinnvoll, wenn das Gerät ohne weiteren Konfigurationsaufwand schnell für viele unterschiedliche Benutzer einsatzbereit sein soll.
+
+Wir werden uns somit auf das Filtern des Grundrauschens sowie eine etwaige minimale Anpassung der Schwellwerte und weiterer Parameter mit SoX und arecord/ALSA beschränken. Das ganze müssen wir auch fortlaufend unter unterschiedlichen Bedinungen testen und ggf. anpassen.
