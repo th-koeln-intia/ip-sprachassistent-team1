@@ -304,7 +304,8 @@ Wie man sieht funktioniert es mit Sox hervorragend das Grundrauschen zu entferne
 
 Wir spielen hier ein wenig mit den Funktionen von SoX und versuchen die Geräusche eines Fernsehers im Hintergrund herauszufiltern.
 
-Dazu nehmen wir verschiedene Sounds zum testen auf:
+Wir nehmen hierzu zuerst Testsounds auf, in denen Sprache vorhanden ist und ein Fernsehr in verschiedenen Lautstärken im Hintergrund läuft.
+Auch hier fürs Protokoll: Der Benutzer, der die Sprache gesprochen hat befindet sich in einer Distanz von unter einem Meter und der Fernseher von etwa sieben Meter vom Mikrofon entfernt. 
 
 ```sh
  arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_silent.wav
