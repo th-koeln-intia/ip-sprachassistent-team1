@@ -7,11 +7,15 @@ services:
         volumes:
             - "./rhasspy/profiles:/profiles"
             - "/etc/localtime:/etc/localtime:ro"
+            - "./rhasspy/noise.prof:/home/noise.prof"
+            - "./rhasspy/noise_sox.prof:/home/noise_sox.prof"
         ports:
             - "12101:12101"
         devices:
             - "/dev/snd:/dev/snd"
         command: --user-profiles /profiles --profile de
+        depends_on: 
+            - mosquitto
     mosquitto:
         image: "arm32v6/eclipse-mosquitto"
         container_name: mosquitto
