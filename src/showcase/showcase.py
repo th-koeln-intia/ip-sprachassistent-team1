@@ -1,6 +1,3 @@
-from .mqtt import mqtt
-from .wake_word import wake_word
-from .asr import asr
 import logging
 import coloredlogs
 
@@ -24,6 +21,15 @@ def setup():
 
     client.loop_forever()
 
-
-setup_logger()
-setup()
+if __name__ == '__main__':
+    from mqtt import mqtt
+    from wake_word import wake_word
+    from asr import asr
+    setup_logger()
+    setup()
+else:
+    from .mqtt import mqtt
+    from .wake_word import wake_word
+    from .asr import asr
+    setup_logger()
+    setup()
