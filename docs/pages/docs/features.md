@@ -9,10 +9,10 @@ menubar: docs_menu
 
 # 📖 Inhaltsverzeichnis
 
-| Feature                                                          | Beschreibung                                                                         |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           |
-| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen |
+| Feature                                                          | Beschreibung                                                                         | Status |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
+| [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
+| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
 
 # 🎙 Wake Word
 
@@ -159,7 +159,9 @@ rhasspy        | [DEBUG:2020-09-29 08:56:31,795] rhasspy-wake-raven: Exiting ref
 
 # 🔊 Hintergrungeräuschreduzierung
 
-Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist und Hintergrundgeräusche wie einen Fernseher erkennt. Es wird versucht aus der Sprache dort einen Intent zu ziehen. Im Folgenden wird der Prozess zur Suche einer geeigneten Möglichkeit zur Reduzierung der Störgeräusche beschrieben.
+Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist was Hintergrundgeräusche wie einen Fernseher angeht. Es wird versucht aus der Sprache im Hintergrund einen Intent zu ziehen. 
+
+Im Folgenden wird der Prozess zur Suche einer geeigneten Möglichkeit zur Reduzierung der Störgeräusche beschrieben.
 
 ## Was ist als Störgeräusche / Hintergrundgeräusch zu bewerten?
 
@@ -173,7 +175,7 @@ Während des Testens hat sich gezeigt, dass das Mikrofon sehr empfindlich ist un
 ## Analyse der Störgeräusche
 
 Im Folgenden sind einige Beispiele zu Störgeräuschen inkl. Soundsample zu finden.
-Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arecord -Dac108 -f S32_LE -r 16000 -c 4`
+Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4`
 
 | Störgeräusch                      | Vorhanden? | Beispielsound                                    |
 | --------------------------------- | ---------- | ------------------------------------------------ |
@@ -227,11 +229,11 @@ Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist d
 }
 ```
 
-Jetzt können die Parameter auch selbst angepasst werden. Leider bietet `arecord` hier keine weiteren Möglichkeiten zur Filterung. (//TODO Warum ist sie dann hier? -- ggf. woanders unterbringen)
+Jetzt können die Parameter auch selbst angepasst werden. Leider bietet `arecord` hier keine weiteren Möglichkeiten zur Filterung. 
 
 ### Pyaudio
 
-Genauso wie bei [arecord](#arecord) bietet Rhasspy nicht gerade zugängliche Möglichkeiten die Parameter einzustellen. Man müsste hier also auch auf ein local command ausweichen. PyAudio bietet auch keine weiteren Möglichkeiten zur Filterung.
+Genauso wie bei [arecord](#arecord) bietet Rhasspy nicht gerade zugängliche Möglichkeiten die Parameter einzustellen. Man müsste hier also auch auf ein local command ausweichen. PyAudio bietet allerdings auch keine weiteren Möglichkeiten zur Filterung.
 
 ### krisp
 
@@ -239,11 +241,10 @@ Genauso wie bei [arecord](#arecord) bietet Rhasspy nicht gerade zugängliche Mö
 
 ### SoX
 
-Mit [SoX](http://sox.sourceforge.net/) ist es möglich die normalen Hintergrundgeräusche herauszufiltern. Dazu wird das Grundrauschen aufgenommen und und ein sogenanntes `noiseprof` davon angelegt. Über die Funktion `noisered` kann SoX dann einen Audioeingang so modulieren, dass dieses Grundrauschen herausgefiltert wird.
+[SoX](http://sox.sourceforge.net/) ist ein mächtiges Tool zur Audiobearbeitung, was viele Funktionen zur Frequenzmodulation bietet.
+Mit SoX ist es möglich die normalen Hintergrundgeräusche herauszufiltern. Dazu wird das Grundrauschen aufgenommen und und ein sogenanntes Rauschprofil davon angelegt. Über die Funktion `noisered` kann SoX dann einen Audioeingang so modulieren, dass dieses Grundrauschen herausgefiltert wird.
 Die Methode ist nur für das Grundrauschen praktikabel und ermöglicht keine tiefergreifende Filterung.
-Zusätzlich ist es mit dem Tool möglich einen Schwellwert festzulegen um etwaige leise Töne herauszufiltern. Unter Grundlage der beispielhaften [Samples](#analyse-der-störgeräusche) ist das allerdings nicht weiter praktikabel, denn hier müsste ein recht hoher Schwellwert gewählt werden, sodass auch leise gesprochene Sprachkommandos nicht mehr erkannt werden können.
-
-SoX eignet sich somit nur zur Filterung des Grundrauschens.
+Zusätzlich ist es mit dem Tool möglich diverse weitere Effekte zur Frequenzmodulation anzuwenden.
 
 ### PulseAudio
 
@@ -271,16 +272,16 @@ Wir werden uns somit auf das Filtern des Grundrauschens sowie eine etwaige minim
 SoX installieren:
 
 ```sh
-sudo apt install sox #TODO in install.sh integrieren, falls tauglich
+sudo apt install sox
 ```
 
 ### Schritt 1: Grundrauschen filtern
 
-10 Sekunden Grundrauschen aufzeichnen. Für die experimentelle Implementierung habe ich im gleichen Schritt noch eine Test-Sprachaufnahme gemacht:
+10 Sekunden Grundrauschen aufzeichnen. Für die experimentelle Implementierung haben wir im gleichen Schritt noch eine Test-Sprachaufnahme gemacht:
 
 ```sh
- arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 noise.wav
- arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_sound_noisy.wav
+ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 noise.wav
+ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 sox_sound_noisy.wav
 ```
 
 Jetzt kann SoX aus der `noise.wav` Datei ein Profil erstellen, was dann später verwendet werden kann. Das geschiet mit
@@ -308,9 +309,9 @@ Wir nehmen hierzu zuerst Testsounds auf, in denen Sprache vorhanden ist und ein 
 Auch hier fürs Protokoll: Der Benutzer, der die Sprache gesprochen hat befindet sich in einer Distanz von unter einem Meter und der Fernseher von etwa sieben Meter vom Mikrofon entfernt. 
 
 ```sh
- arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_silent.wav
- arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_normal.wav
- arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_loud.wav
+ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_silent.wav
+ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_normal.wav
+ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 sox_noisy_tv_loud.wav
 ```
 
 Betrachtet man jetzt die Frequenzen der einzelnen Dateien, so fällt aus, dass zumindest das Filtern eines leisen und möglicherweise auch in zimmerlautstärke eingestellten Fernsehers möglich sein sollte.
@@ -327,6 +328,7 @@ Betrachtet man jetzt die Frequenzen der einzelnen Dateien, so fällt aus, dass z
 Das Ziel ist es also die "kleinen Wellen" auszublenden und die "großen Wellen" unverändert wiederzugeben. Hierzu eignet sich ein [Noise Gate](https://en.wikipedia.org/wiki/Noise_gate). Dieser Schritt würde je nach Einstellung auch das Grundrauschen herausfiltern.
 In SoX kann man das über den `compand` Effekt erreichen. Die Erklärung der Dokumenation ist für Laien nicht ganz so leicht zu verstehen, aber es gibt einen [Post auf Sourceforge](https://sourceforge.net/p/sox/mailman/sox-users/thread/6BD30DC3-1EB7-4B3B-B866-C0777B464A3A%40senortoad.com/#msg23427259) der die Funktionsweise hervorragend in einfachen Worten erläutert.
 
+Die nachfolgenden parametrisierten Befehle haben sich hier für die einzelnen Aufnahmen als geeignet ergben.
 
 #### `sox_noisy_tv_silent.wav`
 
@@ -342,15 +344,11 @@ sox sox_noisy_tv_normal.wav normal_compand.wav compand 0.1,0.1 -inf,-42.1,-inf,-
 
 #### `sox_noisy_tv_loud.wav`
 
+An dieser Datei sieht man, dass es nicht immer möglich ist über ein noise gate ein perfektes Ergebnis zu erzielen.
+
 ```sh
 sox sox_noisy_tv_loud.wav loud_compand.wav compand 0.1,0.1 -inf,-33.1,-inf,-33,-33 0 -90 0.1
 ```
-
-An dieser Datei sieht man, dass es nicht immer möglich ist über ein noise gate ein perfektes Ergebnis zu erzielen.
-
-#### Beispieldateien
-
-Im Folgenden finden sich die hier verwendeten Beispieldateien:
 
 | Unbehandelt                                                | Noise Gate                                       |
 | ---------------------------------------------------------- | ------------------------------------------------ |
@@ -361,25 +359,113 @@ Im Folgenden finden sich die hier verwendeten Beispieldateien:
 ### Schritt 3: Verbindung von arecord mit SoX und Einbindung in Rhasspy
 
 Im dritten und letzen Schritt werden wir versuchen die Ergebnisse aus den vorherigen Schritten "live" anzuwenden.
-Unabhängig von der Tatsache, dass das Noise Gate aus [Schritt 2](#schritt-2-hintergrundgeräusche-reduzieren) bereits das Grundrauschen entfernt, möchten wir gerne ausprobieren, ob es möglich ist auf ein Audiosignal "live" zwei Effekte anzuwenden.
+
+#### Vorbereitungen
 
 Wir setzen die Kommandos aus den obigen Schritten zusammen.
 
 **Grundrauschen entfernen**
+
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) ergeben hat.
 ```sh
-arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
 ```
 
 **Grundrauschen + Noise Gate**
+
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen, Noise Gate anwenden und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) und für das Noise Gate die Werte, die sich aus [Schritt 2 der Analyse](#schritt-2-hintergrundgeräusche-reduzieren) für einen leisen Fernseher ergeben haben.
 ```sh
-arecord -Dac108 -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
+#### Bestandsaufnahme
+
+Wir verwenden Rhasspy innerhalb eines Docker Containers, wenn wir hier jetzt ein Local Command als Audioaufnahme verwenden, muss dieses Kommando in dem Container-System existieren. um das ganze zu überprüfen können wir entweder die entsprechenden Dockerfiles inspizieren oder direkt auf die Shell des Containers zugreifen und überprüfen. Wir werden letztere Möglichkeit hier verwenden.
+
+```sh
+docker exec -it rhasspy /bin/bash
+```
+
+Jetzt befinden wir uns in der Bash des Containers `rhasspy` und können verifizieren, dass arecord (Package: `alsa-utils`) und SoX (Package: `sox`) installiert sind.
+
+```sh
+apt -qq list alsa-utils sox
+```
+
+Es sollte eine Ausgabe wie in etwa die folgende resultieren:
+
+```sh
+alsa-utils/eoan,now 1.1.9-0ubuntu1 armhf [installed]
+sox/eoan,now 14.4.2+git20190427-1build1 armhf [installed]
+```
+
+Auf dem `rhasspy` Docker Image ist also bereits SoX und arecord installiert und wir können die Tools verwenden. Sollte das nicht der Fall sein, wäre es erforderlich ein eigenes Docker Image zu bauen, welches die Mikrofonausgabe nach dem [Hermes-Protokoll](https://docs.snips.ai/reference/hermes) über MQTT published.
+
+#### Anpassungen für Rhasspy
+
+Die zusammengesetzten Kommandos aus den [Vorbereitungen](#vorbereitungen) sind noch nicht für Rhasspy angepasst und wurden auch nur unter einer Ubuntu WSL2-Instanz getestet.
+Um das ganze mit Rhasspy ans Laufen zu bekommen sind noch ein paar Schritte notwendig.
+
+Zum einen definiert das [Hermes-Protokoll](https://docs.snips.ai/reference/hermes), dass die Audiospur im RAW-Format ins MQTT gepublished wird und zum anderen soll die Aufnahme permanent laufen und nicht bloß 10 Sekunden.
+Das publishen übernimmt glücklicherweise [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) für uns, das einzige was wir tun müssen, ist den stdout zu verwenden.
+Das erreichen wir durch die folgende Änderung:
+
+```sh
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw | sox -r 16k -e signed -b 8 -c 4 -t raw - -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+Leider können Pipes in dieser Form nicht von [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) verwendet werden, denn es wird hier versucht die Pipe als Parameter zu übergeben. Schuld daran ist die Funktionsweise des Python Moduls `subprocess`, welches [hier](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L108) aufgerufen wird.
+Glücklicherweise bietet SoX eine paar spezielle Dateibezeichnungen mit denen das kompensiert werden kann und bspw. wie in dem folgenden Fall ein externes Programm als Input verwendet werden kann.
+
+```sh
+sox -r 16k -e signed -b 8 -c 4 -t raw "|arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw" -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+So sähe das Kommando idealerweise auf Grundlage der vorherigen Analyse aus. Leider macht es Rhasspy einem nicht so einfach und unterstützt aus irgendwelchen Gründen, die leider nicht geloggt werden, nicht die "Verkettung" der beiden Kommandos. 
+Wir müssen also ein klein wenig in die Trickkiste greifen und eine weitere Lösung die nur auf SoX basiert verwenden.
+
+Wir verwenden die `alsa` Funtkionalität von SoX und verwenden so das Mikrofon als Eingang ohne `arecord` zu verwenden. Weil wir jetzt aber andere Parameter für die Aufnahme verwenden, müssen wir ein neues Rauschprofil anlegen.
+```sh
+sox -t alsa sysdefault:CARD=seeed4micvoicec -t wav -b 16 -c 2 -r 48k noise.wav
+sox noise.wav -n noiseprof noise_sox.prof
+```
+
+Dann können wir auch hier die Effekte wieder anwenden und den Ausgang auf `stdout` umleiten.
+```sh
+sox -t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 2 -r 48k - noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration `profile.json`. Wichtig ist hier zu beachten, dass `sample_width` in Bytes und nicht in Bits angegeben wird.
+```json
+{
+    "microphone": {
+        "arecord": {
+            "device": "default:CARD=seeed4micvoicec"
+        },
+        "command": {
+            "list_arguments": ["-L"],
+            "sample_rate": 48000,
+            "sample_width": 2,
+            "channels": 2,
+            "list_program": "arecord",
+            "record_arguments": ["-t", "alsa", "sysdefault:CARD=seeed4micvoicec", "-t", "raw", "-b", "16", "-c", "2", "-r", "48k", "-", "noisered", "/home/noise_sox.prof", "0.21", "compand", "0.1,0.1", "-inf,-42.1,-inf,-42,-42", "0", "-90", "0.1"],
+            "record_program": "sox",
+            "test_arguments": ["-q", "-Dsysdefault:CARD=seeed4micvoicec", "-r 16000", "-f S16_LE", "-t raw"],
+            "test_program": "arecord"
+        },
+        "system": "command"
+    }
+}
+```
+
+Wenn man jetzt Rhasspy startet, werden die Filter angewendet. 
+Leider funktioniert die Kombination mit Rhasspy nicht sonderlich gut - möglicherweise ist auch SoX zu langsam um die Effekte "live" anzuwenden, denn es verzögert sehr stark. Für eine genauere Untersuchung fehlt jetzt allerdings die Zeit.
 
 ### Fazit
 
-Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne künstliche Intelligenzen möglich. Hier gilt es allerdings zu beachten, dass der Test unter idealen Bedingungen durchgeführt wurde und nicht auf jede Situation getestet wurde. Wenn eine Filterung wirklich angestrebt werden sollte, ist ein intensiver Praxistest von Nöten.
+Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne künstliche Intelligenzen möglich. Hier gilt es allerdings zu beachten, dass der Test unter idealen Bedingungen durchgeführt wurde und nicht auf jede Situation getestet wurde. Der gesamte Abschnitt ist also eher als Proof-Of-Concept zu betrachten, denn wenn eine Filterung wirklich angestrebt werden sollte, ist ein intensiver Praxistest von Nöten.
+Die Integration mit Rhasspy funktioniert leider nicht so gut wie zuerst gedacht und wirft zeitintensive Probleme auf, die wir hier in dem Zeitplan des Projekts nicht näher untersuchen können.
+
+Für dieses Projekt werden wir die Hintergrundgeräuschunterdrückung also nicht weiter verwenden.
