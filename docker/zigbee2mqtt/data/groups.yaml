@@ -1,0 +1,24 @@
+'1':
+    friendly_name: living_room
+    devices:
+        - '0x00178801023ddbe9'
+'2':
+    friendly_name: bedroom
+    devices:
+        - '0x00178801023ddbe9'
+'3':
+    friendly_name: dining_room
+    devices:
+        - '0x00178801023ddbe9'
+'4':
+    friendly_name: kitchen
+    devices:
+        - '0x00178801023ddbe9'
+'5':
+    friendly_name: hallway
+    devices:
+        - '0x00178801023ddbe9'
+'6':
+    friendly_name: bathroom
+    devices:
+        - '0x00178801023ddbe9'
