@@ -255,6 +255,7 @@ dmypy.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode
 /docker/zigbee2mqtt/data/log/*
+!/docker/node-red/data/lib/**
 
 # Fix some IDEA files are not ignored
 .idea/

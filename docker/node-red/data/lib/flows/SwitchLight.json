@@ -1,0 +1,156 @@
+[
+  {
+    "id": "dc104bbb.f0a138",
+    "type": "tab",
+    "label": "SwitchLight",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "b803ea97.6140b8",
+    "type": "websocket in",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "server": "",
+    "client": "40f78695.8acfa8",
+    "x": 200,
+    "y": 80,
+    "wires": [
+      [
+        "e75cd916.68d0b8"
+      ]
+    ]
+  },
+  {
+    "id": "e75cd916.68d0b8",
+    "type": "switch",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "property": "intent.name",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "SwitchLight",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 490,
+    "y": 80,
+    "wires": [
+      [
+        "8f087624.259c38"
+      ]
+    ]
+  },
+  {
+    "id": "a46af350.f2728",
+    "type": "link in",
+    "z": "dc104bbb.f0a138",
+    "name": "SwitchLight",
+    "links": [
+      "8f087624.259c38"
+    ],
+    "x": 75,
+    "y": 220,
+    "wires": [
+      [
+        "c256b2d9.57e14"
+      ]
+    ]
+  },
+  {
+    "id": "8f087624.259c38",
+    "type": "link out",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "links": [
+      "a46af350.f2728"
+    ],
+    "x": 655,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "c256b2d9.57e14",
+    "type": "function",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "func": "var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        state: msg.slots.state\n    }\n}\nreturn newMsg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 360,
+    "y": 220,
+    "wires": [
+      [
+        "34bbabf8.f464e4",
+        "53213064.e2565"
+      ]
+    ]
+  },
+  {
+    "id": "34bbabf8.f464e4",
+    "type": "mqtt out",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "topic": "",
+    "qos": "",
+    "retain": "",
+    "broker": "d915c822.bc4e18",
+    "x": 690,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "53213064.e2565",
+    "type": "debug",
+    "z": "dc104bbb.f0a138",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 520,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "40f78695.8acfa8",
+    "type": "websocket-client",
+    "z": "",
+    "path": "ws://rhasspy:12101/api/events/intent",
+    "tls": "",
+    "wholemsg": "true"
+  },
+  {
+    "id": "d915c822.bc4e18",
+    "type": "mqtt-broker",
+    "z": "",
+    "name": "",
+    "broker": "mosquitto",
+    "port": "1883",
+    "clientid": "",
+    "usetls": false,
+    "compatmode": false,
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": ""
+  }
+]
