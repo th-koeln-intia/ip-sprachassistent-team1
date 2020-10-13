@@ -1,0 +1,6 @@
+(Wohnzimmer){room:living_room}
+(Schlafzimmer){room:bedroom}
+(Esszimmer){room:dining_room}
+(Küche){room:kitchen}
+(Flur){room:hallway}
+(Bad | Badezimmer){room:bathroom}

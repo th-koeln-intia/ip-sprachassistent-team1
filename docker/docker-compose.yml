@@ -31,7 +31,9 @@ services:
         container_name: "zigbee2mqtt"
         restart: unless-stopped
         volumes:
-            - "./zigbee2mqtt/data:/app/data"
+            - "./zigbee2mqtt/data/configuration.yaml:/app/data/configuration.yaml"
+            - "./zigbee2mqtt/data/devices.yaml:/app/data/devices.yaml"
+            - "./zigbee2mqtt/data/groups.yaml:/app/data/groups.yaml"
             - "/run/udev:/run/udev:ro"
         devices:
             - "${ZIGBEE_DEVICE_PATH}:/dev/ttyACM0"
