@@ -254,8 +254,28 @@ dmypy.json
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode
-/docker/zigbee2mqtt/data/log/*
-!/docker/node-red/data/lib/**
 
 # Fix some IDEA files are not ignored
 .idea/
+
+
+## Node-Red
+/docker/node-red/data/**
+#Exclude flows - maybe TODO
+/docker/node-red/data/flows.json 
+!/docker/node-red/data/lib/**
+!/docker/node-red/data/flows.json
+!/docker/node-red/data/settings.js
+
+## Rhasspy
+/docker/rhasspy/profiles/de/**
+!/docker/rhasspy/profiles/de/custom_words.txt
+!/docker/rhasspy/profiles/de/profile.json
+!/docker/rhasspy/profiles/de/sentences.ini
+!/docker/rhasspy/profiles/de/slots/**
+
+## Zigbee2MQTT
+/docker/zigbee2mqtt/data**
+!/docker/zigbee2mqtt/data/configuration.yaml
+!/docker/zigbee2mqtt/data/devices.yaml
+!/docker/zigbee2mqtt/data/groups.yaml
