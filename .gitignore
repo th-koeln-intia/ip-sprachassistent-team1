@@ -262,9 +262,9 @@ dmypy.json
 ## Node-Red
 /docker/node-red/data/**
 #Exclude flows - maybe TODO
-/docker/node-red/data/flows.json 
+/docker/node-red/data/flows.json
 !/docker/node-red/data/lib/**
-!/docker/node-red/data/flows.json
+#!/docker/node-red/data/flows.json
 !/docker/node-red/data/settings.js
 
 ## Rhasspy
