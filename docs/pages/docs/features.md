@@ -14,7 +14,7 @@ menubar: docs_menu
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
 | [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
 | [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP |
-| [Text-To-Speech](#-text-to-speech) | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak | WIP |
+| [Text-To-Speech](#-text-to-speech) | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak | ✅ |
 
 # 🎙 Wake Word
 
