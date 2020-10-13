@@ -13,6 +13,7 @@ menubar: docs_menu
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
 | [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
+| [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP |
 
 # 🎙 Wake Word
 
@@ -469,3 +470,101 @@ Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne
 Die Integration mit Rhasspy funktioniert leider nicht so gut wie zuerst gedacht und wirft zeitintensive Probleme auf, die wir hier in dem Zeitplan des Projekts nicht näher untersuchen können.
 
 Für dieses Projekt werden wir die Hintergrundgeräuschunterdrückung also nicht weiter verwenden.
+
+# 💡 Lichtsteuerung
+
+## Konfiguration von Zigbee2MQTT
+
+### Paaren der Lampe mit Zigbee2MQTT
+
+Zuerst muss die Zigbee-fähige Lampe Zigbee2MQTT bekannt sein. Wir verwenden im Folgenden die aus dem [Tech-Stack](/docs/tech-stack/) bekannte Philips Hue white and color (929001573). Wenn andere Lampen verwendet werden sollen, müssen die Schritte entsprechend der [Dokumentation von Zigbee2MQTT](https://www.zigbee2mqtt.io/information/supported_devices.html) angepasst werden.
+
+Die einfachste Methode für unsere Lampe ist ein [Touchlink reset](https://www.zigbee2mqtt.io/information/touchlink). Dazu genügt es eine Nachricht ohne Nutzdaten in das MQTT-Topic `zigbee2mqtt/bridge/config/touchlink/factory_reset` zu publishen. Die Lampe muss sich dafür nahe (laut Dokumentation in Entfernung von unter 10cm) an dem Zigbee-Stick befinden. Zusätzlich muss in der `configuration.yaml` von Zigbee2MQTT das Attribut `permit_join: true` gesetzt sein.
+
+Sobald sich die Glühbirne gepaart hat, sollte diese kurz aufblinken und die Paarung ist abgeschlossen.
+
+Es ist sinnvoll nach jeder Paarung einer Lampe einen `friendly_name` in der `devices.yaml` zuzuweisen um den Überblick nicht zu verlieren und die Konfiguration später zu erleichtern. Zum Beispiel so:
+
+Nachdem alle gewünschten Lampen erfolgreich gepaart wurden, sollte `permit_join: false` gesetzt werden.
+
+```yml
+'0x123456789abcdef0':
+  friendly_name: 'lamp_living_room_1'
+'0x123456789abcdef1':
+  friendly_name: 'lamp_bathroom_1'  
+'0x123456789abcdef2':
+  friendly_name: 'lamp_bathroom_2'
+'0x123456789abcdef3':
+  friendly_name: 'lamp_balcony_1'
+```
+
+Wir werden im Folgenden zwei Möglichkeiten beschreiben einen Touclink reset durchzuführen:
+
+#### Touchlink Reset über Node-Red
+
+Im Web-Interface von [Node-Red](http://raspberrypi:1880/) ist ein Flow Namens `Touchlink Reset` verfügbar, der mit einem einfachen Klick eine entsprechende Nachricht in das MQTT-Topic published.
+
+![Node-Red Touchlink Reset Flow](/assets/Node-Red_Tochlink_Reset.png)
+
+#### Touchlink Reset über MQTT-Explorer
+
+Im Folgenden verwenden wir den [MQTT Explorer](http://mqtt-explorer.com/) um den MQTT-Broker anzusteuern und beginnen damit uns auf dem bereitgestellten Mosquitto-Broker anzumelden:
+
+![MQTT-Explorer Login](/assets/MQTT_Explorer_1.png)
+
+Der Login sollte erfolgreich sein und wir können eine leere Nachricht auf das oben genannte Topic publishen:
+
+![MQTT-Explorer Publish](/assets/MQTT_Explorer_2.png)
+
+### Konfigurieren der Gruppen
+
+In der `groups.yaml` werden die Gruppen der Lampen genau spezifiziert. Derzeit unterstützt der Sprachassistent die Folgenden Gruppen (//TODO Am Ende alle Gruppen einfügen):
+
+* living_room
+* bedroom
+* dining_room
+* kitchen
+* hallway
+* bathroom
+
+Weitere Gruppen können hier zwar definiert und über MQTT verwendet werden, allerdings ist der Sprachassistent noch nicht für diese Trainiert. Wenn der Sprachassistent diese auch ansprechen soll, muss die Konfiguration entsprechend der [Dokumentation](#erweiterung-der-gruppen) angepasst werden.
+
+Damit die Lampen Gruppenweise angesteuert werden können, müssen diese den Gruppen über ihre ID zugeordnet werden, das sähe dann für das obige Beispiel weiterführend so aus:
+
+```yml
+'1':
+    friendly_name: living_room
+    devices:
+        - '0x123456789abcdef0'
+'2':
+    friendly_name: bathroom
+    devices:
+        - '0x123456789abcdef1'
+        - '0x123456789abcdef2'
+'3':
+    friendly_name: balcony
+    devices:
+        - '0x123456789abcdef3'
+```
+
+Wichtig ist hier, dass die numerische Gruppen-ID eindeutig ist.
+
+## Konfiguration von Rhasspy
+
+Der Sprachassistent ist bereits vorkonfiguriert. Hier sind lediglich Schritte zur Erweiterung nötig.
+
+### Erweiterung der Gruppen
+
+Sollten weitere Gruppen über den Sprachassistenten angesteuert werden sollen und diese bereits nach [Konfigurieren der Gruppen](#konfigurieren-der-gruppen) definiert worden sein, dann muss für Rhasspy die Datei `profiles/de/slots/light_rooms` angepasst werden. Das Format hier richtet sich nach der [Dokumentation von Rhasspy](https://rhasspy.readthedocs.io/en/latest/training/#sentencesini).
+
+Wichtig ist hier, dass eine Substitution für das Attribut `room` auf den `friendly_name` der `groups.yml` von Zigbee2MQTT durchgeführt wird um die entsprechende Gruppe anzusteuern.
+
+Als Beispiel weiterführend für das obige Beispiel um den Sprachassistenten für die Steuerung der Gruppe `balcony` zu erweitern:
+
+```
+(Balkon | Terasse | Draussen){room:balcony}
+```
+
+Jetzt muss der Sprachassistent neu trainiert werden. Das geschiet entsprechend der [Anleitung](/getting-started/installation/#rhasspy-trainieren).
+
+Die Gruppen sind jetzt einsatzbereit und können verwendet werden.
