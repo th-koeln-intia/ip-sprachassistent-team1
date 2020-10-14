@@ -268,11 +268,11 @@ docker/node-red/data/flows.json
 !docker/node-red/data/settings.js
 
 ## Rhasspy
-docker/rhasspy/profiles/de/**
+docker/rhasspy/profiles/de/*
 !docker/rhasspy/profiles/de/custom_words.txt
 !docker/rhasspy/profiles/de/profile.json
 !docker/rhasspy/profiles/de/sentences.ini
-!docker/rhasspy/profiles/de/slots/**
+!docker/rhasspy/profiles/de/slots/
 
 ## Zigbee2MQTT
 docker/zigbee2mqtt/data**
