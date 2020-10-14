@@ -63,7 +63,16 @@
     },
     "text_to_speech": {
         "espeak": {
-            "voice": "de"
+            "arguments": [
+                "-v",
+                "de+f4",
+                "-s",
+                "120",
+                "-g",
+                "1",
+                "-p",
+                "45"
+            ]
         },
         "system": "espeak"
     },
