@@ -3,8 +3,6 @@ from api import MQTT_HOST, MQTT_PORT
 from flask import request, Response, jsonify
 import json 
 import paho.mqtt.publish as publish
-import jsonpickle
-from types import SimpleNamespace as Namespace
 from json import JSONDecoder, JSONEncoder
 
 class Payload(object):

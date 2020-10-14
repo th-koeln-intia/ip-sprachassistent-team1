@@ -69,8 +69,8 @@ services:
     flask:
         container_name: flask
         build: 
-            context: ../src/api
-            dockerfile: ../../docker/flask/Dockerfile
+            context: ../src/
+            dockerfile: ../docker/flask/Dockerfile
         environment:
             - FLASK_DEBUG=${FLASK_DEBUG}
         ports:
