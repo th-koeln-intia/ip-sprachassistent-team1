@@ -78,3 +78,5 @@ services:
             - "5000:5000"
         volumes:
             - ../src/api:/code
+            - "/etc/timezone:/etc/timezone:ro"
+            - "/etc/localtime:/etc/localtime:ro"
