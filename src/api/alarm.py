@@ -1,4 +1,4 @@
-from app import app
+from api.app import app
 
 @app.route('/alarm')
 def alarmtest():
