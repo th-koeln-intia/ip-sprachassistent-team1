@@ -1,9 +1,19 @@
-from app import app
+from flask import jsonify, request
+from app import app, get_db, query_db
 import time
 
-@app.route('/alarm')
-def alarmtest():
-    return 'alarm API works!'
+@app.route('/alarm', methods=['POST', 'GET'])
+def alarm():
+    if request.method == 'POST':
+        get_db().execute('REPLACE INTO alarms (id, hours, minutes, active) VALUES (?,?,?,?)', 
+        [request.form['id'], request.form['hours'], request.form['minutes'], request.form['active']])
+        get_db().commit()
+        
+    results = []
+    alarms = query_db('SELECT * FROM alarms')
+
+    return jsonify(alarms)
+
 
 @app.cli.command()
 def check_alarm():
