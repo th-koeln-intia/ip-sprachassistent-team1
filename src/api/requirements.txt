@@ -2,3 +2,4 @@ paho-mqtt==1.5.1
 coloredlogs==14.0
 flask
 pytest
+pytest-mock
