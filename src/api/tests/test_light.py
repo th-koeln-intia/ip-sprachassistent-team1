@@ -75,6 +75,10 @@ def test_light_endpoint_mqtt_params(mocker):
         }
     })
 
-    expected_payload = Payload(state='ON', brightness=255, color='#0000ff')
+    expected_payload = {
+            'state': 'ON',
+            'brightness': 255,
+            'color': '#0000ff'
+        }
 
-    paho.mqtt.publish.single.assert_called_once_with('zigbee2mqtt/living_room/set', json.dumps(expected_payload, cls=PayloadEncoder), hostname=mocker.ANY, port=mocker.ANY) # pylint: disable=no-member
+    paho.mqtt.publish.single.assert_called_once_with('zigbee2mqtt/living_room/set', json.dumps(expected_payload), hostname=mocker.ANY, port=mocker.ANY) # pylint: disable=no-member
