@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,visualstudiocode
 
@@ -259,25 +258,26 @@ dmypy.json
 .idea/
 
 
+
 ## Node-Red
-/docker/node-red/data/**
+docker/node-red/data/*
 #Exclude flows - maybe TODO
-/docker/node-red/data/flows.json 
-!/docker/node-red/data/lib/**
-!/docker/node-red/data/flows.json
-!/docker/node-red/data/settings.js
+docker/node-red/data/flows.json
+!docker/node-red/data/lib/
+#!docker/node-red/data/flows.json
+!docker/node-red/data/settings.js
 
 ## Rhasspy
-/docker/rhasspy/profiles/de/**
-!/docker/rhasspy/profiles/de/custom_words.txt
-!/docker/rhasspy/profiles/de/profile.json
-!/docker/rhasspy/profiles/de/sentences.ini
-!/docker/rhasspy/profiles/de/slots/**
+docker/rhasspy/profiles/de/*
+!docker/rhasspy/profiles/de/custom_words.txt
+!docker/rhasspy/profiles/de/profile.json
+!docker/rhasspy/profiles/de/sentences.ini
+!docker/rhasspy/profiles/de/slots/
 
 ## Zigbee2MQTT
-/docker/zigbee2mqtt/data**
-!/docker/zigbee2mqtt/data/configuration.yaml
-!/docker/zigbee2mqtt/data/devices.yaml
-!/docker/zigbee2mqtt/data/groups.yaml
+docker/zigbee2mqtt/data**
+!docker/zigbee2mqtt/data/configuration.yaml
+!docker/zigbee2mqtt/data/devices.yaml
+!docker/zigbee2mqtt/data/groups.yaml
 
 /src/api/database.db

@@ -61,3 +61,9 @@ Wenn man mit den Sprachaufnahmen zufrieden ist müssen diese noch gespeichert we
 ![Wakeword3](../../assets/wword_3.PNG)
 
 Der Sprachassistent ist nun zur Benutzung bereit. Alle verfügbaren Features findet man [hier](/docs/features) 
+
+## Rhasspy trainieren
+
+Um den Sprachassitenten zu trainieren muss man das [Web-Interface von Rhasspy](http://raspberrypi:12101) aufrufen und den Button "Train" drücken. Es kann sein, dass je nach Konfiguration ein Warnhinweis erscheint, der angibt, dass es Wörter ohne bekannte Aussprache gibt. Dann muss die Datei `custom_words.txt` entsprechend der [Dokumentation](https://rhasspy.readthedocs.io/en/latest/training/#custom-words) angepasst werden. Das Web-Interface leitet einen in dem Fall allerdings durch den Prozess.
+
+![Rhasspy Training](/assets/Rhasspy_Training.png)
