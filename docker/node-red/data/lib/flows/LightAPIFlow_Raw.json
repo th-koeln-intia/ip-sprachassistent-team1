@@ -1,0 +1,1 @@
+[{"id":"4c08d20a.a840cc","type":"http request","z":"a3771c72.1a1cf","name":"","method":"POST","ret":"txt","paytoqs":"ignore","url":"http://flask:5000/light/set/raw","tls":"","persist":false,"proxy":"","authType":"","x":610,"y":400,"wires":[[]]}]
