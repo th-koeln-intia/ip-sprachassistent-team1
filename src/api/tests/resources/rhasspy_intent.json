@@ -1,0 +1,83 @@
+{
+    "entities": [
+        {
+            "end": 28,
+            "entity": "room",
+            "raw_end": 27,
+            "raw_start": 17,
+            "raw_value": "wohnzimmer",
+            "start": 17,
+            "value": "living_room",
+            "value_details": {
+                "kind": "Unknown",
+                "value": "living_room"
+            }
+        },
+        {
+            "end": 31,
+            "entity": "state",
+            "raw_end": 30,
+            "raw_start": 28,
+            "raw_value": "an",
+            "start": 29,
+            "value": "on",
+            "value_details": {
+                "kind": "Unknown",
+                "value": "on"
+            }
+        },
+        {
+            "end": 31,
+            "entity": "brightness",
+            "raw_end": 30,
+            "raw_start": 28,
+            "raw_value": "an",
+            "start": 29,
+            "value": 255,
+            "value_details": {
+                "kind": "Unknown",
+                "value": "on"
+            }
+        },
+        {
+            "end": 31,
+            "entity": "color",
+            "raw_end": 30,
+            "raw_start": 28,
+            "raw_value": "an",
+            "start": 29,
+            "value": "#ffffff",
+            "value_details": {
+                "kind": "Unknown",
+                "value": "on"
+            }
+        }
+    ],
+    "intent": {
+        "confidence": 1,
+        "name": "SwitchLight"
+    },
+    "raw_text": "schalte licht im wohnzimmer an",
+    "raw_tokens": [
+        "schalte",
+        "licht",
+        "im",
+        "wohnzimmer",
+        "an"
+    ],
+    "recognize_seconds": 0.272278546999587,
+    "slots": {
+        "room": "living_room",
+        "state": "on"
+    },
+    "speech_confidence": 1,
+    "text": "schalte licht im living_room on",
+    "tokens": [
+        "schalte",
+        "licht",
+        "im",
+        "living_room",
+        "on"
+    ],
+    "wakeword_id": null
+}
