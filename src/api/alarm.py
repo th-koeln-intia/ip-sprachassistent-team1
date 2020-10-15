@@ -2,13 +2,16 @@ from flask import jsonify, request
 from app import app, get_db, query_db
 import time
 
-@app.route('/alarm', methods=['POST', 'GET'])
+@app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
     if request.method == 'POST':
         get_db().execute('REPLACE INTO alarms (id, hours, minutes, active) VALUES (?,?,?,?)', 
         [request.form['id'], request.form['hours'], request.form['minutes'], request.form['active']])
         get_db().commit()
-        
+    
+    elif request.method == 'DELETE':
+        get_db().execute('DELETE FROM alarms WHERE id=?', [request.form['id']])
+
     results = []
     alarms = query_db('SELECT * FROM alarms')
 
