@@ -2,6 +2,8 @@ from flask import jsonify, request
 from app import app, get_db, query_db
 import time
 import paho.mqtt.publish as publish
+import paho.mqtt.subscribe as subscribe
+import datetime
 
 @app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
@@ -18,17 +20,27 @@ def alarm():
 
     return jsonify(alarms)
 
-@app.route('/alarm/play', methods=['POST'])
-def alarm_play():
-    in_file = open("./assets/alarm_sounds/"+ request.form['sound'] +".wav", "rb")
+def alarm_play(alarm):
+    in_file = open("./assets/alarm_sounds/"+ alarm['sound'] +".wav", "rb")
     data = in_file.read()
     in_file.close()
     
-    publish.single("hermes/audioServer/default/playBytes/alert", data, hostname="mosquitto")
+    publish.single("hermes/audioServer/alert/playBytes/fff", data, hostname="mosquitto")
+
+def on_play_finished():
+    now = datetime.datetime.now()
+    return str(now.hour)
+    alarm = query_db('SELECT * FROM alarms WHERE id=0', (), True)
+    return str(alarm['hours'])
 
 @app.cli.command()
 def check_alarm():
-    """Check alarms."""
-    print('Importing feeds...')
-    time.sleep(5)
-    print('Done!')
+    now = datetime.datetime.now()
+
+    alarm = query_db('SELECT * FROM alarms WHERE hours=? AND minutes=?', (now.hour, now.minute), True)
+
+    if alarm is None:
+        return
+    else:
+        subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
+        alarm_play(alarm)
