@@ -5,6 +5,7 @@ import paho.mqtt.publish as publish
 import paho.mqtt.subscribe as subscribe
 import datetime
 import random
+import json
 
 @app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
@@ -31,7 +32,8 @@ def alarm_play(alarm):
 
 def on_play_finished(client, userdata, message):
     active = random.randint(0,1)
-    id = message.payload.id
+    payloadObj = json.loads(message.payload)
+    id = payloadObj.id
     if 'alarm-' in id:
         alarmId = id.split("-")[1]
         alarm = query_db("SELECT * FROM alarms WHERE id=?", alarmId, True)
