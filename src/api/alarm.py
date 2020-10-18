@@ -18,9 +18,9 @@ def alarm():
 
     return jsonify(alarms)
 
-@app.route('/alarm/test')
-def alarm_test():
-    in_file = open("./assets/alarm_sounds/1.wav", "rb")
+@app.route('/alarm/play', methods=['POST'])
+def alarm_play():
+    in_file = open("./assets/alarm_sounds/"+ request.form['sound'] +".wav", "rb")
     data = in_file.read()
     in_file.close()
     
