@@ -39,7 +39,7 @@ def on_play_finished(client, userdata, message):
         if active == 1:
             alarm_play(alarm)
         else:
-            unsubscribe("hermes/audioServer/default/playFinished")
+            client.unsubscribe("hermes/audioServer/default/playFinished")
             get_db().execute("UPDATE alarms SET active=1 WHERE id=?", alarmId)
 
 
