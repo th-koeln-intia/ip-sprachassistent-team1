@@ -33,7 +33,7 @@ def alarm_play(alarm):
 def on_play_finished(client, userdata, message):
     active = random.randint(0,1)
     payloadObj = json.loads(message.payload)
-    id = payloadObj.id
+    id = payloadObj['id']
     if 'alarm-' in id:
         alarmId = id.split("-")[1]
         alarm = query_db("SELECT * FROM alarms WHERE id=?", alarmId, True)
@@ -42,6 +42,8 @@ def on_play_finished(client, userdata, message):
         else:
             client.unsubscribe("hermes/audioServer/default/playFinished")
             get_db().execute("UPDATE alarms SET active=1 WHERE id=?", alarmId)
+    
+    return True
 
 
 @app.cli.command()
@@ -55,4 +57,3 @@ def check_alarm():
     else:
         alarm_play(alarm)
         subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
-        alarm_play(alarm)
