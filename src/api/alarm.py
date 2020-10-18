@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from app import app, get_db, query_db
 import time
+import paho.mqtt.publish as publish
 
 @app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
@@ -17,6 +18,9 @@ def alarm():
 
     return jsonify(alarms)
 
+@app.route('/alarm/test')
+def alarm_test():
+    publish.single("hermes/tts/say", "{'text': 'Okay, ich Schalte das'}", hostname="mosquitto")
 
 @app.cli.command()
 def check_alarm():
