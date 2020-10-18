@@ -19,8 +19,12 @@ def alarm():
     return jsonify(alarms)
 
 @app.route('/alarm/test')
-def alarm_test()
-    publish.single("hermes/tts/say", '{"text": "Okay"}', hostname="mosquitto")
+def alarm_test():
+    in_file = open("./assets/alarm_sounds/1.wav", "rb")
+    data = in_file.read()
+    in_file.close()
+    
+    publish.single("hermes/audioServer/default/playBytes/alert", data, hostname="mosquitto")
 
 @app.cli.command()
 def check_alarm():
