@@ -20,7 +20,7 @@ def alarm():
 
 @app.route('/alarm/test')
 def alarm_test():
-    return publish.single("hermes/tts/say", {'text': 'Okay, ich Schalte das'}, hostname="mosquitto")
+    return publish.single("hermes/tts/say", "{text: 'Okay, ich Schalte das'}", hostname="mosquitto")
 
 @app.cli.command()
 def check_alarm():
