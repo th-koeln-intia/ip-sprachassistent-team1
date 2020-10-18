@@ -3,7 +3,6 @@ from app import app, get_db, query_db
 import time
 import paho.mqtt.publish as publish
 import paho.mqtt.subscribe as subscribe
-import paho.mqtt.unsubscribe as unsubscribe
 import datetime
 import random
 
@@ -24,11 +23,11 @@ def alarm():
     return jsonify(alarms)
 
 def alarm_play(alarm):
-    in_file = open("./assets/alarm_sounds/"+ alarm['sound'] +".wav", "rb")
+    in_file = open("./assets/alarm_sounds/"+ str(alarm['sound']) +".wav", "rb")
     data = in_file.read()
     in_file.close()
     
-    publish.single("hermes/audioServer/default/playBytes/alarm-" + alarm['id'], data, hostname="mosquitto")
+    publish.single("hermes/audioServer/default/playBytes/alarm-" + str(alarm['id']), data, hostname="mosquitto")
 
 def on_play_finished(client, userdata, message):
     active = random.randint(0,1)
@@ -52,5 +51,6 @@ def check_alarm():
     if alarm is None:
         return
     else:
+        alarm_play(alarm)
         subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
         alarm_play(alarm)
