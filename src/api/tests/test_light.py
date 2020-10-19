@@ -14,14 +14,19 @@ def test_light_endpoint_status_ok(mocker):
             'state': 'ON',
             'brightness': 255,
             'color': '#0000ff'
+        },
+        'feedback': {
+            'text': 'Okay, ich schalte Licht im Wohnzimmer an'
         }
     })
     assert response.status_code == 200
+
 
 # An invalid request should return HTTP status BAD REQUEST
 def test_light_endpoint_status_bad_request():
     response = app.test_client().post('/light/set')
     assert response.status_code == 400
+
 
 # Sort a dictionary
 def ordered(obj):
@@ -31,6 +36,7 @@ def ordered(obj):
         return sorted(ordered(x) for x in obj)
     else:
         return obj
+
 
 # A valid request should return ???? TODO 
 def test_light_endpoint_response_data(mocker):
@@ -43,6 +49,9 @@ def test_light_endpoint_response_data(mocker):
             'state': 'ON',
             'brightness': 255,
             'color': '#0000ff'
+        },
+        'feedback': {
+            'text': 'Okay, ich schalte Licht im Wohnzimmer an'
         }
     })
     assert ordered(json.loads(response.data)) == ordered(json.loads("""{
@@ -51,8 +60,12 @@ def test_light_endpoint_response_data(mocker):
             "state": "ON",
             "brightness": 255,
             "color": "#0000ff"
+        },
+        "feedback": {
+            "text": "Okay, ich schalte Licht im Wohnzimmer an"
         }
     }"""))
+
 
 # A valid request should publish a MQTT message
 def test_light_endpoint_mqtt_params(mocker):
@@ -64,6 +77,9 @@ def test_light_endpoint_mqtt_params(mocker):
             'state': 'ON',
             'brightness': 255,
             'color': '#0000ff'
+        },
+        'feedback': {
+            'text': 'Okay, ich schalte Licht im Wohnzimmer an'
         }
     })
 
@@ -73,7 +89,12 @@ def test_light_endpoint_mqtt_params(mocker):
             'state': 'ON'
         }
 
-    paho.mqtt.publish.single.assert_called_once_with('zigbee2mqtt/living_room/set', json.dumps(expected_payload), hostname=mocker.ANY, port=mocker.ANY) # pylint: disable=no-member
+    expected_feedback_payload = {
+        'text': 'Okay, ich schalte Licht im Wohnzimmer an'
+    }
+
+    paho.mqtt.publish.single.assert_has_calls([mocker.call('zigbee2mqtt/living_room/set', json.dumps(expected_payload), hostname=mocker.ANY, port=mocker.ANY), mocker.call('hermes/tts/say', json.dumps(expected_feedback_payload), hostname=mocker.ANY, port=mocker.ANY)]) # pylint: disable=no-member
+
 
 
 def load_rhasspy_intent_json():
@@ -137,4 +158,8 @@ def test_raw_endpoint_mqtt_params(mocker):
             'color': '#ffffff'
         }
 
-    paho.mqtt.publish.single.assert_called_once_with('zigbee2mqtt/living_room/set', json.dumps(expected_payload), hostname=mocker.ANY, port=mocker.ANY) # pylint: disable=no-member
+    expected_feedback_payload = {
+        'text': 'Okay, schalte licht im wohnzimmer an'
+    }
+
+    paho.mqtt.publish.single.assert_has_calls([mocker.call('zigbee2mqtt/living_room/set', json.dumps(expected_payload), hostname=mocker.ANY, port=mocker.ANY), mocker.call('hermes/tts/say', json.dumps(expected_feedback_payload), hostname=mocker.ANY, port=mocker.ANY)]) # pylint: disable=no-member

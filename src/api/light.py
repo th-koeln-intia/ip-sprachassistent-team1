@@ -12,7 +12,8 @@ def set_light():
     if body is None or 'friendly_name' not in body or 'payload' not in body:
         return jsonify({"error": "BAD_REQUEST"}), 400
     else:
-        publish_set(body['friendly_name'], json.dumps(body['payload']))
+        publish_set(body['friendly_name'], json.dumps(body['payload'])) 
+        publish_feedback(json.dumps(body['feedback']))
         return json.dumps(body), 200
 
 
@@ -24,6 +25,8 @@ def set_light_raw():
     friendly_name = get_friendly_name_from_rhasspy_intent(body)
     payload = create_payload_from_rhasspy_intent(body)
     publish_set(friendly_name, json.dumps(payload))
+    raw_text = get_raw_text_as_payload(body)
+    publish_feedback(json.dumps(raw_text))
     return json.dumps(body), 200
 
 
@@ -55,3 +58,25 @@ def get_friendly_name_from_rhasspy_intent(dict):
 def publish_set(friendly_name, payload):
     topic = 'zigbee2mqtt/' + friendly_name + '/set'
     publish.single(topic, payload, hostname=MQTT_HOST, port=MQTT_PORT)
+
+
+def publish_feedback(payload):
+    topic = 'hermes/tts/say'
+    publish.single(topic, payload, hostname=MQTT_HOST, port=MQTT_PORT)
+
+
+def get_raw_value_from_room_entity(dict):
+    entities = dict.get('entities', None)
+    if entities is None:
+        return None
+    room = next((e for e in entities if e['entity'] == 'room'), None)
+
+    return room.get('raw_value', None)
+
+def get_raw_text_as_payload(dict):
+    payload = {}
+    payload['text'] = dict.get('raw_text', None)
+    if(payload['text'] is not None):
+        payload['text'] = 'Okay, ' + payload['text']
+    print(json.dumps(payload))
+    return payload
