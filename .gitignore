@@ -279,3 +279,5 @@ docker/zigbee2mqtt/data**
 !docker/zigbee2mqtt/data/configuration.yaml
 !docker/zigbee2mqtt/data/devices.yaml
 !docker/zigbee2mqtt/data/groups.yaml
+
+/src/api/database.db
