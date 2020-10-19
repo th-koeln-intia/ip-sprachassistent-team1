@@ -28,7 +28,14 @@ def alarm_stop():
     get_db().execute('UPDATE alarms SET active=0 WHERE id=?', [request.form['id']])
     get_db().commit()
 
-    return True
+    return "success"
+
+@app.route('/alarm/sound', methods=['POST'])
+def alarm_sound():
+    get_db().execute('UPDATE alarms SET sound=? WHERE id=?', [request.form['sound'], request.form['id']])
+    get_db().commit()
+    
+    return "success"
 
 def alarm_play(alarm):
     in_file = open("./assets/alarm_sounds/"+ str(alarm['sound']) +".wav", "rb")
