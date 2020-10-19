@@ -1,12 +1,11 @@
-import time
-
 from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def hello():
-    return 'Hello World23!'
+    return 'Hello World!'
 
-import alarm
-import light
+from api import alarm
+from api import light

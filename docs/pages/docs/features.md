@@ -11,12 +11,13 @@ menubar: docs_menu
 
 | Feature                                                          | Beschreibung                                                                         | Status |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
-| [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅      |
-| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕      |
+| [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
+| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
 | [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP    |
-| [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅      |
-| [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅    |
+| [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅     |
+| [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅     |
 | [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | WIP    |
+| [API](#-api)                                                     | Dokumentation der entwickelten API                                                   | WIP    |
 
 # 🎙 Wake Word
 
@@ -676,3 +677,67 @@ Zuletzt gibt es noch die Option `ignore_unknown_words`, welche unbekannte (nicht
 Wir werden es hier erstmal bei der Standard-Konfiguration belassen - sprich: Lediglich `Fuzzy` ist aktiviert.
 
 
+# 💻 API
+
+## Lichtsteuerung
+
+Es gibt eine eigens entwickelte API für die Lichtsteuerung.
+
+### Unit-Tests
+
+Die API besitzt eigene Unit-Tests zur Gewährleistung der Funktionalität. Zum ausführen der Tests einfach Das Kommando `pytest` unterhalb des Verzeichnisses `/src/api` ausführen. 
+
+### Endpunkte
+
+#### `/lights/set`
+
+Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, welcher eine vordefinierte Form haben muss. 
+
+```json
+{
+    "friendly_name": "living_room",
+    "payload": {
+        "state": "ON",
+        "brightness": 255,
+        "color": "#55ffaa"
+    }
+}
+```
+
+`friendly_name` und `payload` sind hierbei die erforderlichen Attribute. Die Attribute unter `payload` sind hierbei frei wählbar. 
+
+Aus dem Request wird ein MQTT-Publish auf das Topic `zigbee2mqtt/<friendly_name>/set` mit der jeweiligen Nachricht, die im `payload` Objekt definiert ist.
+
+Die Schnittstelle ist sehr flexibel einsetzbar, denn sie ist nicht restriktiv.
+
+#### `/lights/set/raw`
+
+Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, der entsprechend von Rhasspy erzeugt wurde. Wichtig ist hierbei hauptsächlich, dass `entities` entsprechend den Erwartungen der Schnittstelle entspricht.
+
+```json
+"entities": [
+        {
+            "entity": "room",
+            "value": "living_room",
+            //[..]
+        },
+        {
+            "entity": "state",
+            "value": "on",
+            //[..]
+        },
+        {
+            "entity": "brightness",
+            "value": 255,
+            //[..]
+        },
+        {
+            "entity": "color",
+            "value": "#ffffff",
+            //[..]
+        }
+    ]
+//[..]
+```
+
+Die Schnittstelle erstellt aus dem Request eine kompatible MQTT-Nachricht, die dann im jeweiligen Topic gepublished wird.

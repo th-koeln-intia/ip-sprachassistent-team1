@@ -1,6 +1,6 @@
-(rot){hex:#ff0000}
-(orange){hex:#ffa500}
-(gelb){hex:#ffff00}
-(grün){hex:#008000}
-(blau){hex:#0000ff}
-(lila | violett){hex:#8800ff}
+(blau){color:#0000ff}
+(gelb){color:#ffff00}
+(orange){color:#ffa500}
+(grün){color:#008000}
+(rot){color:#ff0000}
+(lila | violett){color:#8800ff}
