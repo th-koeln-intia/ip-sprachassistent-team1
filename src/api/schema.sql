@@ -1,4 +1,4 @@
-CREATE TABLE alarms (
+CREATE TABLE IF NOT EXISTS alarms (
 	id INTEGER PRIMARY KEY,
 	hours Integer NOT NULL,
 	minutes INTEGER NOT NULL,
