@@ -9,6 +9,7 @@ services:
             - "/etc/localtime:/etc/localtime:ro"
             - "./rhasspy/noise.prof:/home/noise.prof"
             - "./rhasspy/noise_sox.prof:/home/noise_sox.prof"
+            - "./rhasspy/alarm_sounds:/home/alarm_sounds:ro"
         ports:
             - "12101:12101"
         devices:
@@ -78,3 +79,5 @@ services:
             - "5000:5000"
         volumes:
             - ../src/api:/api
+            - "/etc/timezone:/etc/timezone:ro"
+            - "/etc/localtime:/etc/localtime:ro"
