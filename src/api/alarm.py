@@ -7,6 +7,8 @@ import datetime
 import random
 import json
 
+th = None
+
 @app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
     if request.method == 'POST':
@@ -47,9 +49,16 @@ def on_play_finished(client, userdata, message):
         if alarm['active'] == 1:
             alarm_play(alarm)
         else:
-            client.unsubscribe("hermes/audioServer/default/playFinished")
+            if th is None:
+                return True
+            else:
+                client.unsubscribe("hermes/audioServer/default/playFinished")
+                th.kill()
     
     return True
+
+def subscribePlayFinished():
+    subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
 
 
 @app.cli.command()
@@ -64,4 +73,5 @@ def check_alarm():
         get_db().execute("UPDATE alarms SET active=1 WHERE id=?", [alarm['id']])
         get_db().commit()
         alarm_play(alarm)
-        subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
+        th = threading.Thread(target=subscribePlayFinished)
+
