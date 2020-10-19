@@ -23,6 +23,13 @@ def alarm():
 
     return jsonify(alarms)
 
+@app.route('/alarm/stop', methods=['POST'])
+def alarm_stop():
+    get_db().execute('UPDATE alarms SET active=0 WHERE id=?', [request.form['id']])
+    get_db().commit()
+
+    return True
+
 def alarm_play(alarm):
     in_file = open("./assets/alarm_sounds/"+ str(alarm['sound']) +".wav", "rb")
     data = in_file.read()
@@ -36,12 +43,11 @@ def on_play_finished(client, userdata, message):
     id = payloadObj['id']
     if 'alarm-' in id:
         alarmId = id.split("-")[1]
-        alarm = query_db("SELECT * FROM alarms WHERE id=?", alarmId, True)
-        if active == 1:
+        alarm = query_db("SELECT * FROM alarms WHERE id=?", [alarmId], True)
+        if alarm['active'] == 1:
             alarm_play(alarm)
         else:
             client.unsubscribe("hermes/audioServer/default/playFinished")
-            get_db().execute("UPDATE alarms SET active=1 WHERE id=?", alarmId)
     
     return True
 
@@ -55,5 +61,7 @@ def check_alarm():
     if alarm is None:
         return
     else:
+        get_db().execute("UPDATE alarms SET active=1 WHERE id=?", [alarm['id']])
+        get_db().commit()
         alarm_play(alarm)
         subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
