@@ -1,1 +1,1 @@
-* * * * * sh -c 'cd /api && flask check-alarm'
+* * * * * sh -c 'cd /api && flask check-alarm &'

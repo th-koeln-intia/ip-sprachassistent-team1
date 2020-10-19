@@ -6,9 +6,6 @@ import paho.mqtt.subscribe as subscribe
 import datetime
 import random
 import json
-import threading
-
-th = None
 
 @app.route('/alarm', methods=['POST', 'DELETE', 'GET'])
 def alarm():
@@ -50,16 +47,9 @@ def on_play_finished(client, userdata, message):
         if alarm['active'] == 1:
             alarm_play(alarm)
         else:
-            if th is None:
-                return True
-            else:
-                client.unsubscribe("hermes/audioServer/default/playFinished")
-                th.kill()
+            client.unsubscribe("hermes/audioServer/default/playFinished")
     
     return True
-
-def subscribePlayFinished():
-    subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
 
 
 @app.cli.command()
@@ -74,5 +64,5 @@ def check_alarm():
         get_db().execute("UPDATE alarms SET active=1 WHERE id=?", [alarm['id']])
         get_db().commit()
         alarm_play(alarm)
-        th = threading.Thread(target=subscribePlayFinished)
-
+        
+        subscribe.callback(on_play_finished, "hermes/audioServer/default/playFinished", hostname="mosquitto")
