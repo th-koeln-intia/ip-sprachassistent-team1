@@ -13,7 +13,7 @@ menubar: docs_menu
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
 | [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
-| [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP    |
+| [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | ✅    |
 | [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅     |
 | [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅     |
 | [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | WIP    |
@@ -573,6 +573,24 @@ Jetzt muss der Sprachassistent neu trainiert werden. Das geschiet entsprechend d
 
 Die Gruppen sind jetzt einsatzbereit und können verwendet werden.
 
+
+## Node-Red Flows
+
+In der Bibliothek von Node-Red sind unterschiedliche Flows vorhanden, die eingesetzt werden können.
+
+### `LightAPIFlow.json`
+
+Dieser Flow implementiert die Lichtsteuerung über die API [/lights/set](#lightsset). Der Request Body wird über JavaScript-Funktionsblöcke erstellt und an die API übergeben.
+
+### `LightsAPIFlow_Raw.json`
+
+Dieser Flow implementiert die Lichtsteuerung über die API [/lights/set/raw](#lightssetraw). Der Request Body aus Rhasspy wird direkt an die API übergeben, die Logik liegt komplett innerhalb der API.
+
+### `ChangeLightBrightness.json` / `ChangeLightColor.json` / `SwitchLight.json`
+
+Diese drei Flows sollten nur dann aktiv sein, wenn die API nicht verwendet werden soll. Hier liegt die gesamte Logik in Node-Red, die über JavaScript-Funktionsblöcke implementiert wird.
+
+
 # 🗣 Text To Speech
 
 ## Konfiguration von Espeak
@@ -700,6 +718,9 @@ Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, welcher eine vor
         "state": "ON",
         "brightness": 255,
         "color": "#55ffaa"
+    },
+    "feedback": {
+        "text": "Okay ich ändere das Licht im Wohnzimmer"
     }
 }
 ```
@@ -707,6 +728,7 @@ Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, welcher eine vor
 `friendly_name` und `payload` sind hierbei die erforderlichen Attribute. Die Attribute unter `payload` sind hierbei frei wählbar. 
 
 Aus dem Request wird ein MQTT-Publish auf das Topic `zigbee2mqtt/<friendly_name>/set` mit der jeweiligen Nachricht, die im `payload` Objekt definiert ist.
+Nachdem der Publish ausgeführt wurde, wird ein entsprechender Feedback-Text über Text-To-Speech ausgegeben.
 
 Die Schnittstelle ist sehr flexibel einsetzbar, denn sie ist nicht restriktiv.
 
@@ -741,3 +763,4 @@ Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, der entsprechend
 ```
 
 Die Schnittstelle erstellt aus dem Request eine kompatible MQTT-Nachricht, die dann im jeweiligen Topic gepublished wird.
+Danach wird ein entsprechender Feedback-Text über Text-To-Speech ausgegeben, der den eingesprochenen Text wiederholt.
