@@ -70,14 +70,14 @@ services:
     flask:
         container_name: flask
         build: 
-            context: ../src/api
-            dockerfile: ../../docker/flask/Dockerfile
+            context: ../src/
+            dockerfile: ../docker/flask/Dockerfile
         environment:
             - FLASK_DEBUG=${FLASK_DEBUG}
         ports:
             #TODO: remove in production to avoid external access
             - "5000:5000"
         volumes:
-            - ../src/api:/code
+            - ../src/api:/api
             - "/etc/timezone:/etc/timezone:ro"
             - "/etc/localtime:/etc/localtime:ro"

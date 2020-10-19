@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from app import app, get_db, query_db
+from api.app import app, get_db, query_db
 import time
 import paho.mqtt.publish as publish
 import paho.mqtt.subscribe as subscribe

@@ -1,6 +1,4 @@
-import time
 import sqlite3
-
 from flask import g
 from flask import Flask
 
@@ -41,9 +39,10 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+
 @app.route('/')
 def hello():
-    return 'Hello World23!'
+    return 'Hello World!'
 
-import alarm
-import light
+from api import alarm
+from api import light

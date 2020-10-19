@@ -13,8 +13,11 @@ menubar: docs_menu
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
 | [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
-| [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP |
-| [Text-To-Speech](#-text-to-speech) | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak | ✅ |
+| [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | WIP    |
+| [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅     |
+| [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅     |
+| [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | WIP    |
+| [API](#-api)                                                     | Dokumentation der entwickelten API                                                   | WIP    |
 
 # 🎙 Wake Word
 
@@ -599,3 +602,142 @@ Die Konfiguration sieht insgesamt so aus:
 ```
 
 Die Stimme ist leider nicht besonders natürlich, denn es handelt sich hierbei lediglich um einen Sprachsynthesizer, der auf der Verkettung von Diphonen basiert.
+
+# 📝 Speech To Text
+
+Wir verwenden [Pocketsphinx](https://rhasspy.readthedocs.io/en/latest/speech-to-text/#pocketsphinx) als Speech-To-Text Dienst.
+
+## Einrichtung
+
+Beim ersten Start wird ein Download eines von vortrainierten akustischen Modells sowie Wörterbuch benötigt.
+Es handelt sich dabei um die [CMU Sphinx](https://sourceforge.net/projects/cmusphinx/) Datenbank.
+Ein eigenes Training ist hier erstmal nicht sinnvoll was aus der 
+[Dokumentation](https://cmusphinx.github.io/wiki/tutorialam/) auch hervorgeht, denn wir haben weder genügend Zeit noch 
+genug Daten dafür.
+
+## Technische Schwierigkeiten
+
+Das Speech-To-Text-System ist hierbei auf dem Raspberry Pi ziemlich langsam - es ist allerdings möglich die Aufgabe auf
+ein leistungsstärkeres System zu übertragen. Besonders beim Language Model Mixing (siehe nächsten Abschnitt) ist die Hardware des Rhaspberry zu schwach und es wird ausdrücklich empfohlen die Berechnung über einen Server laufen zu lassen.
+
+Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents (`sentences.ini`) gepflegt 
+sein, weil aus dieser ein Sprachmodell erstellt wird. Das bedeutet es können noch so viele Wörter im Wörterbuch stehen, 
+Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
+remote-Instanz bloß der Speech-To-Text Dienst läuft. Dieses Verhalten kann man abändern, indem man den Wert `mix_weight` bei PocketSphinx erhöht.
+Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der `sentences.ini` eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.
+
+# 🕹 Intent Recognition
+
+Wir verwenden als intent recognition service [Fsticuffs](https://rhasspy.readthedocs.io/en/latest/intent-recognition/#fsticuffs), welches die [rhasspy-nlu](https://github.com/rhasspy/rhasspy-nlu) nutzt und auf [OpenFst](http://www.openfst.org/twiki/bin/view/FST/WebHome) basiert.
+
+## Glossar
+
+Um den Elefanten im Raum direkt anzusprechen und die Funktionsweise zu erläutern werden wir jetzt erstmal die Begrifflichkeiten erläutern.
+
+### NLU
+
+NLU steht für **N**atural **L**anguage **U**nderstanding und bezeichnet im wesentlichen den Prozess natürliche Sprache in für einen Computer verständliche Form zu bringen.
+
+### FST
+
+Bei FSTs handelt es sich um die sogenannten **f**inite-**s**tate **t**ransducers oder auf deutsch: Endlicher Transduktor. Es handelt sich hierbei um eine spezielle Form der endlichen Automaten, die zusätzlich zu dem Eingabealphabet ein Ausgabealphabet besitzen.
+Ein FST kann zusätzlich auch gewichtet sein - das bedeutet, dass man den Zustandsübergangsfunktionen des Automats einen Wert zuweist. Dieser Aspekt macht den FST besonders attraktiv für die Sprachsynthese um ein Eingabezeichen mit unterschliedlichen Phonemen zu verknüpfen.
+
+Als Beispiel ist hier ein Automat, der die Schreibweise und Aussprache von "OpenFst" verknüpft und determiniert.
+
+![FST](/assets/openfst.jpg)<br/>
+<i><sub>Quelle: [http://www.openfst.org/twiki/bin/view/FST/WebHome](http://www.openfst.org/twiki/bin/view/FST/WebHome)</sub></i>
+
+### OpenFst
+
+OpenFst ist eine quelloffene Python-Bibliothek um FSTs zu konstruieren und zu verwenden.
+
+### rhasspy-nlu
+
+Hierbei handelt es sich um die hauseigene NLU Bibliothek von Rhasspy. Es wird hierbei eine Datei `sentences.ini` gepflegt, die alle Sätze beinhaltet, welche erkannt werden sollen. Diese Sätze werden mit ihren Phonemen der Lautsprache verknüpft und daraus kann dann ein FST erstellt werden.
+Hierbei muss jedes potenziell ausgesprochene Wort mit seinen Phonemen verknüpft sein, dazu kann man ein Wörterbuch anlegen und eigene Wörter nach dem [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict) definieren.
+Der Schritt ist nicht zwingend notwendig, denn rhasspy-nlu bietet die Möglichkeit Aussprachen zu "erraten". Dazu wird die Bibliothek [Phonetisaurus](https://github.com/AdolfVonKleist/Phonetisaurus) verwendet.
+
+### Fsticuffs
+
+Fsticuffs basiert auf der rhasspy-nlu Bibliothek und implementiert die NLU für das [Hermes Protokoll](https://docs.snips.ai/reference/hermes), welches Rhasspy verwendet.
+
+## Konfiguration von Rhasspy
+
+Unser Ziel ist es eine einfache und zuverlässige Funktionsweise von Deep Thought zu gewährleisten, daher sollten etwaige Konfigurationen vorzugsweise auf der obersten Abstraktionsebene `rhasspy-nlu` erfolgen.
+
+### Konfiguration von Fsticuffs
+
+In erster Linie geht es in diesem Abschnitt darum welche Möglichkeiten es zur Konfiguration von Fsticuffs gibt, ohne das Ziel diese umzusetzen.
+
+Das Web-Interface von Rhasspy bietet hier lediglich ein Kontrollkästchen `Fuzzy` an. Wenn aktiviert, lässt Fsticuffs bestimmte unscharfe Übereinstimmungen zu.
+Zusätzlich ist es laut Dokumentation möglich einen eigenen Intent-Graphen zu übergeben. Das dürfte dann sinnvoll sein, wenn man den Graphen extern programmatisch erzeugen will.
+Zuletzt gibt es noch die Option `ignore_unknown_words`, welche unbekannte (nicht in der `sentences.ini` definierte Wörter) ignoriert und somit mehr Sätze zulässt.
+
+Wir werden es hier erstmal bei der Standard-Konfiguration belassen - sprich: Lediglich `Fuzzy` ist aktiviert.
+
+
+# 💻 API
+
+## Lichtsteuerung
+
+Es gibt eine eigens entwickelte API für die Lichtsteuerung.
+
+### Unit-Tests
+
+Die API besitzt eigene Unit-Tests zur Gewährleistung der Funktionalität. Zum ausführen der Tests einfach Das Kommando `pytest` unterhalb des Verzeichnisses `/src/api` ausführen. 
+
+### Endpunkte
+
+#### `/lights/set`
+
+Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, welcher eine vordefinierte Form haben muss. 
+
+```json
+{
+    "friendly_name": "living_room",
+    "payload": {
+        "state": "ON",
+        "brightness": 255,
+        "color": "#55ffaa"
+    }
+}
+```
+
+`friendly_name` und `payload` sind hierbei die erforderlichen Attribute. Die Attribute unter `payload` sind hierbei frei wählbar. 
+
+Aus dem Request wird ein MQTT-Publish auf das Topic `zigbee2mqtt/<friendly_name>/set` mit der jeweiligen Nachricht, die im `payload` Objekt definiert ist.
+
+Die Schnittstelle ist sehr flexibel einsetzbar, denn sie ist nicht restriktiv.
+
+#### `/lights/set/raw`
+
+Der Endpunkt erwartet einen POST-Request mit einem JSON Objekt, der entsprechend von Rhasspy erzeugt wurde. Wichtig ist hierbei hauptsächlich, dass `entities` entsprechend den Erwartungen der Schnittstelle entspricht.
+
+```json
+"entities": [
+        {
+            "entity": "room",
+            "value": "living_room",
+            //[..]
+        },
+        {
+            "entity": "state",
+            "value": "on",
+            //[..]
+        },
+        {
+            "entity": "brightness",
+            "value": 255,
+            //[..]
+        },
+        {
+            "entity": "color",
+            "value": "#ffffff",
+            //[..]
+        }
+    ]
+//[..]
+```
+
+Die Schnittstelle erstellt aus dem Request eine kompatible MQTT-Nachricht, die dann im jeweiligen Topic gepublished wird.

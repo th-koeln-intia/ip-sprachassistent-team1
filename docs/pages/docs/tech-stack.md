@@ -47,20 +47,7 @@ Sprache transkribiert. Die Umwandlung erfolgt dabei komplett offline. Pocketsphi
 Feinabstimmung - insbesondere den Start- und Stopp-Zeitpunkt des Transkribierens.
 Das Wörterbuch sowie die entsprechende Aussprache lässt sich hier über Textdateien definieren und ergänzen.
 
-Beim ersten Start wird ein Download eines von vortrainierten akustischen Modells sowie Wörterbuch benötigt.
-Es handelt sich dabei um die [CMU Sphinx](https://sourceforge.net/projects/cmusphinx/) Datenbank.
-Ein eigenes Training ist hier erstmal nicht sinnvoll was aus der 
-[Dokumentation](https://cmusphinx.github.io/wiki/tutorialam/) auch hervorgeht, denn wir haben weder genügend Zeit noch 
-genug Daten dafür.
-
-Das Speech-To-Text-System ist hierbei auf dem Raspberry Pi ziemlich langsam - es ist allerdings möglich die Aufgabe auf
-ein leistungsstärkeres System zu übertragen. Besonders beim Language Model Mixing (siehe nächsten Abschnitt) ist die Hardware des Rhaspberry zu schwach und es wird ausdrücklich empfohlen die Berechnung über einen Server laufen zu lassen.
-
-Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents (`sentences.ini`) gepflegt 
-sein, weil aus dieser ein Sprachmodell erstellt wird. Das bedeutet es können noch so viele Wörter im Wörterbuch stehen, 
-Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
-remote-Instanz bloß der Speech-To-Text Dienst läuft. Dieses Verhalten kann man abändern, indem man den Wert `mix_weight` bei PocketSphinx erhöht.
-Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der `sentences.ini` eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.
+Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-speech-to-text).
 
 ### Fsticuffs
 
@@ -68,10 +55,14 @@ Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language 
 gesprochen werden. Alle möglichen Befehle müssen definiert werden. Nach eigener Aussage ist Fsticuffs dafür extrem 
 performant.
 
+Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-intent-recognition).
+
 ### Espeak
 
 [Espeak](http://espeak.sourceforge.net/) ([Rhasspy GitHub](https://github.com/rhasspy/rhasspy-tts-cli-hermes)) ist ein 
 Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
+
+Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-text-to-speech).
 
 ### Rhasspy (Dialogue Management)
 
@@ -110,6 +101,12 @@ Weitere Informationen: [https://mqtt.org/](https://mqtt.org/)
 
 Der [MQTT Explorer](http://mqtt-explorer.com/) eignet sich hervorragend dafür seinen MQTT-Broker zu debuggen. Er bietet 
 eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu versenden.
+
+## Zigbee2MQTT
+
+[Zigbee2MQTT](https://www.zigbee2mqtt.io/) ist ein Service, der es ermöglicht smarte Geräte, die auf der [Zigbee Spezifikation](https://zigbeealliance.org/) basieren über MQTT Nachrichten zu verwenden. 
+
+Wir verwenden den Service um eine (oder mehrere) Lampe über den Sprachassistenten anzusteuern. Der Entwicklungsprozess ist [hier](/docs/features/#-lichtsteuerung) beschrieben.
 
 ## Node-Red
 

@@ -1,0 +1,1 @@
+[{"id":"5dfb4074.d21d7","type":"function","z":"192b9815.ec6158","name":"","func":"var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        color: {\n            hex: msg.slots.color\n        }\n    }\n}\nreturn newMsg;","outputs":1,"noerr":0,"initialize":"","finalize":"","x":280,"y":200,"wires":[["ac3ac7f2.0b14f8"]]}]
