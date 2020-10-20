@@ -44,5 +44,7 @@ def close_connection(exception):
 def hello():
     return 'Hello World!'
 
+init_db()
+
 from api import alarm
 from api import light
