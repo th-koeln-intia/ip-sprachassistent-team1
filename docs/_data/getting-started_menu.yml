@@ -7,3 +7,5 @@
           link: /getting-started/introduction/
         - name: Installation
           link: /getting-started/installation/
+        - name: Sprachbefehle
+          link: /getting-started/voice-commands/
