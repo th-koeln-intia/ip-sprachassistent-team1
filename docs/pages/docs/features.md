@@ -12,11 +12,11 @@ menubar: docs_menu
 | Feature                                                          | Beschreibung                                                                         | Status |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
-| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
+| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ✅     |
 | [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | ✅    |
 | [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅     |
 | [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅     |
-| [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | WIP    |
+| [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | ✅    |
 | [API](#-api)                                                     | Dokumentation der entwickelten API                                                   | WIP    |
 
 # 🎙 Wake Word
@@ -374,7 +374,9 @@ Wir setzen die Kommandos aus den obigen Schritten zusammen.
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) ergeben hat.
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 \
+ | \
+sox -t wav - -t wav record.wav noisered noise.prof 0.21
 ```
 
 **Grundrauschen + Noise Gate**
@@ -382,7 +384,12 @@ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen, Noise Gate anwenden und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) und für das Noise Gate die Werte, die sich aus [Schritt 2 der Analyse](#schritt-2-hintergrundgeräusche-reduzieren) für einen leisen Fernseher ergeben haben.
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 \
+ | \
+sox -t wav - \
+-t wav record.wav \
+noisered noise.prof 0.21 \
+compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 #### Bestandsaufnahme
@@ -418,14 +425,22 @@ Das publishen übernimmt glücklicherweise [rhasspy-microphone-cli-hermes](https
 Das erreichen wir durch die folgende Änderung:
 
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw | sox -r 16k -e signed -b 8 -c 4 -t raw - -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw \ 
+  | \
+sox -r 16k -e signed -b 8 -c 4 -t raw - \
+ -t raw - \
+ noisered /home/noise.prof 0.21 \
+ compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 Leider können Pipes in dieser Form nicht von [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) verwendet werden, denn es wird hier versucht die Pipe als Parameter zu übergeben. Schuld daran ist die Funktionsweise des Python Moduls `subprocess`, welches [hier](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L108) aufgerufen wird.
 Glücklicherweise bietet SoX eine paar spezielle Dateibezeichnungen mit denen das kompensiert werden kann und bspw. wie in dem folgenden Fall ein externes Programm als Input verwendet werden kann.
 
 ```sh
-sox -r 16k -e signed -b 8 -c 4 -t raw "|arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw" -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+sox -r 16k -e signed -b 8 -c 4 -t raw "|arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw" \
+  -t raw - \
+  noisered /home/noise.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 So sähe das Kommando idealerweise auf Grundlage der vorherigen Analyse aus. Leider macht es Rhasspy einem nicht so einfach und unterstützt aus irgendwelchen Gründen, die leider nicht geloggt werden, nicht die "Verkettung" der beiden Kommandos. 
@@ -439,168 +454,61 @@ sox noise.wav -n noiseprof noise_sox.prof
 
 Dann können wir auch hier die Effekte wieder anwenden und den Ausgang auf `stdout` umleiten.
 ```sh
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 2 -r 48k - noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 2 -r 48k - \
+  noisered /home/noise_sox.prof 0.21 \ 
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+Aus einem unbekannten Grund (//TODO Grund herausfinden?) ist funktioniert die Integration in Rhasspy, nur mit einer Sampling-Rate von 16000 Hz und einem Channel, also müssen wir das Kommando noch leicht abändern. Zusätzlich fügen wir den Paramter `-q` hinzu, der verhindert, dass SoX den Status loggt, um die Logs freizuhalten.
+```sh
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 1 -r 16k - \
+  -q \
+  noisered /home/noise_sox.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration `profile.json`. Wichtig ist hier zu beachten, dass `sample_width` in Bytes und nicht in Bits angegeben wird.
 ```json
 {
-    "microphone": {
-        "arecord": {
-            "device": "default:CARD=seeed4micvoicec"
-        },
-        "command": {
-            "list_arguments": ["-L"],
-            "sample_rate": 48000,
-            "sample_width": 2,
-            "channels": 2,
-            "list_program": "arecord",
-            "record_arguments": ["-t", "alsa", "sysdefault:CARD=seeed4micvoicec", "-t", "raw", "-b", "16", "-c", "2", "-r", "48k", "-", "noisered", "/home/noise_sox.prof", "0.21", "compand", "0.1,0.1", "-inf,-42.1,-inf,-42,-42", "0", "-90", "0.1"],
-            "record_program": "sox",
-            "test_arguments": ["-q", "-Dsysdefault:CARD=seeed4micvoicec", "-r 16000", "-f S16_LE", "-t raw"],
-            "test_program": "arecord"
-        },
-        "system": "command"
-    }
+  "microphone": {
+    "command": {
+      "channels": "1",
+      "list_arguments": ["-L"],
+      "list_program": "arecord",
+      "record_arguments": "-t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 1 -r 16k - -q noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1",
+      "record_program": "sox",
+      "sample_rate": "16000",
+      "test_arguments": [
+        "-q",
+        "-Dsysdefault:CARD=seeed4micvoicec",
+        "-r 16000",
+        "-f S16_LE",
+        "-t raw"
+      ],
+      "test_program": "arecord"
+    },
+    "system": "command"
+  }
 }
 ```
 
-Wenn man jetzt Rhasspy startet, werden die Filter angewendet. 
-Leider funktioniert die Kombination mit Rhasspy nicht sonderlich gut - möglicherweise ist auch SoX zu langsam um die Effekte "live" anzuwenden, denn es verzögert sehr stark. Für eine genauere Untersuchung fehlt jetzt allerdings die Zeit.
+Wenn man jetzt Rhasspy startet, werden die Filter angewendet. Allerdings sind jetzt noch Anpassungen an Pocketsphinx nötig, denn das Unterdrücken der Hintergrundgeräusche geschiet in unserer Implementierung nahezu direkt nach Sprechpausen, was Pocketsphinx als Stille wahrnimmt und je nach Länge der Sprechpause als Abbruchbedingung wertet.
 
-### Fehlersuche
+Wir setzen den Parameter für den Zeitraum, in dem es still sein muss, damit Pocketsphinx eine Abbruchbedingung wahrnimmt auf eine Sekunde. Eine weitere Möglichkeit wäre es die "attack" und "release" Werte des Noise-Gates anzupassen.
 
-Die Ergebnisse aus dem vorherigen Schritt sind leider unbefriedigend, da eine extrem starke Verzögerung besteht. Wir möchten jetzt damit beginnen den Fehler zu suchen, dafür versuchen wir Schrittweise die Verzögerung zu reproduzieren und so den Flaschenhals auszumachen, der Optimierungen bedarf
-
-#### 1. Schritt: SoX untersuchen
-
-Zuerst überprüfen wir ob SoX auf dem Raspberry Pi bzw. allgemein langsam ist. Dazu beenden wir alle im Hintergrund laufenden Docker-Container und etwaige Prozesse, die Resourcen benötigen.
-
-Dazu haben wir uns einen einfachen Test ausgedacht (Die Betrachtung des Signals über ein virtuelles Oszilloskop stellte sich als Overkill heraus):
-
-Wir starten die Audioaufnahme über SoX direkt auf dem Raspberry Pi (Sollte SoX nicht installiert sein: `apt install sox`) und zählen laut von eins bis fünf hoch - direkt nach der gesprochenen fünf brechen wir die Aufnahme ab und hören uns die entsprechende Datei an.
-
-Für die Aufnahme müssen wir das Kommando noch ein wenig anpassen, dass es in eine Datei schreibt und in das WAVE Format kodiert.
-
-```sh
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t wav -b 16 -c 2 -r 48k test_count.wav noisered /home/pi/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```json
+"command": {
+  "webrtcvad": {
+    "silence_sec": "1"
+  }
+}
 ```
 
-Die Aufnahme verlief fehlerfrei und ohne hörbare Verzögerungen. Jetzt starten wir wieder die Docker-Container und führen das ganze erneut durch. 
+##### Alternative: UDP-Streaming mit GStreamer
 
-Vor dem Start der Container ist allerdings noch zu beachten, dass der `rhasspy` Container das Sound-Device übergeben bekommt und verwendet, weshalb wir dieses nicht mehr "direkt" auf dem Raspberry Pi verwenden können. Also deaktivieren wir in den Einstellungen von Rhasspy das "Audio Recording".
-
-Fürs Protokoll betrachten wir nach dem Start der Container die Resourcenauslastung des Raspberry Pi. Dafür verwenden wir das Tool `mpstat`, welches wir zunächst allerdings installieren müssen.
-
-```sh
-sudo apt install sysstat
-```
-
-Sobald die Installation abgeschlossen ist, warten wir ein paar Minuten um einen vernünftigen Messwert zu erhalten, denn `mpstat` misst die Durchschnittsauslastung der CPU seit dem letzten Boot respektive Start des Services. Dann können wir uns mit `mpstat -P ALL` die durschnittliche Prozessorauslastung anzeigen lassen:
-
-```sh
-$ mpstat -P ALL
-Linux 4.19.118-v7+ (raspberrypi)        21/10/20        _armv7l_        (4 CPU)
-
-08:45:59     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-08:45:59     all   12.14    0.01    1.95    0.72    0.00    0.25    0.00    0.00    0.00   84.94
-08:45:59       0   12.06    0.01    2.03    0.87    0.00    0.38    0.00    0.00    0.00   84.65
-08:45:59       1   12.26    0.01    1.94    0.58    0.00    0.23    0.00    0.00    0.00   84.99
-08:45:59       2   12.50    0.01    1.95    0.72    0.00    0.19    0.00    0.00    0.00   84.63
-08:45:59       3   11.74    0.00    1.87    0.72    0.00    0.18    0.00    0.00    0.00   85.48
-```
-
-Man sieht, dass die CPU Auslastung durch die Docker-Container nicht sonderlich hoch ist, also sollten wir beim Widerholen des Tests auch wieder ein unverzögertes Ergebnis bekommen.
-
-```sh
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t wav -b 16 -c 2 -r 48k test_count.wav noisered /home/pi/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
-```
-
-Wie erwartet ist das Ergebnis ohne wahrnehmbare Verzögerung. Das Tool SoX ist also auch auf dem Raspberry Pi in der Lage die Frequenzmodulation bzw. die Effekte auf das Audiosignal anzuwenden und es ohne wahrnehmbare Verzögerung auszugeben.
-
-#### 2. Schritt: SoX im Docker-Container
-
-Fraglich ist jetzt ob SoX auch im Docker-Container verzögerungsfrei arbeitet. Für einen schnellen und praxisnahen Test führen wir den Test direkt auf dem `rhasspy` Container aus. Dazu öffnen wir die Shell des Containers und führen das Kommando aus. Als Ausgabeverzeichnis wählen wir das bereits gemappte Verzeichnis aus der `docker-compose.yml` (//TODO Link GitHub), sodass wir ohne große Umstände auf die Aufnahme zugreifen können.
-
-```sh
-docker exec -it rhasspy /bin/bash
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t wav -b 16 -c 2 -r 48k /profiles/test_count.wav noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
-```
-
-Beim Anhören ist eine minimale Verzögerung wahrnehmbar die sich im Millisekundenbereich bewegen sollte. Während das schon ein Problem für die User Experience des Sprachassistenten darstellen könnte, so sollte dieser trotzdem zeitnah das Audiosignal verarbeiten können. 
-
-An dieser Stelle liegt also die Vermutung nahe, dass der Flaschenhals Rhasspy bzw. die entsprechende Komponente [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) ist.
-
-
-#### 3. Schritt: rhasspy-microphone-cli-hermes auslagern
-
-Im nächsten Schritt werden wir die rhasspy-microphone-cli-hermes Komponente auslagern. Zunächst direkt auf dem Raspberry Pi und bei Erfolg in einen separaten Docker-Container.
-
-Wir installieren also zunächst die Komponente auf dem Raspberry Pi.
-```sh
-git clone https://github.com/rhasspy/rhasspy-microphone-cli-hermes
-cd rhasspy-microphone-cli-hermes
-./configure
-make
-make install
-```
-
-Jetzt führen wir die Komponente mit passenden Parametern aus und aktivieren zusätzlich die Debugging-Ausgabe:
-
-```sh
-bin/rhasspy-microphone-cli-hermes --record-command "sox -t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 2 -r 48k - noisered /home/pi/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1" --sample-rate 48000 --sample-width 2 --channels 2 --host raspberrypi --debug
-```
-
-Jetzt werden die WAVE-Chunks der Audioaufnahme direkt entsprechend des [Hermes Protokoll](https://docs.snips.ai/reference/hermes) verarbeitet. In den Einstellungen von Rhasspy müssen wir jetzt noch das "Audio Recording" auf "Hermes MQTT" stellen. 
-
-Leider bedeutet das auch, dass der Test aus den vorherigen Schritten nicht in der Form anwendbar ist. Wir testen das ganze jetzt, indem wir ein Wake-Word aufnehmen und prüfen ob wir ein verzögertes Verhalten feststellen können.
-
-Wir nehmen eine extrem starke Latenz bei der Aufnahme des Wake-Words war. Wir nehmen trotzdem die drei Wake-Words zuende auf und prüfen jetzt die Reaktionszeit der Aktivierung und stellen fest, dass es nicht möglich ist Rhasspy aufzuwecken. Die aufgenommenen Wake-Words sind allerdings korrekt aufgenommen worden.
-Wenn das Wake-Word in dem Web-Interface von Hand getriggert wird, gibt es nach einiger Zeit einen "TimeOut Error".
-Die Logs der laufenden rhasspy-microphone-cli-hermes Komponente zeigen kein Fehlerhaftes verhalten. Wir betrachten also die Logs aus dem `rhasspy` Container und triggern das Wake-Word von Hand.
-
-```sh
-docker logs -f rhasspy
-```
-
-Woraufhin der folgende Fehler sichtbar werden. Der erste ist vom Aufnehmen des Wake Words und der zweite von der manuellen Aktivierung.
-```
-[ERROR:2020-10-21 09:52:15,622] rhasspyserver_hermes: 
-Traceback (most recent call last):
-  File "/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/quart/app.py", line 1821, in full_dispatch_request
-    result = await self.dispatch_request(request_context)
-  File "/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/quart/app.py", line 1869, in dispatch_request
-    return await handler(**request_.view_args)
-  File "/usr/lib/rhasspy/rhasspy-server-hermes/rhasspyserver_hermes/__main__.py", line 2077, in api_record_wake_example
-    async for response in core.publish_wait(handle_recorded(), messages, message_types):
-  File "/usr/lib/rhasspy/rhasspy-server-hermes/rhasspyserver_hermes/__init__.py", line 959, in publish_wait
-    result_awaitable, timeout=timeout_seconds
-  File "/usr/lib/python3.7/asyncio/tasks.py", line 449, in wait_for
-    raise futures.TimeoutError()
-concurrent.futures._base.TimeoutError
-
-[..]
-
-[ERROR:2020-10-21 09:58:24,743] rhasspyserver_hermes: 
-Traceback (most recent call last):
-  File "/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/quart/app.py", line 1821, in full_dispatch_request
-    result = await self.dispatch_request(request_context)
-  File "/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/quart/app.py", line 1869, in dispatch_request
-    return await handler(**request_.view_args)
-  File "/usr/lib/rhasspy/rhasspy-server-hermes/rhasspyserver_hermes/__main__.py", line 827, in api_listen_for_command
-    handle_captured(), messages, message_types
-  File "/usr/lib/rhasspy/rhasspy-server-hermes/rhasspyserver_hermes/__init__.py", line 959, in publish_wait
-    result_awaitable, timeout=timeout_seconds
-  File "/usr/lib/python3.7/asyncio/tasks.py", line 449, in wait_for
-    raise futures.TimeoutError()
-concurrent.futures._base.TimeoutError
-```
-
-An dieser Stelle können wir leider nicht mehr damit anfangen
-
-#### 4. Schritt: UDP Streaming
-
-Mit Rhasspy version 2.5 ist es möglich einen [UDP-Stream zu verwenden](https://rhasspy.readthedocs.io/en/latest/audio-input/#gstreamer). Wir versuchen also jetzt einen UDP-Stream an Rhasspy zu übermitteln, der dann von dem Modul [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) über [GStreamer](https://gstreamer.freedesktop.org/) empfangen und daraufhin verarbeitet wird.
+Mit Rhasspy Version 2.5 ist es möglich einen [UDP-Stream zu verwenden](https://rhasspy.readthedocs.io/en/latest/audio-input/#gstreamer). Wir versuchen also jetzt einen UDP-Stream an Rhasspy zu übermitteln, der dann von dem Modul [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) über [GStreamer](https://gstreamer.freedesktop.org/) empfangen und daraufhin verarbeitet wird.
 
 Dazu ist es zunächst nötig, dass wir den entsprechenden UDP-Port für den Container freigeben, dazu fügen wir in der `docker-compose.yml` den folgenden Punkt hinzu und starten den Container neu.
 
@@ -634,54 +542,34 @@ sudo apt install gstreamer1.0-tools gstreamer1.0-plugins-good
 
 Jetzt verbinden wir unser bekanntes SoX Kommando mit gstreamer, sodass ein UDP-Stream produziert wird:
 ```sh
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 2 -r 48k - noisered /home/pi/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1 | gst-launch-1.0 fdsrc fd=0 ! audio/x-raw, rate=48000, channels=2, format=S16LE ! audioconvert ! audioresample ! audio/x-raw, rate=16000, channels=1, format=S16LE ! udpsink host=127.0.0.1 port=12333
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 2 -r 48k - \
+  noisered /home/pi/noise_sox.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1 \
+  | \
+gst-launch-1.0 fdsrc fd=0 ! \
+  audio/x-raw, rate=48000, channels=2, format=S16LE ! \
+  audioconvert ! \
+  audioresample ! \
+  audio/x-raw, rate=16000, channels=1, format=S16LE ! \
+  udpsink host=127.0.0.1 port=12333
 ```
 
-Das Wake-Word kann ohne Probleme und auch ohne merkliche Verzögerung eingesprochen werden.
+Es ist sinnvoll, das ganze wieder in einem weiteren Docker-Container auszulagern.
 
-In dem Zuge ist uns die Theorie gekommen, dass der Fehler gar nicht mit dem Tooling zusammenhängt, sondern mit dem Zusammenspiel der Encodierung und Rhasspy, denn in diesem Beispiel verwenden eine Sampling-Rate von 16000 Hz und lediglich einen Channel.
 
-#### 5. Schritt: SoX auf Sampling-Rate anpassen
-
-`profile.json`:
-```json
-"microphone": {
-  "command": {
-    "channels": "1",
-    "list_arguments": ["-L"],
-    "list_program": "arecord",
-    "record_arguments": "-t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 1 -r 16k - -q noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1",
-    "record_program": "sox",
-    "sample_rate": "16000",
-    "test_arguments": [
-      "-q",
-      "-Dsysdefault:CARD=seeed4micvoicec",
-      "-r 16000",
-      "-f S16_LE",
-      "-t raw"
-    ],
-    "test_program": "arecord"
-  },
-  "system": "command"
-}
-```
-
-Mit dem Resultat, dass die Einsprache eines Wakewords problemlos verlief. Das Aufwecken verläuft auch problemlos. Allerdings sind jetzt noch Anpassungen an Pocketsphinx nötig, //TODO denn, ....
-
-```json
-"command": {
-  "webrtcvad": {
-    "silence_sec": "1"
-  }
-}
-```
-
-### Fazit //TODO Fazit bearbeiten
+### Fazit
 
 Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne künstliche Intelligenzen möglich. Hier gilt es allerdings zu beachten, dass der Test unter idealen Bedingungen durchgeführt wurde und nicht auf jede Situation getestet wurde. Der gesamte Abschnitt ist also eher als Proof-Of-Concept zu betrachten, denn wenn eine Filterung wirklich angestrebt werden sollte, ist ein intensiver Praxistest von Nöten.
-Die Integration mit Rhasspy funktioniert leider nicht so gut wie zuerst gedacht und wirft zeitintensive Probleme auf, die wir hier in dem Zeitplan des Projekts nicht näher untersuchen können.
 
-Für dieses Projekt werden wir die Hintergrundgeräuschunterdrückung also nicht weiter verwenden.
+Die Integration mit Rhasspy funktioniert über SoX leider auf Anhieb nicht so gut wie zuerst gedacht, ist allerdings mit ein wenig Hirnschmalz lösbar.
+
+Um ein geeigneten Prozess zur Hintergrundgeräuschfilterung über SoX zu implementieren, muss man sich mit der Frequenzmodulation von Audiosignalen auseinandersetzen sowie untersuchen wie das WAV/RAW-Audioformat und die Signalverarbeitung derer funktioniert. Das kann unter Umständen aufwendig werden.
+
+Zu guter Letzt ist es wichtig nochmal zu erwähnen, dass die Implementierung hier unter idealen Bedingungen und nur im Rahmen der Möglichkeiten des Projekts getestet wurde. Es ist von ungemeiner Bedeutung die Hintergrundgeräuschfilterung intensiv unter unterschiedlichen Bedingungen zu testen und den Prozess anhand der Ergebnisse anzupassen und auf den Use-Case zuzuschneiden, denn eine schlechte Implementierung würde enorme Auswirkungen auf die User Experience haben.
+Als Beispiel sind wir mit dieser Referenzimplementierung in der Lage einen zimmerlauten Fernseher auf 7m Abstand herauszufiltern, das bedeutet allerdings auch, dass Menschen (potenzielle Benutzer des Sprachassistenten), die in 7m Entfernung stehen und in Zimmerlautstärke sprechen herausgefiltert werden.
+
+Es ist durchaus möglich, dass GStreamer (Siehe: [Alternative: UDP-Streaming mit GStreamer](#alternative-udp-streaming-mit-gstreamer)) weitere Möglichkeiten zur Filterung bietet, die über die Grenzen von SoX hinausgehen, denn hier gibt es unzählige Plugins die zum einen verfügbar sind und zum anderen auch selbst entwickelt werden können.
 
 # 💡 Lichtsteuerung
 
