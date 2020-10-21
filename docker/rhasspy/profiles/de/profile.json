@@ -1,4 +1,9 @@
 {
+    "command": {
+        "webrtcvad": {
+            "silence_sec": "1"
+        }
+    },
     "dialogue": {
         "system": "rhasspy"
     },
@@ -10,36 +15,14 @@
             "device": "default:CARD=seeed4micvoicec"
         },
         "command": {
-            "channels": 2,
+            "channels": "1",
             "list_arguments": [
                 "-L"
             ],
             "list_program": "arecord",
-            "record_arguments": [
-                "-t",
-                "alsa",
-                "sysdefault:CARD=seeed4micvoicec",
-                "-t",
-                "raw",
-                "-b",
-                "16",
-                "-c",
-                "2",
-                "-r",
-                "48k",
-                "-",
-                "noisered",
-                "/home/noise_sox.prof",
-                "0.21",
-                "compand",
-                "0.1,0.1",
-                "-inf,-42.1,-inf,-42,-42",
-                "0",
-                "-90",
-                "0.1"
-            ],
+            "record_arguments": "-t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 1 -r 16k - -q noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1",
             "record_program": "sox",
-            "sample_rate": 48000,
+            "sample_rate": "16000",
             "test_arguments": [
                 "-q",
                 "-Dsysdefault:CARD=seeed4micvoicec",
@@ -49,7 +32,7 @@
             ],
             "test_program": "arecord"
         },
-        "system": "arecord"
+        "system": "command"
     },
     "mqtt": {
         "enabled": "true",
