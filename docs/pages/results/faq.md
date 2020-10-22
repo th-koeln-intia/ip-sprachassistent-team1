@@ -7,7 +7,14 @@ show_sidebar: false
 menubar: results_menu
 ---
 
+//TODO Aufteilung ggf. überarbeiten
+
 # Allgemein
+
+* **Warum habt ihr so unterschiedlich viele Commits? Hat die Arbeitsaufteilung nicht geklappt?**
+
+Wir haben unterschiedliche Commit-Strategien und diese nicht aufeinander abgestimmt. Tobias tendiert dazu seine Änderungen sehr feingranular zu commiten um den derzeitigen Arbeitsstand zu versionieren wohingegen Stefan seine Änderungen mit zunehmender Reife commited.
+Desweiteren haben wir an der Dokumentation respektive der Projektstruktur Änderungen vorgenommen und Dateien verschoben was dann je nach Umfang in einer zahlenmäßig hohen Änderung entspricht.
 
 # Entscheidungen im Entwicklungsprozess
 
