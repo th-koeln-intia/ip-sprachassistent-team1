@@ -1,7 +1,7 @@
 ---
 title: Features
 permalink: /docs/features/
-subtitle: Features
+subtitle: Was kann Deep Thought im Detail und wie lässt sich Deep Thought erweitern?
 layout: page
 show_sidebar: false
 menubar: docs_menu

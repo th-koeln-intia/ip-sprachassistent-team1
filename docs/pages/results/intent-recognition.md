@@ -4,7 +4,7 @@ permalink: /results/intent-recognition/
 subtitle: Entwicklungsergebnisse zur Implementierung der Intent Recognition
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 # 🕹 Intent Recognition

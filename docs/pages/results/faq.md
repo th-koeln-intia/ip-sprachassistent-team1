@@ -4,7 +4,7 @@ permalink: /results/faq/
 subtitle: Warum? Wieso? Weshalb?
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 # Allgemein

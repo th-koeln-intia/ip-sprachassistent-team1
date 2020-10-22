@@ -4,7 +4,7 @@ permalink: /results/speech-to-text/
 subtitle: Entwicklungsergebnisse zur Implementierung des Speech-To-Text Services
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 # 📝 Speech To Text

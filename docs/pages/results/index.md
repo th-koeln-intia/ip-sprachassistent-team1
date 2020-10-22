@@ -4,7 +4,7 @@ permalink: /results/
 subtitle: Wie seid ihr die Entwicklung angegangen? Wie lief der Entwicklungsprozess ab?
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 Auf den Folgenden Seiten finden sich die Entwicklungsprozesse der Entwicklung von Deep Thought.

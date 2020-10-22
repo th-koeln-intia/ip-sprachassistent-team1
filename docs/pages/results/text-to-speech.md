@@ -4,7 +4,7 @@ permalink: /results/text-to-speech/
 subtitle: Entwicklungsergebnisse zur Implementierung des Text-To-Speech Services
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 

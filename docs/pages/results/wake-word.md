@@ -4,7 +4,7 @@ permalink: /results/wake-word/
 subtitle: Entwicklungsergebnisse zur Suche eines geeigneten Wake-Words.
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 # 🎙 Wake Word

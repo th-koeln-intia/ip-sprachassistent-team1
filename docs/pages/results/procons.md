@@ -4,7 +4,7 @@ permalink: /results/pros-and-cons/
 subtitle: Warum sollte ich Deep Thought verwenden? Wann ist Deep Thought ungeeignet?
 layout: page
 show_sidebar: false
-menubar: docs_menu
+menubar: results_menu
 ---
 
 # Vorteile

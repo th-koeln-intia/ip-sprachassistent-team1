@@ -1,0 +1,25 @@
+- label: Entwicklungsergebnisse
+  items:
+  - name: Entwicklungergebnisse
+    link: /results/
+    items:
+      - name: Wake-Word
+        link: /results/wake-word/
+      - name: Speech-To-Text
+        link: /results/speech-to-text/
+      - name: Text-To-Speech
+        link: /results/text-to-speech/
+      - name: Intent Recognition
+        link: /results/intent-recognition/
+      - name: Hintergrundgeräuschreduzierung
+        link: /results/noise-cancelling/
+      - name: Node-Red Flows
+        link: /results/node-red/
+      - name: API
+        link: /results/api/
+      - name: Vor- und Nachteile
+        link: /results/pros-and-cons/
+      - name: Fazit zur Implementierung
+        link: /results/conclusion/
+      - name: FAQ
+        link: /results/faq/

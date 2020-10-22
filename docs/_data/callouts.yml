@@ -1,19 +1,24 @@
 style: is-light
 height: is-medium
 items:
-  - title: Dokumentation
-    icon: fa-book
-    call_to_action_name: Dokumentation
-    call_to_action_link: /docs/
-    description: >
-      Hier findet sich die Entwicklungsdokumentation des Projekts inklusive allen Entscheidungsprozessen sowie Schwierigkeiten, die während der Entwicklung aufgetreten sind.
-      Die Dokumentation soll helfen, die praxistauglichkeit zu evaluieren.
   - title: Getting Started
     icon: fa-wrench
     call_to_action_name: Getting Started
     call_to_action_link: /getting-started/
     description: >
-      Hier ist die Benutzeranleitung zu finden. Wie startet man den Sprachassistenten? Welche Konfigurationsschritte sind nötig?
+      Hier ist die Benutzeranleitung zu finden. Wie startet man den Sprachassistenten? Welche Konfigurationsschritte sind nötig? Welche Befehle kann ich ausführen?
+  - title: Dokumentation
+    icon: fa-book
+    call_to_action_name: Dokumentation
+    call_to_action_link: /docs/
+    description: >
+      Hier findet sich die Dokumentation des Projekts, die detailiert die Implementierung beschreibt und Möglichkeiten zur Erweiterung zeigt.
+  - title: Entwicklungsergebnisse
+    icon: fa-book
+    call_to_action_name: Entwicklungsergebnisse
+    call_to_action_link: /results/
+    description: >
+      Die Entwicklungsergebnisse des Projekts - was ist gut gelaufen, welche Tools sind geeignet für einen Sprachassistenten, welche Probleme und Schwierigkeiten traten wärend der Entwicklung auf und wie sind Entscheidungen zu begründen.
   - title: GitHub
     icon: fa-github
     icon_brand: true
