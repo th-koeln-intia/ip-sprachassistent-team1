@@ -1,7 +1,7 @@
 ---
 title: Introduction
 permalink: /getting-started/introduction/
-subtitle: Introduction
+subtitle: Wie ist dieses Projekt entstanden?
 layout: page
 show_sidebar: false
 menubar: getting-started_menu

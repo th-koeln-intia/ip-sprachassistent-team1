@@ -1,7 +1,7 @@
 ---
 title: FAQ
 permalink: /docs/faq/
-subtitle: FAQ
+subtitle: Warum? Wieso? Weshalb?
 layout: page
 show_sidebar: false
 menubar: docs_menu
@@ -10,6 +10,11 @@ menubar: docs_menu
 # Allgemein
 
 # Entscheidungen im Entwicklungsprozess
+
+* **Warum heißt der Sprachassistent Deep Thought?**
+
+Dabei handelt es sich um den Computer aus dem Roman "Per Anhalter durch die Galaxis", der die Antwort "42" auf die Frage nach dem Sinn des Lebens berechnet ([Ausführliche Information](https://de.wikipedia.org/wiki/42_(Antwort))).
+Einem Computer Fragen zu stellen respektive Anweisungen zu geben und daraufhin eine Antwort von diesem zu bekommen ist im Grunde das, was ein Sprachassistent tun soll. Zusätzlich bedeutet "Deep Thought" wörtlich übersetzt "tieferer Gedanke" - auch das fanden wir sehr passend, schließlich soll die Anweisung an den Sprachassistenten eine Intention des Benutzers umsetzen und daher haben wir uns für diesen Namen entschieden.
 
 * **Warum habt ihr euch dazu entschieden, das GitHub Pages Theme zu wechseln und warum ausgerechnet bulma-clean-theme?**
 

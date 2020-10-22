@@ -1,7 +1,7 @@
 ---
 title: Vor- und Nachteile
 permalink: /docs/pros-and-cons/
-subtitle: Vor- und Nachteile
+subtitle: Warum sollte ich Deep Thought verwenden? Wann ist Deep Thought ungeeignet?
 layout: page
 show_sidebar: false
 menubar: docs_menu

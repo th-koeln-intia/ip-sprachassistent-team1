@@ -1,7 +1,7 @@
 ---
 title: Tech-Stack
 permalink: /docs/tech-stack/
-subtitle: Tech-Stack
+subtitle: Welche Technik steckt hinter Deep Thoguht?
 layout: page
 show_sidebar: false
 menubar: docs_menu

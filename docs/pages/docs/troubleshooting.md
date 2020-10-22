@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 permalink: /docs/troubleshooting/
-subtitle: Troubleshooting
+subtitle: Ich bin bei der Verwendung bzw. der Weiterentwicklung von Deep Thought auf ein Problem gestoßen - wie behebe ich das?
 layout: page
 show_sidebar: false
 menubar: docs_menu
