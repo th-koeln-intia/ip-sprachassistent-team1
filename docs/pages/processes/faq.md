@@ -1,6 +1,6 @@
 ---
 title: FAQ
-permalink: /docs/faq/
+permalink: /results/faq/
 subtitle: Warum? Wieso? Weshalb?
 layout: page
 show_sidebar: false
