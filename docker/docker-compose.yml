@@ -7,7 +7,6 @@ services:
         volumes:
             - "./rhasspy/profiles:/profiles"
             - "/etc/localtime:/etc/localtime:ro"
-            - "./rhasspy/noise.prof:/home/noise.prof"
             - "./rhasspy/noise_sox.prof:/home/noise_sox.prof"
             - "./rhasspy/alarm_sounds:/home/alarm_sounds:ro"
         ports:
