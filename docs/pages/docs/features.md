@@ -12,11 +12,11 @@ menubar: docs_menu
 | Feature                                                          | Beschreibung                                                                         | Status |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------ |
 | [Wake Word](#-wake-word)                                         | Das Aktivierungswort des Sprachassistenten                                           | ✅     |
-| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ⭕     |
+| [Hintergrungeräuschreduzierung](#-hintergrungeräuschreduzierung) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen | ✅     |
 | [Lichtsteuerung](#-lichtsteuerung)                               | Die Steuerung einer Zigbee-fähigen Lichtquelle mit dem Sprachassistenten             | ✅    |
 | [Text-To-Speech](#-text-to-speech)                               | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           | ✅     |
 | [Speech-To-Text](#-speech-to-text)                               | Entwicklungsdokumentation zur Verwendung von Pocketsphinx                            | ✅     |
-| [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | WIP    |
+| [Intent Recognition](#-intent-recognition)                       | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               | ✅    |
 | [API](#-api)                                                     | Dokumentation der entwickelten API                                                   | WIP    |
 
 # 🎙 Wake Word
@@ -193,7 +193,7 @@ Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arec
 
 ## Bestandsaufnahme der Möglichkeiten
 
-Rhasspy hat hierzu keine geeignete eigene Funktion und da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren.
+Rhasspy hat zur Filterung von Hintergrundgeräuschen keine geeignete eigene Funktion, allerdings ist es möglich den [Speech-To-Text Service ein wenig zu sensibilisieren](#rhasspy-silence). Wenn wir uns nun auf die Filterung von Hintergrundgeräuschen beschränken, ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren, da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt.
 
 Rhasspy bietet da von Haus aus die Möglichkeiten [arecord](https://alsa-project.org/wiki/Main_Page) und [pyaudio](https://pypi.org/project/PyAudio/) zusätzlich gibt es die Möglichkeit die Audioaufnahme über ein lokales Command zu machen sowie eine HTTP API zu verwenden. Es ist also möglich weitere Tools zu verwenden. 
 
@@ -212,7 +212,7 @@ Welche weiteren Tools gibt es, die die Möglichkeit bieten Hintergrundgeräusche
 
 ### arecord
 
-Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist das ganze sehr schlecht dokumentiert. Daher verwenden wir im Folgenden nicht das mitglieferte `arcord` von Rhasspy, sondern weichen auf ein `Local Command` aus. Die Folgende Konfiguration in der `profile.json` ist äquivalent zu der mitgelieferten.
+Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist das ganze sehr schlecht dokumentiert. Daher verwenden wir im Folgenden nicht das mitglieferte `arcord` von Rhasspy, sondern weichen auf ein `Local Command` aus. Die folgende Konfiguration von `command` ist äquivalent zu der Standard-Konfiguration von `arecord`.
 
 ```json
 "microphone": {
@@ -259,6 +259,12 @@ Dazu kann mit PulseAudio ein Modul namens `module-echo-cancel` verwendet werden.
 ### Weitere Möglichkeiten auf Basis von AI/KI/NN
 
 Zu dem Thema existiert eine [Publizierung](https://www.researchgate.net/publication/282446599_Removing_Noise_from_Speech_Signals_Using_Different_Approaches_of_Artificial_Neural_Networks) ("Removing Noise from Speech Signals Using Different Approaches of Artificial Neural Networks", Omaima Al-Allaf, 2015, University of Jordan, 10.5815/ijitcs.2015.07.02) welche weitere Möglichkeiten zur reduzierung von Hintergrundgeräuschen behandelt, die auf Basis künstlicher Intelligenzen agieren. 
+
+### rhasspy-silence
+
+Bei [rhasspy-silence](https://github.com/rhasspy/rhasspy-silence) handelt es sich um eine Implementierung von [Sprechpausenerkennung](https://de.wikipedia.org/wiki/Sprechpausenerkennung). Dieser Dienst wird unter anderem von unserem Speech-To-Text-Service [rhasspy-asr-pocketsphinx-hermes](https://github.com/rhasspy/rhasspy-asr-pocketsphinx-hermes/) verwendet, weshalb es hier Möglichkeiten zur Optimierung gibt.
+
+Interessant ist das gerade deshalb, weil hier möglicherweise eine Filterung bei einer guten Parametrisierung obsolet werden würde, allerdings ist auch eine Kombinierung denkbar, denn eine Hintergrundgeräuschreduzierung kann auch in ein klareres Klangbild resultieren.
 
 ### Fazit der Analyse
 
@@ -374,7 +380,9 @@ Wir setzen die Kommandos aus den obigen Schritten zusammen.
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) ergeben hat.
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 \
+ | \
+sox -t wav - -t wav record.wav noisered noise.prof 0.21
 ```
 
 **Grundrauschen + Noise Gate**
@@ -382,7 +390,12 @@ arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t
 Sound für 10 Sekunden aufnehmen, Grundrauschen entfernen, Noise Gate anwenden und in `record.wav` speichern.
 Als Grundlage für das Grundrauschen verwenden wir das Rauschprofil, das sich aus [Schritt 1 der Analyse](#schritt-1-grundrauschen-filtern) und für das Noise Gate die Werte, die sich aus [Schritt 2 der Analyse](#schritt-2-hintergrundgeräusche-reduzieren) für einen leisen Fernseher ergeben haben.
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 | sox -t wav - -t wav record.wav noisered noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -d 10 \
+ | \
+sox -t wav - \
+-t wav record.wav \
+noisered noise.prof 0.21 \
+compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 #### Bestandsaufnahme
@@ -418,14 +431,22 @@ Das publishen übernimmt glücklicherweise [rhasspy-microphone-cli-hermes](https
 Das erreichen wir durch die folgende Änderung:
 
 ```sh
-arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw | sox -r 16k -e signed -b 8 -c 4 -t raw - -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw \ 
+  | \
+sox -r 16k -e signed -b 8 -c 4 -t raw - \
+ -t raw - \
+ noisered /home/noise.prof 0.21 \
+ compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 Leider können Pipes in dieser Form nicht von [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) verwendet werden, denn es wird hier versucht die Pipe als Parameter zu übergeben. Schuld daran ist die Funktionsweise des Python Moduls `subprocess`, welches [hier](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L108) aufgerufen wird.
 Glücklicherweise bietet SoX eine paar spezielle Dateibezeichnungen mit denen das kompensiert werden kann und bspw. wie in dem folgenden Fall ein externes Programm als Input verwendet werden kann.
 
 ```sh
-sox -r 16k -e signed -b 8 -c 4 -t raw "|arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw" -t raw - noisered /home/noise.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+sox -r 16k -e signed -b 8 -c 4 -t raw "|arecord -Dsysdefault:CARD=seeed4micvoicec -f S32_LE -r 16000 -c 4 -t raw" \
+  -t raw - \
+  noisered /home/noise.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 So sähe das Kommando idealerweise auf Grundlage der vorherigen Analyse aus. Leider macht es Rhasspy einem nicht so einfach und unterstützt aus irgendwelchen Gründen, die leider nicht geloggt werden, nicht die "Verkettung" der beiden Kommandos. 
@@ -439,41 +460,125 @@ sox noise.wav -n noiseprof noise_sox.prof
 
 Dann können wir auch hier die Effekte wieder anwenden und den Ausgang auf `stdout` umleiten.
 ```sh
-sox -t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 2 -r 48k - noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 2 -r 48k - \
+  noisered /home/noise_sox.prof 0.21 \ 
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
+```
+
+Die Integration in Rhasspy funktioniert nur mit einer Sampling-Rate von 16000 Hz und einem Channel. Grund dafür ist, dass der Dienst [rhasspy-silence](#rhasspy-silence) auf [wbrtcvad](https://github.com/wiseman/py-webrtcvad) basiert, welches zwingend ein Mono-Signal voraussetzt. Theoretisch sollte zumindest eine andere Sampling-Rate möglich sein, denn wbrtcvad unterstützt nach eigener Aussage auch Sampling-Raten von 8000 Hz, 32000 Hz und 48000 Hz. Rhasspy arbeitet intern allerdings standardmäßig mit 16000 Hz und eine Parametrisierung des Werts ist nicht möglich, solange man keine eigene Instanz der entsprechenden Dienste aufsetzt.
+Dass Rhasspy mit einer anderen Abtastrate bzw. anderer Anzahl Kanälen nicht zurecht kommt, scheint ein Bug zu sein, denn eigentlich sollte das Signal entsprechend für rhasspy-silence [konvertiert](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L173) werden.
+
+Also müssen wir das Kommando noch leicht abändern. Zusätzlich fügen wir den Paramter `-q` hinzu, der verhindert, dass SoX den Status loggt, um die Logs freizuhalten.
+```sh
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 1 -r 16k - \
+  -q \
+  noisered /home/noise_sox.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
 Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration `profile.json`. Wichtig ist hier zu beachten, dass `sample_width` in Bytes und nicht in Bits angegeben wird.
 ```json
 {
-    "microphone": {
-        "arecord": {
-            "device": "default:CARD=seeed4micvoicec"
-        },
-        "command": {
-            "list_arguments": ["-L"],
-            "sample_rate": 48000,
-            "sample_width": 2,
-            "channels": 2,
-            "list_program": "arecord",
-            "record_arguments": ["-t", "alsa", "sysdefault:CARD=seeed4micvoicec", "-t", "raw", "-b", "16", "-c", "2", "-r", "48k", "-", "noisered", "/home/noise_sox.prof", "0.21", "compand", "0.1,0.1", "-inf,-42.1,-inf,-42,-42", "0", "-90", "0.1"],
-            "record_program": "sox",
-            "test_arguments": ["-q", "-Dsysdefault:CARD=seeed4micvoicec", "-r 16000", "-f S16_LE", "-t raw"],
-            "test_program": "arecord"
-        },
-        "system": "command"
-    }
+  "microphone": {
+    "command": {
+      "channels": "1",
+      "list_arguments": ["-L"],
+      "list_program": "arecord",
+      "record_arguments": "-t alsa sysdefault:CARD=seeed4micvoicec -t raw -b 16 -c 1 -r 16k - -q noisered /home/noise_sox.prof 0.21 compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1",
+      "record_program": "sox",
+      "sample_rate": "16000",
+      "test_arguments": [
+        "-q",
+        "-Dsysdefault:CARD=seeed4micvoicec",
+        "-r 16000",
+        "-f S16_LE",
+        "-t raw"
+      ],
+      "test_program": "arecord"
+    },
+    "system": "command"
+  }
 }
 ```
 
-Wenn man jetzt Rhasspy startet, werden die Filter angewendet. 
-Leider funktioniert die Kombination mit Rhasspy nicht sonderlich gut - möglicherweise ist auch SoX zu langsam um die Effekte "live" anzuwenden, denn es verzögert sehr stark. Für eine genauere Untersuchung fehlt jetzt allerdings die Zeit.
+Die Filter werden jetzt angewendet. Allerdings sind jetzt noch Anpassungen an Pocketsphinx nötig, denn das Unterdrücken der Hintergrundgeräusche geschiet in unserer Implementierung nahezu direkt nach Sprechpausen, was Pocketsphinx als Stille wahrnimmt und je nach Länge der Sprechpause als Abbruchbedingung wertet.
+
+Wir setzen den Parameter für den Zeitraum, in dem es still sein muss, damit Pocketsphinx eine Abbruchbedingung wahrnimmt auf eine Sekunde. Eine weitere Möglichkeit wäre es die "attack" und "release" Werte des Noise-Gates anzupassen.
+
+```json
+"command": {
+  "webrtcvad": {
+    "silence_sec": "1.5"
+  }
+}
+```
+
+##### Alternative: UDP-Streaming mit GStreamer
+
+Mit Rhasspy Version 2.5 ist es möglich einen [UDP-Stream zu verwenden](https://rhasspy.readthedocs.io/en/latest/audio-input/#gstreamer). Wir versuchen also jetzt einen UDP-Stream an Rhasspy zu übermitteln, der dann von dem Modul [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) über [GStreamer](https://gstreamer.freedesktop.org/) empfangen und daraufhin verarbeitet wird.
+
+Dazu ist es zunächst nötig, dass wir den entsprechenden UDP-Port für den Container freigeben, dazu fügen wir in der `docker-compose.yml` den folgenden Punkt hinzu und starten den Container neu.
+
+```yml
+rhasspy:
+  [..]
+  ports:
+    - "12333:12333/udp"
+```
+
+Jetzt müssen wir die `profile.json` Konfiguration von Rhasspy anpassen.
+
+```json
+"microphone": {
+  "system": "command",
+  "command": {
+    "record_program": "gst-launch-1.0",
+    "record_arguments": "udpsrc port=12333 ! audio/x-raw, rate=16000, channels=1, format=S16LE ! filesink location=/dev/stdout",
+    "sample_rate": 16000,
+    "sample_width": 2,
+    "channels": 1
+  }
+}
+```
+
+Rhasspy ist nun empfangsbereit für einen UDP-Stream, den wir direkt vom Raspberry Pi aus starten. Dazu gehen wir folgendermaßen vor.
+
+```sh
+sudo apt install gstreamer1.0-tools gstreamer1.0-plugins-good
+```
+
+Jetzt verbinden wir unser bekanntes SoX Kommando mit gstreamer, sodass ein UDP-Stream produziert wird:
+```sh
+sox -t alsa sysdefault:CARD=seeed4micvoicec \
+  -t raw -b 16 -c 2 -r 48k - \
+  noisered /home/pi/noise_sox.prof 0.21 \
+  compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1 \
+  | \
+gst-launch-1.0 fdsrc fd=0 ! \
+  audio/x-raw, rate=48000, channels=2, format=S16LE ! \
+  audioconvert ! \
+  audioresample ! \
+  audio/x-raw, rate=16000, channels=1, format=S16LE ! \
+  udpsink host=127.0.0.1 port=12333
+```
+
+Es ist sinnvoll, das ganze wieder in einem weiteren Docker-Container auszulagern.
+
 
 ### Fazit
 
 Das Unterdrücken von Hintergrundgeräuschen ist auch mit einfachen Mitteln ohne künstliche Intelligenzen möglich. Hier gilt es allerdings zu beachten, dass der Test unter idealen Bedingungen durchgeführt wurde und nicht auf jede Situation getestet wurde. Der gesamte Abschnitt ist also eher als Proof-Of-Concept zu betrachten, denn wenn eine Filterung wirklich angestrebt werden sollte, ist ein intensiver Praxistest von Nöten.
-Die Integration mit Rhasspy funktioniert leider nicht so gut wie zuerst gedacht und wirft zeitintensive Probleme auf, die wir hier in dem Zeitplan des Projekts nicht näher untersuchen können.
 
-Für dieses Projekt werden wir die Hintergrundgeräuschunterdrückung also nicht weiter verwenden.
+Die Integration mit Rhasspy funktioniert über SoX leider auf Anhieb nicht so gut wie zuerst gedacht, ist allerdings mit ein wenig Hirnschmalz lösbar.
+
+Um ein geeigneten Prozess zur Hintergrundgeräuschfilterung über SoX zu implementieren, muss man sich mit der Frequenzmodulation von Audiosignalen auseinandersetzen sowie untersuchen wie das WAV/RAW-Audioformat und die Signalverarbeitung derer funktioniert. Das kann unter Umständen aufwendig werden.
+
+Zu guter Letzt ist es wichtig nochmal zu erwähnen, dass die Implementierung hier unter idealen Bedingungen und nur im Rahmen der Möglichkeiten des Projekts getestet wurde. Es ist von ungemeiner Bedeutung die Hintergrundgeräuschfilterung intensiv unter unterschiedlichen Bedingungen zu testen und den Prozess anhand der Ergebnisse anzupassen und auf den Use-Case zuzuschneiden, denn eine schlechte Implementierung würde enorme Auswirkungen auf die User Experience haben.
+Als Beispiel sind wir mit dieser Referenzimplementierung in der Lage einen zimmerlauten Fernseher auf 7m Abstand herauszufiltern, das bedeutet allerdings auch, dass Menschen (potenzielle Benutzer des Sprachassistenten), die in 7m Entfernung stehen und in Zimmerlautstärke sprechen herausgefiltert werden.
+
+Es ist durchaus möglich, dass GStreamer (Siehe: [Alternative: UDP-Streaming mit GStreamer](#alternative-udp-streaming-mit-gstreamer)) weitere Möglichkeiten zur Filterung bietet, die über die Grenzen von SoX hinausgehen, denn hier gibt es unzählige Plugins die zum einen verfügbar sind und zum anderen auch selbst entwickelt werden können.
 
 # 💡 Lichtsteuerung
 
