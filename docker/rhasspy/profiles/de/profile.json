@@ -1,7 +1,7 @@
 {
     "command": {
         "webrtcvad": {
-            "silence_sec": "1"
+            "silence_sec": "1.5"
         }
     },
     "dialogue": {

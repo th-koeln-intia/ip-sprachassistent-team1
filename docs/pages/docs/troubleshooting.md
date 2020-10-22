@@ -37,3 +37,9 @@ Zur Lösung genügt es also sich in das Web-Interface von Rhasspy einzuloggen un
 Das liegt daran, dass fälschlicherweise nicht der gesamte Node-Red Flow exportiert wurde, sondern nur der einzelne Node. Sobald man einen Node auswählt und dann den Flow exportieren möchte wird standardmäßig nur der einzelne Node exportiert. Man sollte also darauf achten, dass "Aktueller Flow" ausgewählt ist.
 
 ![node-red_export](/assets/node-red_export.png)
+
+* **Ich habe eine enorme Verzögerung meiner Sprachbefehle oder diese erhalten einen Timeout**
+
+Es könnte sich hierbei um einen Fehler der Verarbeitung des Audio-Signals handeln.
+Die Integration in Rhasspy funktioniert nur mit einer Sampling-Rate von 16000 Hz und einem Channel. Grund dafür ist, dass der Dienst [rhasspy-silence](#rhasspy-silence) auf [wbrtcvad](https://github.com/wiseman/py-webrtcvad) basiert, welches zwingend ein Mono-Signal voraussetzt. Theoretisch sollte zumindest eine andere Sampling-Rate möglich sein, denn wbrtcvad unterstützt nach eigener Aussage auch Sampling-Raten von 8000 Hz, 32000 Hz und 48000 Hz. Rhasspy arbeitet intern allerdings standardmäßig mit 16000 Hz und eine Parametrisierung des Werts ist nicht möglich, solange man keine eigene Instanz der entsprechenden Dienste aufsetzt.
+Dass Rhasspy mit einer anderen Abtastrate bzw. anderer Anzahl Kanälen nicht zurecht kommt, scheint ein Bug zu sein, denn eigentlich sollte das Signal entsprechend für rhasspy-silence [konvertiert](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L173) werden.

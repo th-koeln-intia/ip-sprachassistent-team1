@@ -193,7 +193,7 @@ Fürs Protokoll: Die Geräusche wurden mit folgendem Befehl aufgezeichnet: `arec
 
 ## Bestandsaufnahme der Möglichkeiten
 
-Rhasspy hat hierzu keine geeignete eigene Funktion und da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren.
+Rhasspy hat zur Filterung von Hintergrundgeräuschen keine geeignete eigene Funktion, allerdings ist es möglich den [Speech-To-Text Service ein wenig zu sensibilisieren](#rhasspy-silence). Wenn wir uns nun auf die Filterung von Hintergrundgeräuschen beschränken, ist notwendig sich direkt auf den Audiotreiber bzw. auf das verwendete Tool zu konzentrieren, da das Mikrofon permanent das Audiosignal als MQTT Nachricht übermittelt.
 
 Rhasspy bietet da von Haus aus die Möglichkeiten [arecord](https://alsa-project.org/wiki/Main_Page) und [pyaudio](https://pypi.org/project/PyAudio/) zusätzlich gibt es die Möglichkeit die Audioaufnahme über ein lokales Command zu machen sowie eine HTTP API zu verwenden. Es ist also möglich weitere Tools zu verwenden. 
 
@@ -212,7 +212,7 @@ Welche weiteren Tools gibt es, die die Möglichkeit bieten Hintergrundgeräusche
 
 ### arecord
 
-Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist das ganze sehr schlecht dokumentiert. Daher verwenden wir im Folgenden nicht das mitglieferte `arcord` von Rhasspy, sondern weichen auf ein `Local Command` aus. Die Folgende Konfiguration in der `profile.json` ist äquivalent zu der mitgelieferten.
+Leider bietet Rhasspy nicht die Möglichkeit die Parameter anzupassen bzw. ist das ganze sehr schlecht dokumentiert. Daher verwenden wir im Folgenden nicht das mitglieferte `arcord` von Rhasspy, sondern weichen auf ein `Local Command` aus. Die folgende Konfiguration von `command` ist äquivalent zu der Standard-Konfiguration von `arecord`.
 
 ```json
 "microphone": {
@@ -259,6 +259,12 @@ Dazu kann mit PulseAudio ein Modul namens `module-echo-cancel` verwendet werden.
 ### Weitere Möglichkeiten auf Basis von AI/KI/NN
 
 Zu dem Thema existiert eine [Publizierung](https://www.researchgate.net/publication/282446599_Removing_Noise_from_Speech_Signals_Using_Different_Approaches_of_Artificial_Neural_Networks) ("Removing Noise from Speech Signals Using Different Approaches of Artificial Neural Networks", Omaima Al-Allaf, 2015, University of Jordan, 10.5815/ijitcs.2015.07.02) welche weitere Möglichkeiten zur reduzierung von Hintergrundgeräuschen behandelt, die auf Basis künstlicher Intelligenzen agieren. 
+
+### rhasspy-silence
+
+Bei [rhasspy-silence](https://github.com/rhasspy/rhasspy-silence) handelt es sich um eine Implementierung von [Sprechpausenerkennung](https://de.wikipedia.org/wiki/Sprechpausenerkennung). Dieser Dienst wird unter anderem von unserem Speech-To-Text-Service [rhasspy-asr-pocketsphinx-hermes](https://github.com/rhasspy/rhasspy-asr-pocketsphinx-hermes/) verwendet, weshalb es hier Möglichkeiten zur Optimierung gibt.
+
+Interessant ist das gerade deshalb, weil hier möglicherweise eine Filterung bei einer guten Parametrisierung obsolet werden würde, allerdings ist auch eine Kombinierung denkbar, denn eine Hintergrundgeräuschreduzierung kann auch in ein klareres Klangbild resultieren.
 
 ### Fazit der Analyse
 
@@ -460,7 +466,10 @@ sox -t alsa sysdefault:CARD=seeed4micvoicec \
   compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
-Aus einem unbekannten Grund (//TODO Grund herausfinden?) ist funktioniert die Integration in Rhasspy, nur mit einer Sampling-Rate von 16000 Hz und einem Channel, also müssen wir das Kommando noch leicht abändern. Zusätzlich fügen wir den Paramter `-q` hinzu, der verhindert, dass SoX den Status loggt, um die Logs freizuhalten.
+Die Integration in Rhasspy funktioniert nur mit einer Sampling-Rate von 16000 Hz und einem Channel. Grund dafür ist, dass der Dienst [rhasspy-silence](#rhasspy-silence) auf [wbrtcvad](https://github.com/wiseman/py-webrtcvad) basiert, welches zwingend ein Mono-Signal voraussetzt. Theoretisch sollte zumindest eine andere Sampling-Rate möglich sein, denn wbrtcvad unterstützt nach eigener Aussage auch Sampling-Raten von 8000 Hz, 32000 Hz und 48000 Hz. Rhasspy arbeitet intern allerdings standardmäßig mit 16000 Hz und eine Parametrisierung des Werts ist nicht möglich, solange man keine eigene Instanz der entsprechenden Dienste aufsetzt.
+Dass Rhasspy mit einer anderen Abtastrate bzw. anderer Anzahl Kanälen nicht zurecht kommt, scheint ein Bug zu sein, denn eigentlich sollte das Signal entsprechend für rhasspy-silence [konvertiert](https://github.com/rhasspy/rhasspy-microphone-cli-hermes/blob/master/rhasspymicrophone_cli_hermes/__init__.py#L173) werden.
+
+Also müssen wir das Kommando noch leicht abändern. Zusätzlich fügen wir den Paramter `-q` hinzu, der verhindert, dass SoX den Status loggt, um die Logs freizuhalten.
 ```sh
 sox -t alsa sysdefault:CARD=seeed4micvoicec \
   -t raw -b 16 -c 1 -r 16k - \
@@ -494,14 +503,14 @@ Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration `pro
 }
 ```
 
-Wenn man jetzt Rhasspy startet, werden die Filter angewendet. Allerdings sind jetzt noch Anpassungen an Pocketsphinx nötig, denn das Unterdrücken der Hintergrundgeräusche geschiet in unserer Implementierung nahezu direkt nach Sprechpausen, was Pocketsphinx als Stille wahrnimmt und je nach Länge der Sprechpause als Abbruchbedingung wertet.
+Die Filter werden jetzt angewendet. Allerdings sind jetzt noch Anpassungen an Pocketsphinx nötig, denn das Unterdrücken der Hintergrundgeräusche geschiet in unserer Implementierung nahezu direkt nach Sprechpausen, was Pocketsphinx als Stille wahrnimmt und je nach Länge der Sprechpause als Abbruchbedingung wertet.
 
 Wir setzen den Parameter für den Zeitraum, in dem es still sein muss, damit Pocketsphinx eine Abbruchbedingung wahrnimmt auf eine Sekunde. Eine weitere Möglichkeit wäre es die "attack" und "release" Werte des Noise-Gates anzupassen.
 
 ```json
 "command": {
   "webrtcvad": {
-    "silence_sec": "1"
+    "silence_sec": "1.5"
   }
 }
 ```
@@ -519,7 +528,7 @@ rhasspy:
     - "12333:12333/udp"
 ```
 
-Jetzt müssen wir die `profile.json` Konfiguration von Rhasspy anpassen und rhasspy neu starten.
+Jetzt müssen wir die `profile.json` Konfiguration von Rhasspy anpassen.
 
 ```json
 "microphone": {
