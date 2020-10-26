@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO Takes a very long time, is every command really necessary and can manual steps be stored here?
-
 if [[ "$EUID" -ne 0 ]]
   then echo "Please run as root"
   exit
