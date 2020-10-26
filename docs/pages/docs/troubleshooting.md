@@ -29,7 +29,7 @@ Laut einem [Reddit-Post](https://www.reddit.com/r/Hue/comments/aa3am0/so_the_pow
 
 * **Wenn ich die `profile.json` von Rhasspy bearbeite, wird diese auch nach einem Neustart nicht verwendet**
   
-Rhasspy ist was das angeht ziemlich frickelig. Aus der [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json) wird eine `supervisord.conf` und eine `docker-compose.yml` Datei erstellt, die daraufhin Rhasspy als Konfiguration dienen. Das passiert allerdings nicht nach einem neustart, sondern nur dann, wenn man im Web Interface in den Einstellungen "Save Settings" drückt.
+Rhasspy ist was das angeht ziemlich frickelig. Aus der [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json) wird eine [supervisord.conf](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/supervisord.conf) und eine [docker-compose.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/docker-compose.yml) Datei erstellt, die daraufhin Rhasspy als Konfiguration dienen. Das passiert allerdings nicht nach einem neustart, sondern nur dann, wenn man im Web Interface in den Einstellungen "Save Settings" drückt.
 Zur Lösung genügt es also sich in das Web-Interface von Rhasspy einzuloggen und unter den Einstellungen den Button "Save Settings" zu drücken.
 
 * **Ich kann meine Node-Red Flows nicht importieren, es wird immer nur ein Node hinzugefügt**
