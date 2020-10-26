@@ -45,8 +45,9 @@ Die Helligkeit wird Stufenweise in den Stufen von 0-10 gesetzt, wobei 0 0% Helli
 ### "Schalte das Licht im Wohnzimmer auf grün"
 
 Der Sprachassistent ist in der Lage die Farbe des Lichts in den konfigurierten Räumen zu steuern.
-Es sind folgende Farben verfügbar (//TODO Weitere Farben und insbesondere auch Weiß/Warmweiß):
+Es sind folgende Farben verfügbar:
 
+* Weiß
 * Blau
 * Gelb
 * Orange

@@ -116,6 +116,7 @@ Die Gruppen sind jetzt einsatzbereit und können verwendet werden.
 ## Node-Red Flows
 
 In der Bibliothek von Node-Red sind unterschiedliche Flows vorhanden, die eingesetzt werden können.
+Die Flows stellen eine exklusive Auswahl da, das bedeutet, dass nur entweder `LightAPIFlow` **oder** `LightAPIFlow_Raw` **oder** `ChangeLightBrightness.json`, `ChangeLightColor.json` und `SwitchLight.json` verwendet werden sollen.
 
 ### `LightAPIFlow.json`
 
@@ -123,7 +124,7 @@ Dieser Flow implementiert die Lichtsteuerung über die API [/lights/set](#lights
 
 ### `LightsAPIFlow_Raw.json`
 
-Dieser Flow implementiert die Lichtsteuerung über die API [/lights/set/raw](#lightssetraw). Der Request Body aus Rhasspy wird direkt an die API übergeben, die Logik liegt komplett innerhalb der API.
+Dieser Flow implementiert die Lichtsteuerung über die API [/lights/set/raw](#lightssetraw). Der Request Body aus Rhasspy wird direkt an die API übergeben, die Logik liegt komplett innerhalb der API. 
 
 ### `ChangeLightBrightness.json` / `ChangeLightColor.json` / `SwitchLight.json`
 

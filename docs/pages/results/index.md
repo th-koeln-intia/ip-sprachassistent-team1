@@ -11,7 +11,6 @@ Auf den Folgenden Seiten finden sich die Entwicklungsprozesse der Entwicklung vo
 
 Inhalt:
 
-//TODO Beschreibungen
 # 📖 Inhaltsverzeichnis
 
 | Thema                                                       | Beschreibung                                                                         |
@@ -21,8 +20,8 @@ Inhalt:
 | [Text-To-Speech](/results/text-to-speech/)                  | Der Prozess zur Anpassung der Text-To-Speech-Engine espeak                           |
 | [Intent Recognition](/results/intent-recognition/)          | Entwicklungsdokumentation zur Verwendung von Fsticuffs                               |
 | [Hintergrungeräuschreduzierung](/results/noise-cancelling/) | Prozess zur Eruierung einer geeigneten Technik zum Filtern von Hintergrundgeräuschen |
-| [Node-Red Flows](/results/node-red/)                        | Dokumentation der entwickelten API                                                   |
+| [Node-Red Flows](/results/node-red/)                        | Die entwickelten Node-Red Flows sowie Beschreibung derer                             |
 | [API](/results/api/)                                        | Dokumentation der entwickelten API                                                   |
-| [Vor- und Nachteile](/results/pro-and-cons/)                | Dokumentation der entwickelten API                                                   |
-| [Fazit](/results/conclusion/)                               | Dokumentation der entwickelten API                                                   |
-| [FAQ](/results/faq/)                                        | Dokumentation der entwickelten API                                                   |
+| [Vor- und Nachteile](/results/pro-and-cons/)                | Welche Vor- und Nachteile bietet Deep Thought                                        |
+| [Fazit](/results/conclusion/)                               | Das Entwicklungsfazit - ist der verwendete Technologiestack praxistauglich?          |
+| [FAQ](/results/faq/)                                        | Frequently Asked Questions                                                           |

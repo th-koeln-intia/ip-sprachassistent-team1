@@ -54,7 +54,6 @@ cp ./docker/.env.example ./docker/.env
 
 Anschließend kann man mithilfe der [docker-compose.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/docker-compose.yml) alle Services starten:
 
-//TODO ist das der richtige Befehl? Aus dem richtigen Ordner? Klappt das .env?
 ```sh
 cd ./docker
 docker-compose up -d 

@@ -7,8 +7,6 @@ show_sidebar: false
 menubar: results_menu
 ---
 
-//TODO Aufteilung ggf. überarbeiten
-
 # Allgemein
 
 * **Warum habt ihr so unterschiedlich viele Commits? Hat die Arbeitsaufteilung nicht geklappt?**
