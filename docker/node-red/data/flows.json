@@ -1,0 +1,1457 @@
+[
+    {
+        "id": "7ad2cda0.52b104",
+        "type": "tab",
+        "label": "SwitchLight",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "c4c327e2.c016d8",
+        "type": "tab",
+        "label": "ChangeLightBrightness",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "61ee8bef.dd8cd4",
+        "type": "tab",
+        "label": "Touchlink Reset",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "97d54f1a.0531d",
+        "type": "tab",
+        "label": "ChangeLightColor",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "c9e82928.4afd98",
+        "type": "tab",
+        "label": "LightAPIFlow",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "9b9c3b9d.e90598",
+        "type": "tab",
+        "label": "LightAPIFlow_Raw",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4a8616b3.5a0b58",
+        "type": "tab",
+        "label": "Rhasspy Intent Handling",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "786239ce.dda028",
+        "type": "tab",
+        "label": "Wecker",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9d35b9d5.8453d8",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "4acfd80d.a48d88",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "949bd9a4.91a4a8",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "2dc6f4fa.bcfa5c",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "20d114f0.693afc",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "1d297aa8.732005",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "a12a7af1.df6c08",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "28528890.bd64b8",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "1235800e.a8d1b",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://rhasspy:12101/api/events/intent",
+        "tls": "",
+        "wholemsg": "true"
+    },
+    {
+        "id": "eca587c3.781d18",
+        "type": "websocket in",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "server": "",
+        "client": "2dc6f4fa.bcfa5c",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "3e3069e5.4b0926"
+            ]
+        ]
+    },
+    {
+        "id": "3e3069e5.4b0926",
+        "type": "switch",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SwitchLight",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "d2c30f15.cb07f"
+            ]
+        ]
+    },
+    {
+        "id": "663daf69.ea126",
+        "type": "link in",
+        "z": "7ad2cda0.52b104",
+        "name": "SwitchLight",
+        "links": [
+            "d2c30f15.cb07f"
+        ],
+        "x": 75,
+        "y": 220,
+        "wires": [
+            [
+                "78491b99.f77a34",
+                "9f36ecc.eb2ce1"
+            ]
+        ]
+    },
+    {
+        "id": "d2c30f15.cb07f",
+        "type": "link out",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "links": [
+            "663daf69.ea126"
+        ],
+        "x": 655,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "78491b99.f77a34",
+        "type": "function",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "func": "var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        state: msg.slots.state\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "1440d37e.80e47d"
+            ]
+        ]
+    },
+    {
+        "id": "1440d37e.80e47d",
+        "type": "mqtt out",
+        "z": "7ad2cda0.52b104",
+        "name": "Set Light",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "20d114f0.693afc",
+        "x": 700,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9f36ecc.eb2ce1",
+        "type": "function",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "func": "var room = msg.entities.find(element => element.entity == 'room');\nvar state = msg.entities.find(element => element.entity == 'state');\nvar newMsg = {\n    topic: 'hermes/tts/say',\n    payload: {\n        text: 'Okay, ich Schalte das ' + room.raw_value +  ' Licht ' + state.raw_value\n    }\n};\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "bd19c741.97ce88"
+            ]
+        ]
+    },
+    {
+        "id": "bd19c741.97ce88",
+        "type": "mqtt out",
+        "z": "7ad2cda0.52b104",
+        "name": "Feedback",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "20d114f0.693afc",
+        "x": 700,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "3a421b1e.178f74",
+        "type": "catch",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "9cf237e9.4c5bd8"
+            ]
+        ]
+    },
+    {
+        "id": "52c4bfab.eb7be",
+        "type": "mqtt out",
+        "z": "7ad2cda0.52b104",
+        "name": "Feedback",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "20d114f0.693afc",
+        "x": 700,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9cf237e9.4c5bd8",
+        "type": "function",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "func": "var newMsg = {\n    topic: 'hermes/tts/say',\n    payload: {\n        text: 'Es tut mir Leid, das konnte ich leider nicht machen'\n    }\n};\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 420,
+        "wires": [
+            [
+                "52c4bfab.eb7be"
+            ]
+        ]
+    },
+    {
+        "id": "308581de.33a01e",
+        "type": "function",
+        "z": "7ad2cda0.52b104",
+        "name": "",
+        "func": "var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        color: {\n            hex: msg.slots.color\n        }\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 700,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "125ca15d.ada19f",
+        "type": "websocket in",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "server": "",
+        "client": "1d297aa8.732005",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "c026e6e6.e0a2f8"
+            ]
+        ]
+    },
+    {
+        "id": "c026e6e6.e0a2f8",
+        "type": "switch",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ChangeLightBrightness",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "ec2bc47c.b7a9c8"
+            ]
+        ]
+    },
+    {
+        "id": "ec2bc47c.b7a9c8",
+        "type": "link out",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "links": [
+            "d58cebf3.2e31b8"
+        ],
+        "x": 615,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d58cebf3.2e31b8",
+        "type": "link in",
+        "z": "c4c327e2.c016d8",
+        "name": "ChangeLightBrightness",
+        "links": [
+            "ec2bc47c.b7a9c8"
+        ],
+        "x": 45,
+        "y": 120,
+        "wires": [
+            [
+                "d6ffc1de.dae5a",
+                "9b915c83.74bb3"
+            ]
+        ]
+    },
+    {
+        "id": "d6ffc1de.dae5a",
+        "type": "function",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "func": "var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        brightness: msg.slots.brightness\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "ce6d620.1f149a"
+            ]
+        ]
+    },
+    {
+        "id": "ce6d620.1f149a",
+        "type": "mqtt out",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "a12a7af1.df6c08",
+        "x": 520,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9b915c83.74bb3",
+        "type": "function",
+        "z": "c4c327e2.c016d8",
+        "name": "",
+        "func": "var room = msg.entities.find(element => element.entity == 'room');\nvar brightness = msg.entities.find(element => element.entity == 'brightness');\nvar newMsg = {\n    topic: 'hermes/tts/say',\n    payload: {\n        text: 'Okay, ich Schalte das ' + room.raw_value +  ' Licht auf Helligkeit stufe ' + brightness.raw_value\n    }\n};\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "1ebf12e.36745ed"
+            ]
+        ]
+    },
+    {
+        "id": "1ebf12e.36745ed",
+        "type": "mqtt out",
+        "z": "c4c327e2.c016d8",
+        "name": "Feedback",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "a12a7af1.df6c08",
+        "x": 590,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "3b385bb9.72f8f4",
+        "type": "inject",
+        "z": "61ee8bef.dd8cd4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 100,
+        "y": 40,
+        "wires": [
+            [
+                "aaf57217.8b5a6"
+            ]
+        ]
+    },
+    {
+        "id": "aaf57217.8b5a6",
+        "type": "mqtt out",
+        "z": "61ee8bef.dd8cd4",
+        "name": "",
+        "topic": "zigbee2mqtt/bridge/config/touchlink/factory_reset",
+        "qos": "",
+        "retain": "",
+        "broker": "4acfd80d.a48d88",
+        "x": 600,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "c344eba4.c30738",
+        "type": "websocket in",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "server": "",
+        "client": "1d297aa8.732005",
+        "x": 180,
+        "y": 40,
+        "wires": [
+            [
+                "ed1f4773.307418"
+            ]
+        ]
+    },
+    {
+        "id": "ed1f4773.307418",
+        "type": "switch",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ChangeLightColor",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 40,
+        "wires": [
+            [
+                "495c0cce.c61204"
+            ]
+        ]
+    },
+    {
+        "id": "495c0cce.c61204",
+        "type": "link out",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "links": [
+            "2a6f451d.2e49da"
+        ],
+        "x": 635,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2a6f451d.2e49da",
+        "type": "link in",
+        "z": "97d54f1a.0531d",
+        "name": "ChangeLightColor",
+        "links": [
+            "495c0cce.c61204"
+        ],
+        "x": 65,
+        "y": 120,
+        "wires": [
+            [
+                "f285ab23.7b2118",
+                "615cffc1.9f058"
+            ]
+        ]
+    },
+    {
+        "id": "f285ab23.7b2118",
+        "type": "function",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "func": "var newMsg = {\n    topic: 'zigbee2mqtt/' + msg.slots.room + '/set',\n    payload: {\n        color: msg.slots.color\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "73592557.f3f51c"
+            ]
+        ]
+    },
+    {
+        "id": "73592557.f3f51c",
+        "type": "mqtt out",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "a12a7af1.df6c08",
+        "x": 540,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "615cffc1.9f058",
+        "type": "function",
+        "z": "97d54f1a.0531d",
+        "name": "",
+        "func": "var room = msg.entities.find(element => element.entity == 'room');\nvar color = msg.entities.find(element => element.entity == 'color');\nvar newMsg = {\n    topic: 'hermes/tts/say',\n    payload: {\n        text: 'Okay, ich Schalte das ' + room.raw_value +  ' Licht auf Farbe ' + color.raw_value\n    }\n};\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 280,
+        "y": 240,
+        "wires": [
+            [
+                "80477925.050dd8"
+            ]
+        ]
+    },
+    {
+        "id": "80477925.050dd8",
+        "type": "mqtt out",
+        "z": "97d54f1a.0531d",
+        "name": "Feedback",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "a12a7af1.df6c08",
+        "x": 610,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "605bf504.61ecec",
+        "type": "websocket in",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "server": "",
+        "client": "28528890.bd64b8",
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "2b283cc7.17a264"
+            ]
+        ]
+    },
+    {
+        "id": "2b283cc7.17a264",
+        "type": "switch",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SwitchLight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ChangeLightColor",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ChangeLightBrightness",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 490,
+        "y": 60,
+        "wires": [
+            [
+                "f9177764.d01ea8"
+            ],
+            [
+                "de0a9b4d.4e0d88"
+            ],
+            [
+                "4f829dd9.185f04"
+            ]
+        ]
+    },
+    {
+        "id": "f9177764.d01ea8",
+        "type": "link out",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "links": [
+            "ac6552fd.087ba"
+        ],
+        "x": 695,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ac6552fd.087ba",
+        "type": "link in",
+        "z": "c9e82928.4afd98",
+        "name": "SwitchLight",
+        "links": [
+            "f9177764.d01ea8"
+        ],
+        "x": 75,
+        "y": 360,
+        "wires": [
+            [
+                "5fa9b19c.e456"
+            ]
+        ]
+    },
+    {
+        "id": "5270ca1.a4e0434",
+        "type": "link in",
+        "z": "c9e82928.4afd98",
+        "name": "ChangeLightColor",
+        "links": [
+            "de0a9b4d.4e0d88"
+        ],
+        "x": 75,
+        "y": 400,
+        "wires": [
+            [
+                "5fa9b19c.e456"
+            ]
+        ]
+    },
+    {
+        "id": "7dbba7aa.759ef8",
+        "type": "link in",
+        "z": "c9e82928.4afd98",
+        "name": "ChangeLightBrightness",
+        "links": [
+            "4f829dd9.185f04"
+        ],
+        "x": 75,
+        "y": 440,
+        "wires": [
+            [
+                "5fa9b19c.e456"
+            ]
+        ]
+    },
+    {
+        "id": "de0a9b4d.4e0d88",
+        "type": "link out",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "links": [
+            "5270ca1.a4e0434"
+        ],
+        "x": 695,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4f829dd9.185f04",
+        "type": "link out",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "links": [
+            "7dbba7aa.759ef8"
+        ],
+        "x": 695,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5fa9b19c.e456",
+        "type": "function",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "func": "var room = msg.entities.find(entity => entity.entity == 'room')\nvar state = msg.entities.find(entity => entity.entity == 'state')\nvar brightness = msg.entities.find(entity => entity.entity == 'brightness')\nvar color = msg.entities.find(entity => entity.entity == 'color') \nvar raw_text = msg.raw_text\n\nvar json = {\n    friendly_name: room.value,\n    payload: {\n        state: state !== undefined ? state.value : undefined,\n        brightness: brightness !== undefined ? brightness.value : undefined,\n        color: color !== undefined ? color.value : undefined\n    },\n    feedback: {\n        text: 'Okay, ' + raw_text\n    }\n}\n\nreturn json;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 320,
+        "y": 400,
+        "wires": [
+            [
+                "5067b555.2c7c3c"
+            ]
+        ]
+    },
+    {
+        "id": "67ea8cf0.1b66c4",
+        "type": "debug",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9db3354c.4274c8",
+        "type": "http request",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/light/set",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 890,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5067b555.2c7c3c",
+        "type": "function",
+        "z": "c9e82928.4afd98",
+        "name": "",
+        "func": "var newMsg = {\n    payload: msg,\n    headers: {\n        'Content-Type': 'application/json'\n    }\n}\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "9db3354c.4274c8"
+            ]
+        ]
+    },
+    {
+        "id": "ac43cc42.78c85",
+        "type": "websocket in",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "server": "",
+        "client": "28528890.bd64b8",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "e8a045bf.16b2f8"
+            ]
+        ]
+    },
+    {
+        "id": "e8a045bf.16b2f8",
+        "type": "switch",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SwitchLight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ChangeLightColor",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ChangeLightBrightness",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 470,
+        "y": 60,
+        "wires": [
+            [
+                "f812e179.ea82b"
+            ],
+            [
+                "8832bdea.b956f"
+            ],
+            [
+                "56bea1fd.c8576"
+            ]
+        ]
+    },
+    {
+        "id": "f812e179.ea82b",
+        "type": "link out",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "links": [
+            "eb507bf7.da5e28"
+        ],
+        "x": 675,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "eb507bf7.da5e28",
+        "type": "link in",
+        "z": "9b9c3b9d.e90598",
+        "name": "SwitchLight",
+        "links": [
+            "f812e179.ea82b"
+        ],
+        "x": 55,
+        "y": 360,
+        "wires": [
+            [
+                "d5c1da91.54d008"
+            ]
+        ]
+    },
+    {
+        "id": "5d11849d.491d8c",
+        "type": "link in",
+        "z": "9b9c3b9d.e90598",
+        "name": "ChangeLightColor",
+        "links": [
+            "8832bdea.b956f"
+        ],
+        "x": 55,
+        "y": 400,
+        "wires": [
+            [
+                "d5c1da91.54d008"
+            ]
+        ]
+    },
+    {
+        "id": "2003c32d.64cb1c",
+        "type": "link in",
+        "z": "9b9c3b9d.e90598",
+        "name": "ChangeLightBrightness",
+        "links": [
+            "56bea1fd.c8576"
+        ],
+        "x": 55,
+        "y": 440,
+        "wires": [
+            [
+                "d5c1da91.54d008"
+            ]
+        ]
+    },
+    {
+        "id": "8832bdea.b956f",
+        "type": "link out",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "links": [
+            "5d11849d.491d8c"
+        ],
+        "x": 675,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "56bea1fd.c8576",
+        "type": "link out",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "links": [
+            "2003c32d.64cb1c"
+        ],
+        "x": 675,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "36a92b15.acccf4",
+        "type": "http request",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/light/set/raw",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 870,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5c1da91.54d008",
+        "type": "function",
+        "z": "9b9c3b9d.e90598",
+        "name": "",
+        "func": "var newMsg = {\n    payload: msg,\n    headers: {\n        'Content-Type': 'application/json'\n    }\n}\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "36a92b15.acccf4"
+            ]
+        ]
+    },
+    {
+        "id": "f231b955.11d5a8",
+        "type": "websocket in",
+        "z": "4a8616b3.5a0b58",
+        "name": "",
+        "server": "",
+        "client": "1235800e.a8d1b",
+        "x": 220,
+        "y": 340,
+        "wires": [
+            [
+                "110867e3.075498"
+            ]
+        ]
+    },
+    {
+        "id": "110867e3.075498",
+        "type": "switch",
+        "z": "4a8616b3.5a0b58",
+        "name": "Intent Switch",
+        "property": "intent.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SetAlarm",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "TurnLightOn",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "DeleteAlarm",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "StopAlarm",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ChangeAlarmSound",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 590,
+        "y": 340,
+        "wires": [
+            [
+                "62444503.99900c"
+            ],
+            [],
+            [
+                "170400c9.79331f"
+            ],
+            [
+                "e167d528.6deca8"
+            ],
+            [
+                "12e95fca.02f8e"
+            ]
+        ]
+    },
+    {
+        "id": "62444503.99900c",
+        "type": "link out",
+        "z": "4a8616b3.5a0b58",
+        "name": "SetzeWecker",
+        "links": [
+            "e23822b3.da7"
+        ],
+        "x": 755,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "170400c9.79331f",
+        "type": "link out",
+        "z": "4a8616b3.5a0b58",
+        "name": "LöscheWecker",
+        "links": [
+            "949cc338.b41cb"
+        ],
+        "x": 755,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e167d528.6deca8",
+        "type": "link out",
+        "z": "4a8616b3.5a0b58",
+        "name": "StoppeWecker",
+        "links": [
+            "af7ca6a5.fbec78"
+        ],
+        "x": 755,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "12e95fca.02f8e",
+        "type": "link out",
+        "z": "4a8616b3.5a0b58",
+        "name": "ChangeAlarmSound",
+        "links": [
+            "21630b3b.107b04"
+        ],
+        "x": 755,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "fb692cc6.2cdc6",
+        "type": "link in",
+        "z": "786239ce.dda028",
+        "name": "",
+        "links": [
+            "fc95e746.14f3f8"
+        ],
+        "x": 215,
+        "y": 160,
+        "wires": [
+            [
+                "30f0be7c.6ff672"
+            ]
+        ]
+    },
+    {
+        "id": "5c5b988e.ffcd48",
+        "type": "http request",
+        "z": "786239ce.dda028",
+        "name": "POST /alarm",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/alarm",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 570,
+        "y": 160,
+        "wires": [
+            [
+                "517b53ed.41ecfc"
+            ]
+        ]
+    },
+    {
+        "id": "517b53ed.41ecfc",
+        "type": "debug",
+        "z": "786239ce.dda028",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "30f0be7c.6ff672",
+        "type": "function",
+        "z": "786239ce.dda028",
+        "name": "convert to api params",
+        "func": "msg.payload = {\n        id: 0,\n        hours: msg.slots.alarm_hour,\n        minutes: msg.slots.alarm_minute,\n        active: 1\n    }\n    \nmsg.headers = {}\nmsg.headers['Content-Type'] = 'application/x-www-form-urlencoded'\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "5c5b988e.ffcd48"
+            ]
+        ]
+    },
+    {
+        "id": "2e8a5a9e.d48526",
+        "type": "link in",
+        "z": "786239ce.dda028",
+        "name": "",
+        "links": [
+            "8bbbfee5.88b4b"
+        ],
+        "x": 215,
+        "y": 260,
+        "wires": [
+            [
+                "1e68a001.062f"
+            ]
+        ]
+    },
+    {
+        "id": "1e68a001.062f",
+        "type": "function",
+        "z": "786239ce.dda028",
+        "name": "convert to api params",
+        "func": "msg.payload = {\n        id: 0\n    }\n    \nmsg.headers = {}\nmsg.headers['Content-Type'] = 'application/x-www-form-urlencoded'\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 260,
+        "wires": [
+            [
+                "54c740c8.f67d"
+            ]
+        ]
+    },
+    {
+        "id": "54c740c8.f67d",
+        "type": "http request",
+        "z": "786239ce.dda028",
+        "name": "DELETE /alarm",
+        "method": "DELETE",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/alarm",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 580,
+        "y": 260,
+        "wires": [
+            [
+                "2d0626d0.26c05a"
+            ]
+        ]
+    },
+    {
+        "id": "2d0626d0.26c05a",
+        "type": "debug",
+        "z": "786239ce.dda028",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4f75a46e.1a875c",
+        "type": "link in",
+        "z": "786239ce.dda028",
+        "name": "",
+        "links": [
+            "b0f07851.11d478"
+        ],
+        "x": 215,
+        "y": 360,
+        "wires": [
+            [
+                "551f8cf.3f44874"
+            ]
+        ]
+    },
+    {
+        "id": "551f8cf.3f44874",
+        "type": "function",
+        "z": "786239ce.dda028",
+        "name": "convert to api params",
+        "func": "msg.payload = {\n        id: 0\n    }\n    \nmsg.headers = {}\nmsg.headers['Content-Type'] = 'application/x-www-form-urlencoded'\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 360,
+        "wires": [
+            [
+                "f5a89f7f.2424f"
+            ]
+        ]
+    },
+    {
+        "id": "f5a89f7f.2424f",
+        "type": "http request",
+        "z": "786239ce.dda028",
+        "name": "POST /alarm/stop",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/alarm/stop",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [
+                "2cd75db9.2fad32"
+            ]
+        ]
+    },
+    {
+        "id": "2cd75db9.2fad32",
+        "type": "debug",
+        "z": "786239ce.dda028",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c017dab.f1a6328",
+        "type": "link in",
+        "z": "786239ce.dda028",
+        "name": "",
+        "links": [
+            "b39a0338.31bd9"
+        ],
+        "x": 215,
+        "y": 460,
+        "wires": [
+            [
+                "58d250f0.afeec"
+            ]
+        ]
+    },
+    {
+        "id": "58d250f0.afeec",
+        "type": "function",
+        "z": "786239ce.dda028",
+        "name": "convert to api params",
+        "func": "msg.payload = {\n        id: 0,\n        sound: msg.slots.alarm_sound\n    }\n    \nmsg.headers = {}\nmsg.headers['Content-Type'] = 'application/x-www-form-urlencoded'\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 460,
+        "wires": [
+            [
+                "c8cb7738.6814b8"
+            ]
+        ]
+    },
+    {
+        "id": "c8cb7738.6814b8",
+        "type": "http request",
+        "z": "786239ce.dda028",
+        "name": "POST /alarm/sound",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask:5000/alarm/sound",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "8485ac29.b502"
+            ]
+        ]
+    },
+    {
+        "id": "8485ac29.b502",
+        "type": "debug",
+        "z": "786239ce.dda028",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    }
+]
