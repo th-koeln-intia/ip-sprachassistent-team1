@@ -92,15 +92,15 @@ Das daraus resultierende Rauschprofil legen wir jetzt in dem rhasspy-Ordner ab u
  ┃ ┃ ┗ 📜noise_sox.prof
 ```
 
-Möglicherweise ist es jetzt noch notwendig den `amount` Parameter für den SoX Effekt `noisered` anzupassen, das ganze muss in der `profile.json` unter `microphone.command.record_arguments` passieren.
+Möglicherweise ist es jetzt noch notwendig den `amount` Parameter für den SoX Effekt `noisered` anzupassen, das ganze muss in der [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json) unter `microphone.command.record_arguments` passieren.
 
 # 💡 Lichtsteuerung
 
 ### Erweiterung der Gruppen
 
-Sollten weitere Gruppen über den Sprachassistenten angesteuert werden sollen und diese bereits nach [Konfigurieren der Gruppen](#konfigurieren-der-gruppen) definiert worden sein, dann muss für Rhasspy die Datei `profiles/de/slots/light_rooms` angepasst werden. Das Format hier richtet sich nach der [Dokumentation von Rhasspy](https://rhasspy.readthedocs.io/en/latest/training/#sentencesini).
+Sollten weitere Gruppen über den Sprachassistenten angesteuert werden sollen und diese bereits nach [Konfigurieren der Gruppen](#konfigurieren-der-gruppen) definiert worden sein, dann muss für Rhasspy die Datei [profiles/de/slots/light_rooms](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/slots/light_rooms) angepasst werden. Das Format hier richtet sich nach der [Dokumentation von Rhasspy](https://rhasspy.readthedocs.io/en/latest/training/#sentencesini).
 
-Wichtig ist hier, dass eine Substitution für das Attribut `room` auf den `friendly_name` der `groups.yml` von Zigbee2MQTT durchgeführt wird um die entsprechende Gruppe anzusteuern.
+Wichtig ist hier, dass eine Substitution für das Attribut `room` auf den `friendly_name` der [groups.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/zigbee2mqtt/data/groups.yaml) von Zigbee2MQTT durchgeführt wird um die entsprechende Gruppe anzusteuern.
 
 Als Beispiel weiterführend für das obige Beispiel um den Sprachassistenten für die Steuerung der Gruppe `balcony` zu erweitern:
 
@@ -155,7 +155,7 @@ Es gibt eine eigens entwickelte API für die Lichtsteuerung.
 
 ### Unit-Tests
 
-Die API besitzt eigene Unit-Tests zur Gewährleistung der Funktionalität. Zum ausführen der Tests einfach Das Kommando `pytest` unterhalb des Verzeichnisses `/src/api` ausführen. 
+Die API besitzt eigene Unit-Tests zur Gewährleistung der Funktionalität. Zum ausführen der Tests einfach Das Kommando `pytest` unterhalb des Verzeichnisses [/src/api](https://github.com/th-koeln-intia/ip-sprachassistent-team1/tree/master/src/api) ausführen. 
 
 ### Endpunkte
 

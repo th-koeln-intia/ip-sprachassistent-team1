@@ -24,8 +24,8 @@ genug Daten dafür.
 Das Speech-To-Text-System ist hierbei auf dem Raspberry Pi ziemlich langsam - es ist allerdings möglich die Aufgabe auf
 ein leistungsstärkeres System zu übertragen. Besonders beim Language Model Mixing (siehe nächsten Abschnitt) ist die Hardware des Rhaspberry zu schwach und es wird ausdrücklich empfohlen die Berechnung über einen Server laufen zu lassen.
 
-Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents (`sentences.ini`) gepflegt 
+Es geht nicht aus der Dokumentation hervor, allerdings müssen für Pocketsphinx die Intents in der [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) gepflegt 
 sein, weil aus dieser ein Sprachmodell erstellt wird. Das bedeutet es können noch so viele Wörter im Wörterbuch stehen, 
-Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der `sentences.ini` stehen, selbst wenn auf der 
+Pocketsphinx erkennt standardmäßig nur die Satzbestandteile, die auch in der [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) stehen, selbst wenn auf der 
 remote-Instanz bloß der Speech-To-Text Dienst läuft. Dieses Verhalten kann man abändern, indem man den Wert `mix_weight` bei PocketSphinx erhöht.
-Je höher dieser Wert ist, desto mehr wird die `sentences.ini` mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der `sentences.ini` eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.
+Je höher dieser Wert ist, desto mehr wird die [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) mit dem language Model von PocketSphinx vermischt und es werden auch Wörter erkannt, die nicht in der [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) eingetragen wurden. Aufgrund der Größe des mitgelieferten Language Models nimmt die Spracherkennung mit einem mix_weight > 0 sehr viel mehr Rechenkapazität in Anspruch.

@@ -35,7 +35,7 @@ OpenFst ist eine quelloffene Python-Bibliothek um FSTs zu konstruieren und zu ve
 
 ### rhasspy-nlu
 
-Hierbei handelt es sich um die hauseigene NLU Bibliothek von Rhasspy. Es wird hierbei eine Datei `sentences.ini` gepflegt, die alle Sätze beinhaltet, welche erkannt werden sollen. Diese Sätze werden mit ihren Phonemen der Lautsprache verknüpft und daraus kann dann ein FST erstellt werden.
+Hierbei handelt es sich um die hauseigene NLU Bibliothek von Rhasspy. Es wird hierbei eine Datei [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) gepflegt, die alle Sätze beinhaltet, welche erkannt werden sollen. Diese Sätze werden mit ihren Phonemen der Lautsprache verknüpft und daraus kann dann ein FST erstellt werden.
 Hierbei muss jedes potenziell ausgesprochene Wort mit seinen Phonemen verknüpft sein, dazu kann man ein Wörterbuch anlegen und eigene Wörter nach dem [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict) definieren.
 Der Schritt ist nicht zwingend notwendig, denn rhasspy-nlu bietet die Möglichkeit Aussprachen zu "erraten". Dazu wird die Bibliothek [Phonetisaurus](https://github.com/AdolfVonKleist/Phonetisaurus) verwendet.
 
@@ -53,6 +53,6 @@ In erster Linie geht es in diesem Abschnitt darum welche Möglichkeiten es zur K
 
 Das Web-Interface von Rhasspy bietet hier lediglich ein Kontrollkästchen `Fuzzy` an. Wenn aktiviert, lässt Fsticuffs bestimmte unscharfe Übereinstimmungen zu.
 Zusätzlich ist es laut Dokumentation möglich einen eigenen Intent-Graphen zu übergeben. Das dürfte dann sinnvoll sein, wenn man den Graphen extern programmatisch erzeugen will.
-Zuletzt gibt es noch die Option `ignore_unknown_words`, welche unbekannte (nicht in der `sentences.ini` definierte Wörter) ignoriert und somit mehr Sätze zulässt.
+Zuletzt gibt es noch die Option `ignore_unknown_words`, welche unbekannte (nicht in der [sentences.ini](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/sentences.ini) definierte Wörter) ignoriert und somit mehr Sätze zulässt.
 
 Wir werden es hier erstmal bei der Standard-Konfiguration belassen - sprich: Lediglich `Fuzzy` ist aktiviert.

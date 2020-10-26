@@ -12,7 +12,7 @@ menubar: results_menu
 
 ## Konfiguration von Espeak
 
-Die Standard-Implementierung von Rhasspy für die Espeak Text-To-Speech Engine bietet nicht viel Raum für Optionen, daher müssen wir uns einem kleinen Trick innerhalb der `profile.json` bedienen und die Standartwerte mit Parametern überschreiben.
+Die Standard-Implementierung von Rhasspy für die Espeak Text-To-Speech Engine bietet nicht viel Raum für Optionen, daher müssen wir uns einem kleinen Trick innerhalb der [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json) bedienen und die Standartwerte mit Parametern überschreiben.
 
 Zunächst einmal spricht die Standardeinstellung von Espeak zu schnell und ist desweiteren auch eine männliche Stimme, die für unsere Personifizierung über das Wakeword Trixie ungeeignet ist. Espeak bietet allerdings für die Sprachen verschiedene Stimmarten, die mit einem Suffix bestimmt werden können. Nach durchprobieren hat sich `de+f4` als am natürlichsten ergeben. Die Anpassung der Parameter für Wortpausen sowie Sprechgeschwindigkeit und Pitch sind ebenfalls durch ausprobieren entstanden und im Hinblick auf die Ziele des Forschungsprojekts so gewählt, dass die Stimme gut verständlich ist. 
 

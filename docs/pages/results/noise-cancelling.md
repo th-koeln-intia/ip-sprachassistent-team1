@@ -324,7 +324,7 @@ sox -t alsa sysdefault:CARD=seeed4micvoicec \
   compand 0.1,0.1 -inf,-42.1,-inf,-42,-42 0 -90 0.1
 ```
 
-Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration `profile.json`. Wichtig ist hier zu beachten, dass `sample_width` in Bytes und nicht in Bits angegeben wird.
+Um das jetzt in Rhasspy zu integrieren verwenden wir folgende Konfiguration [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json). Wichtig ist hier zu beachten, dass `sample_width` in Bytes und nicht in Bits angegeben wird.
 ```json
 {
   "microphone": {
@@ -365,7 +365,7 @@ Wir setzen den Parameter für den Zeitraum, in dem es still sein muss, damit Poc
 
 Mit Rhasspy Version 2.5 ist es möglich einen [UDP-Stream zu verwenden](https://rhasspy.readthedocs.io/en/latest/audio-input/#gstreamer). Wir versuchen also jetzt einen UDP-Stream an Rhasspy zu übermitteln, der dann von dem Modul [rhasspy-microphone-cli-hermes](https://github.com/rhasspy/rhasspy-microphone-cli-hermes) über [GStreamer](https://gstreamer.freedesktop.org/) empfangen und daraufhin verarbeitet wird.
 
-Dazu ist es zunächst nötig, dass wir den entsprechenden UDP-Port für den Container freigeben, dazu fügen wir in der `docker-compose.yml` den folgenden Punkt hinzu und starten den Container neu.
+Dazu ist es zunächst nötig, dass wir den entsprechenden UDP-Port für den Container freigeben, dazu fügen wir in der [docker-compose.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/docker-compose.yml) den folgenden Punkt hinzu und starten den Container neu.
 
 ```yml
 rhasspy:
@@ -374,7 +374,7 @@ rhasspy:
     - "12333:12333/udp"
 ```
 
-Jetzt müssen wir die `profile.json` Konfiguration von Rhasspy anpassen.
+Jetzt müssen wir die [profile.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/profile.json) Konfiguration von Rhasspy anpassen.
 
 ```json
 "microphone": {

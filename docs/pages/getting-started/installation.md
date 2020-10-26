@@ -25,7 +25,7 @@ cd ip-sprachassistent-team1
 Die Daten befinden sich jetzt auf dem Raspberry Pi.
 
 ## Tooling installieren
-Jetzt müssen wir einige Tools installieren und Konfigurationen setzen. Wir stellen dafür ein Script bereit, man kann sie allerdings auch manuell ausführen.
+Jetzt müssen wir einige Tools installieren und Konfigurationen setzen. Wir stellen dafür ein Script Namens [install.sh](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/install.sh) bereit, man kann sie allerdings auch manuell ausführen.
 
 ```sh
 sudo chmod +x ./docker/install.sh
@@ -40,19 +40,19 @@ Das Skript führt die folgenden Schritte durch:
 * Respeaker 4-Mic-Array Treiber installieren
 * Vordefinierte `asound` Konfiguration setzen
 
-Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
+Die Ausführung des Skripts kann relativ lange dauern. Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
 
 ## Sprachassistenten installieren
 
 ### Docker
 
-Wir empfehlen zur Benutzung von Deep Thought eine Docker-Umgebung zu verwenden. Zuerst muss man die Umgebungsvariablen für die docker-compose Datei seinen Bedürfnissen anpassen. Hierfür legt man auf Basis der ./docker/.env.example eine Datei ./docker/.env an und bearbeitet diese anschließend mit dem Editor seiner Wahl.
+Wir empfehlen zur Benutzung von Deep Thought eine Docker-Umgebung zu verwenden. Zuerst muss man die Umgebungsvariablen für die docker-compose Datei seinen Bedürfnissen anpassen. Hierfür legt man auf Basis der [./docker/.env.example](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/.env.example) eine Datei ./docker/.env an und bearbeitet diese anschließend mit dem Editor seiner Wahl.
 
 ```sh
 cp ./docker/.env.example ./docker/.env
 ```
 
-Anschließend kann man mit docker-compose alle Services starten:
+Anschließend kann man mithilfe der [docker-compose.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/docker-compose.yml) alle Services starten:
 
 //TODO ist das der richtige Befehl? Aus dem richtigen Ordner? Klappt das .env?
 ```sh
@@ -97,11 +97,11 @@ Wenn man mit den Sprachaufnahmen zufrieden ist müssen diese noch gespeichert we
 
 Zuerst muss die Zigbee-fähige Lampe Zigbee2MQTT bekannt sein. Wir verwenden im Folgenden die aus dem [Tech-Stack](/docs/tech-stack/) bekannte Philips Hue white and color (929001573). Wenn andere Lampen verwendet werden sollen, müssen die Schritte entsprechend der [Dokumentation von Zigbee2MQTT](https://www.zigbee2mqtt.io/information/supported_devices.html) angepasst werden.
 
-Die einfachste Methode für unsere Lampe ist ein [Touchlink reset](https://www.zigbee2mqtt.io/information/touchlink). Dazu genügt es eine Nachricht ohne Nutzdaten in das MQTT-Topic `zigbee2mqtt/bridge/config/touchlink/factory_reset` zu publishen. Die Lampe muss sich dafür nahe (laut Dokumentation in Entfernung von unter 10cm) an dem Zigbee-Stick befinden. Zusätzlich muss in der `configuration.yaml` von Zigbee2MQTT das Attribut `permit_join: true` gesetzt sein.
+Die einfachste Methode für unsere Lampe ist ein [Touchlink reset](https://www.zigbee2mqtt.io/information/touchlink). Dazu genügt es eine Nachricht ohne Nutzdaten in das MQTT-Topic `zigbee2mqtt/bridge/config/touchlink/factory_reset` zu publishen. Die Lampe muss sich dafür nahe (laut Dokumentation in Entfernung von unter 10cm) an dem Zigbee-Stick befinden. Zusätzlich muss in der [configuration.yaml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/zigbee2mqtt/data/configuration.yaml) von Zigbee2MQTT das Attribut `permit_join: true` gesetzt sein.
 
 Sobald sich die Glühbirne gepaart hat, sollte diese kurz aufblinken und die Paarung ist abgeschlossen.
 
-Es ist sinnvoll nach jeder Paarung einer Lampe einen `friendly_name` in der `devices.yaml` zuzuweisen um den Überblick nicht zu verlieren und die Konfiguration später zu erleichtern. Zum Beispiel so.
+Es ist sinnvoll nach jeder Paarung einer Lampe einen `friendly_name` in der [devices.yaml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/zigbee2mqtt/data/devices.yaml) zuzuweisen um den Überblick nicht zu verlieren und die Konfiguration später zu erleichtern. Zum Beispiel so.
 
 ```yml
 '0x123456789abcdef0':
@@ -136,7 +136,7 @@ Der Login sollte erfolgreich sein und wir können eine leere Nachricht auf das o
 
 ### Konfigurieren der Gruppen
 
-In der `groups.yaml` werden die Gruppen der Lampen genau spezifiziert. Derzeit unterstützt der Sprachassistent die Folgenden Gruppen:
+In der [groups.yaml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/zigbee2mqtt/data/groups.yaml) werden die Gruppen der Lampen genau spezifiziert. Derzeit unterstützt der Sprachassistent die Folgenden Gruppen:
 
 * living_room
 * bedroom
@@ -169,6 +169,6 @@ Wichtig ist hier, dass die numerische Gruppen-ID eindeutig ist.
 
 ## Rhasspy trainieren
 
-Um den Sprachassitenten zu trainieren muss man das [Web-Interface von Rhasspy](http://raspberrypi:12101) aufrufen und den Button "Train" drücken. Es kann sein, dass je nach Konfiguration ein Warnhinweis erscheint, der angibt, dass es Wörter ohne bekannte Aussprache gibt. Dann muss die Datei `custom_words.txt` entsprechend der [Dokumentation](https://rhasspy.readthedocs.io/en/latest/training/#custom-words) angepasst werden. Das Web-Interface leitet einen in dem Fall allerdings durch den Prozess.
+Um den Sprachassitenten zu trainieren muss man das [Web-Interface von Rhasspy](http://raspberrypi:12101) aufrufen und den Button "Train" drücken. Es kann sein, dass je nach Konfiguration ein Warnhinweis erscheint, der angibt, dass es Wörter ohne bekannte Aussprache gibt. Dann muss die Datei [custom_words.txt](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/rhasspy/profiles/de/custom_words.txt) entsprechend der [Dokumentation](https://rhasspy.readthedocs.io/en/latest/training/#custom-words) angepasst werden. Das Web-Interface leitet einen in dem Fall allerdings durch den Prozess. Bei der Erstinstallation sollte das allerdings nicht nötig sein.
 
 ![Rhasspy Training](/assets/Rhasspy_Training.png)

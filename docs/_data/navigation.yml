@@ -45,5 +45,7 @@
       link: /results/conclusion/
     - name: FAQ
       link: /results/faq/
+- name: GitHub
+  link: https://github.com/th-koeln-intia/ip-sprachassistent-team1
 - name: Über
   link: /about/
