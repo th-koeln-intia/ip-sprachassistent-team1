@@ -15,8 +15,8 @@ Es wäre natürlich auch möglich gewesen diesen Teil der Logik an einen anderen
 
 ## Methodik
 
-Unsere Flows sind in der Bibliothek von Node-Red verfügbar, das hat für die Entwicklung den entscheidenenden Vorteil, dass wir an unterschiedlichen Dateien arbeiten, denn standardmäßig verwendet Node-Red eine einzige Datei zur Verwaltung aller Flows. Wir haben uns dazu entschlossen die Entsprechende Datei `flows.json` aus unserer Versionsverwaltung zu entfernen, damit wir dort nicht in Konflikte geraten.
-Zum ende des Projekts haben wir die Datei erneut versioniert um eine einfache Erstinstallation zu ermöglichen.
+Unsere Flows sind in der Bibliothek von Node-Red verfügbar, das hat für die Entwicklung den entscheidenenden Vorteil, dass wir an unterschiedlichen Dateien arbeiten, denn standardmäßig verwendet Node-Red eine einzige Datei zur Verwaltung aller Flows. Wir haben uns dazu entschlossen die Entsprechende Datei [flows.json](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/node-red/data/flows.json) aus unserer Versionsverwaltung zu entfernen, damit wir dort nicht in Konflikte geraten.
+Zum Ende des Projekts haben wir die Datei erneut versioniert um eine einfache Erstinstallation zu ermöglichen.
 
 Alle implementierten Flows finden sich in einem [separaten Ordner](https://github.com/th-koeln-intia/ip-sprachassistent-team1/tree/master/docker/node-red/data/lib/flows) in einer dedizierten Datei auf die aus Node-Red heraus zugegriffen werden kann.
 
