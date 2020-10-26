@@ -38,7 +38,7 @@ def ordered(obj):
         return obj
 
 
-# A valid request should return ???? TODO 
+# A valid request should return the provided request body as confirmation
 def test_light_endpoint_response_data(mocker):
     mocker.patch('paho.mqtt.publish.single') # Prevent from publishing a real message
 
