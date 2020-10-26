@@ -261,7 +261,7 @@ dmypy.json
 
 ## Node-Red
 docker/node-red/data/*
-#Exclude flows - maybe TODO
+#Exclude flows
 docker/node-red/data/flows.json
 !docker/node-red/data/lib/
 #!docker/node-red/data/flows.json
