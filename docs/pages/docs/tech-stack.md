@@ -106,7 +106,7 @@ eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu 
 
 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) ist ein Service, der es ermöglicht smarte Geräte, die auf der [Zigbee Spezifikation](https://zigbeealliance.org/) basieren über MQTT Nachrichten zu verwenden. 
 
-Wir verwenden den Service um eine (oder mehrere) Lampe über den Sprachassistenten anzusteuern. Der Entwicklungsprozess ist [hier](/docs/features/#-lichtsteuerung) beschrieben.
+Wir verwenden den Service um eine (oder mehrere) Lampe über den Sprachassistenten anzusteuern. Der Entwicklungsprozess ist [hier](/docs/features/light) beschrieben.
 
 ## Node-Red
 

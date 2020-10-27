@@ -56,7 +56,7 @@ Führt einen [Touchlink Reset](https://www.zigbee2mqtt.io/information/touchlink)
 
 ![Flow_LightAPI](/assets/Flow_LightAPI.png)
 
-Wir haben die Lichtsteuerung in einer [eigens entwickelten API](/docs/features/#api) integriert, die in diesem Flow verwendet wird. Dabei reagiert dieser Flow auf alle drei Intents `SwitchLight`, `ChangeLightColor` sowie `ChangeLightBrightness` und verarbeitet diese über JavaScript-Bausteine zu einem validen API-Call.
+Wir haben die Lichtsteuerung in einer [eigens entwickelten API](/docs/features/api) integriert, die in diesem Flow verwendet wird. Dabei reagiert dieser Flow auf alle drei Intents `SwitchLight`, `ChangeLightColor` sowie `ChangeLightBrightness` und verarbeitet diese über JavaScript-Bausteine zu einem validen API-Call.
 
 Sollte dieser Flow verwendet werden, sollte man darauf achten, die Flows [ChangeLightBrightness](#changelightbrightness) und [ChangeLightColor](#changelightcolor) sowie [LightAPIFLow_Raw](#lightapiflow_raw) zu deaktivieren.
 

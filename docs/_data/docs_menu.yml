@@ -1,13 +1,23 @@
-- label: Dokumentation
+- label: Entwicklungsdokumentation
+  link: /docs/
   items:
-    - name: Entwicklungsdokumentation
+    - name: Übersicht
       link: /docs/
+    - name: Features
       items:
-      - name: Tech-Stack
-        link: /docs/tech-stack/
-      - name: Features
-        link: /docs/features/
-      - name: Troubleshooting
-        link: /docs/troubleshooting/
+        - name: Wake Word
+          link: /docs/features/wake
+        - name: Lichtsteuerung
+          link: /docs/features/light
+        - name: Wecker
+          link: /docs/features/alarm
+        - name: Hintergrundgeräuschreduzierung
+          link: /docs/features/noisecancelling
+        - name: API
+          link: /docs/features/api
+    - name: Troubleshooting
+      link: /docs/troubleshooting/
+    - name: Tech-Stack
+      link: /docs/tech-stack/
         
 

@@ -29,7 +29,7 @@ Das Wake-Word muss bei der ersten Verwendung eingerichtet werden, siehe dafür: 
 ### "Hey, Trixie"
 
 Wir empfehlen dieses Wake-Word, auch wenn es nicht zwingend verwendet werden muss, denn es hat sich als außerordentlich zuverlässlich erwiesen.
-Siehe hierzu auch: [Prozess zur Suche eines geeigneten Wake-Words](/docs/features/#-wake-word)
+Siehe hierzu auch: [Prozess zur Suche eines geeigneten Wake-Words](/docs/features/wake)
 
 ## Lichtsteuerung
 

@@ -10,16 +10,14 @@
 - name: Dokumentation
   link: /docs/
   dropdown:
-    - name: Tech-Stack
-      link: /docs/tech-stack/
+    - name: Übersicht
+      link: /docs/
     - name: Features
       link: /docs/features/
     - name: Troubleshooting
       link: /docs/troubleshooting/
-    - name: Vor- und Nachteile
-      link: /docs/pros-and-cons/
-    - name: FAQ
-      link: /docs/faq/
+    - name: Tech-Stack
+      link: /docs/tech-stack/
 - name: Entwicklungergebnisse
   link: /results/
   dropdown:

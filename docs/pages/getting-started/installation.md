@@ -144,7 +144,7 @@ In der [groups.yaml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/
 * hallway
 * bathroom
 
-Weitere Gruppen können hier zwar definiert und über MQTT verwendet werden, allerdings ist der Sprachassistent noch nicht für diese Trainiert. Wenn der Sprachassistent diese auch ansprechen soll, muss die Konfiguration entsprechend der [Dokumentation](/docs/features/#erweiterung-der-gruppen) angepasst werden.
+Weitere Gruppen können hier zwar definiert und über MQTT verwendet werden, allerdings ist der Sprachassistent noch nicht für diese Trainiert. Wenn der Sprachassistent diese auch ansprechen soll, muss die Konfiguration entsprechend der [Dokumentation](/docs/features/light) angepasst werden.
 
 Damit die Lampen gruppenweise angesteuert werden können, müssen diese den Gruppen über ihre ID zugeordnet werden, das sähe dann für das obige Beispiel weiterführend so aus:
 
