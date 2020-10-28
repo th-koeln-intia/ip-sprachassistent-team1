@@ -15,7 +15,7 @@ Sollten weitere Gruppen(Räume) über den Sprachassistenten angesteuert werden s
 
 Wichtig ist hier, dass eine Substitution für das Attribut `room` auf den `friendly_name` der [groups.yml](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/zigbee2mqtt/data/groups.yaml) von Zigbee2MQTT durchgeführt wird um die entsprechende Gruppe anzusteuern.
 
-Als Beispiel weiterführend für das obige Beispiel um den Sprachassistenten für die Steuerung der Gruppe `balcony` zu erweitern:
+Als Beispiel um den Sprachassistenten für die Steuerung der Gruppe `balcony` zu erweitern:
 
 ```
 (Balkon | Terasse | Draussen){room:balcony}
