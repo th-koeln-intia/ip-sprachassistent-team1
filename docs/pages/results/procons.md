@@ -22,7 +22,7 @@ Die einzelnen Services lassen sich ohne schnell konfigurieren und sind bereits n
 # Nachteile
 
 ## Bedienung aus der Ferne nicht möglich
-In unserer Referenzimplementierung der Hintergrundgeräuschunterdrückung ist es nicht möglich, den Sprachassistenten aus einer großen Distanz zu bedienen, denn die Sprache wird unter Umständen als Hintergrundgeräusch wahrgenommen und herausgefiltert. Wir haben jedoch weitere Möglichkeiten aufgelistet, die als Grundlage zur Weiterentwicklung dienen können. Siehe hierzu: [Hintergrundgeräuschunterdrückung](/results/noise-cancelling/).
+In unserer Referenzimplementierung der Hintergrundgeräuschunterdrückung ist es nicht möglich den Sprachassistenten aus einer großen Distanz zu bedienen, denn die Sprache wird unter Umständen als Hintergrundgeräusch wahrgenommen und herausgefiltert. Wir haben jedoch weitere Möglichkeiten aufgelistet, die als Grundlage zur Weiterentwicklung dienen können. Siehe hierzu: [Hintergrundgeräuschunterdrückung](/results/noise-cancelling/).
 
 ## Langsame Erkennung Speech-to-text
 Die Spracherkennung ist auf dem Raspberry 3 relativ langsam, weshalb es sich dort empfiehlt die Erkennung auf einen [Server auszulagern](https://rhasspy.readthedocs.io/en/latest/speech-to-text/#remote-http-server). Auf dem Raspberry 4 ist die Spracherkennung schneller, weshalb man dort auf den extra Server verzichten könnte.
