@@ -3,6 +3,8 @@
   - name: Entwicklungergebnisse
     link: /results/
     items:
+      - name: Wecker
+        link: /results/alarm/
       - name: Wake-Word
         link: /results/wake-word/
       - name: Speech-To-Text

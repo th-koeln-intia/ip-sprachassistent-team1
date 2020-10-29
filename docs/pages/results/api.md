@@ -1,6 +1,6 @@
 ---
 title: API
-permalink: /results/api
+permalink: /results/api/
 subtitle: Entwicklungsergebnisse zur API
 layout: page
 show_sidebar: false
