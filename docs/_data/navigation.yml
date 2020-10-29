@@ -21,6 +21,8 @@
 - name: Entwicklungergebnisse
   link: /results/
   dropdown:
+    - name: Wecker
+      link: /results/alarm/
     - name: Wake-Word
       link: /results/wake-word/
     - name: Speech-To-Text
