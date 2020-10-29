@@ -50,9 +50,6 @@ services:
             - "1880:1880"
     hermes-led:
         container_name: hermes-led
-        #build:
-        #    context: ./hermes-led/
-        #    dockerfile: ./Dockerfile
         image: thund/hermes-led:0.0.2
         volumes:
             - ./rhasspy/profiles/de:/tmp/rhasspy
@@ -73,9 +70,6 @@ services:
             dockerfile: ../docker/flask/Dockerfile
         environment:
             - FLASK_DEBUG=${FLASK_DEBUG}
-        ports:
-            #TODO: remove in production to avoid external access
-            - "5000:5000"
         volumes:
             - ../src/api:/api
             - "/etc/timezone:/etc/timezone:ro"
