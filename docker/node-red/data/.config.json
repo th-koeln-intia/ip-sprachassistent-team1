@@ -392,23 +392,6 @@
      "file": "/usr/src/node-red/node_modules/node-red-node-tail/28-tail.js"
     }
    }
-  },
-  "node-red-contrib-pythonshell": {
-   "name": "node-red-contrib-pythonshell",
-   "version": "1.5.4",
-   "local": true,
-   "nodes": {
-    "pythonshell": {
-     "name": "pythonshell",
-     "types": [
-      "pythonshell in"
-     ],
-     "enabled": true,
-     "local": true,
-     "module": "node-red-contrib-pythonshell",
-     "file": "/data/node_modules/node-red-contrib-pythonshell/src/pythonshell.js"
-    }
-   }
   }
  },
  "_credentialSecret": "65acb4ac505b263d4753f5bd51b3135825f727eabaf043f20cc5645fa26d12f4",
