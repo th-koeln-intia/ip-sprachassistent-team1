@@ -4,6 +4,7 @@
     - name: Übersicht
       link: /docs/
     - name: Features
+      link: /docs/features/
       items:
         - name: Wake Word
           link: /docs/features/wake
