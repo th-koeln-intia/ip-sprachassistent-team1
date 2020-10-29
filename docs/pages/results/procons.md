@@ -19,6 +19,24 @@ Da das Wake-Word über die Signatur des Audiosignals erkannt wird und nicht übe
 ## Schnelle Konfiguration
 Die einzelnen Services lassen sich ohne schnell konfigurieren und sind bereits nach einer kurzer Einarbeitungszeit erweiterbar.
 
+## Zuverlässiges Wake-Word
+Wir haben ein sehr zuverlässiges Wake-Word gefunden, was nach unserer Erfahrung im Alltag extrem selten Falsch-Positive und -Negative Erkennungen hat. 
+
+## Flexible API mit Erweiterungsmöglichkeiten
+Unsere API ist leicht auf weitere Use-Cases erweiterbar.
+
+## Zuverlässige Spracherkennung
+Unsere Implementation bietet eine sehr zuverlässige Erkennung der jeweiligen Intents bzw. der Sprache im allgemeinen.
+
+## Docker-Umgebung und nahezu automatisierte Installation
+Deep Thought wurde für eine Docker-Umgebung entwickelt, wodurch wir eine einfache Isolation des Sprachassistenten und leichte Bereitstellung auf mehreren Endgeräten bieten. Die Installation der nativen Abhängigkeiten erfolgt über ein Skript nahezu komplett automatisiert.
+
+## Offline-Betrieb
+Deep Thought kann komplett offline betrieben werden, es ist für den Betrieb keine Internetverbindung erforderlich. Lediglich während der Installation ist aus aus Komfortgründen notwendig kurzfrisitig eine Internetverbindung aufzubauen. 
+
+## Datenschutz
+Die Daten sind sicher, jegliche Kommunikation (Mit Ausnahme der Wake-Word Aufnahmen) wird nicht persistiert und auch nicht für ein eigenes Sprachmustertraining verwendet. 
+
 # Nachteile
 
 ## Bedienung aus der Ferne nicht möglich
