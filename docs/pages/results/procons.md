@@ -29,3 +29,6 @@ Die Spracherkennung ist auf dem Raspberry 3 relativ langsam, weshalb es sich dor
 
 ## Wake-Word muss für jede Person eingesprochen werden
 Damit das Wake-Word erkannt wird, muss dieses von jeder Person, die den Sprachassistenten verwenden will, eingesprochen werden. Je nach Einsatzgebiet kann das ein Nachteil sein, denn das verursacht Aufwand bei der Installation.
+
+## Text-To-Speech stimme ist künstlich
+Die Stimme der verwendeten Text-To-Speech Implementierung ist sehr künstlich, denn sie wird auf Basis der Eingabephoneme synthetisiert. Teilweise ist es schwierig zu die Ausgabe zu verstehen, wenn man nicht weiß was genau gesprochen wird.
