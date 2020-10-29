@@ -38,6 +38,15 @@ Das liegt daran, dass fälschlicherweise nicht der gesamte Node-Red Flow exporti
 
 ![node-red_export](/assets/node-red_export.png)
 
+* **Mein Wake-Word funktioniert nicht**
+
+Eine mögliche Ursache ist, dass der Einstellungswert `minimum_matches` nicht auf 1 gesetzt ist. Wenn dieser höher gewählt es, resultiert das in folgender Meldung und das Wake-Word kann aus einem unbekannten Grund nicht erkannt werden:
+
+```
+rhasspy        | [DEBUG:2020-09-29 08:56:29,593] rhasspy-wake-raven: Enter refractory for 2.0 second(s)
+rhasspy        | [DEBUG:2020-09-29 08:56:31,795] rhasspy-wake-raven: Exiting refractory period
+```
+
 * **Ich habe eine enorme Verzögerung meiner Sprachbefehle oder diese erhalten einen Timeout**
 
 Es könnte sich hierbei um einen Fehler der Verarbeitung des Audio-Signals handeln.
