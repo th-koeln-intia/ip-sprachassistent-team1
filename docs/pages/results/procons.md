@@ -7,7 +7,7 @@ show_sidebar: false
 menubar: results_menu
 ---
 
-# Vorteile
+<h1 style="color:green">Vorteile</h1>
 
 ## Hintergrundgeräuschunterdrückung evaluiert und als PoC implementiert
 Wir haben uns intensiv mit dem Thema Hintergrundgeräuschunterdrückung auseinandergesetzt, was alleine durch die Filterung des Grundrauschens in ein um einiges klareres Klangbild resultiert. Das unterstüzt unseren Speech-To-Text Service Pocketsphinx dabei die Sprachbefehle besser zu verstehen und zuverlässigere Ergebnisse zu liefern.
@@ -37,7 +37,7 @@ Deep Thought kann komplett offline betrieben werden, es ist für den Betrieb kei
 ## Datenschutz
 Die Daten sind sicher, jegliche Kommunikation (Mit Ausnahme der Wake-Word Aufnahmen) wird nicht persistiert und auch nicht für ein eigenes Sprachmustertraining verwendet. 
 
-# Nachteile
+<h1 style="color:red">Nachteile</h1>
 
 ## Bedienung aus der Ferne nicht möglich
 In unserer Referenzimplementierung der Hintergrundgeräuschunterdrückung ist es nicht möglich den Sprachassistenten aus einer großen Distanz zu bedienen, denn die Sprache wird unter Umständen als Hintergrundgeräusch wahrgenommen und herausgefiltert. Wir haben jedoch weitere Möglichkeiten aufgelistet, die als Grundlage zur Weiterentwicklung dienen können. Siehe hierzu: [Hintergrundgeräuschunterdrückung](/results/noise-cancelling/).
