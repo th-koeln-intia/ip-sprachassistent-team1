@@ -34,10 +34,11 @@ sudo ./docker/install.sh
 
 Das Skript führt die folgenden Schritte durch:
 * SPI auf dem Raspberry Pi aktiveren
-* Docker installieren
+* [Git](https://packages.debian.org/de/buster/git), [python3](https://packages.debian.org/de/buster/python3), [python3-pip](https://packages.debian.org/de/buster/python3-pip), [libffi-dev](https://packages.debian.org/de/buster/libffi-dev), [libssl-dev](https://packages.debian.org/de/buster/libssl-dev) installieren
+* [Docker](https://get.docker.com) installieren
 * Nutzer `pi` zur docker-Gruppe hinzufügen
-* docker-compose installieren
-* Respeaker 4-Mic-Array Treiber installieren
+* [docker-compose](https://pypi.org/project/docker-compose/) installieren
+* [Respeaker 4-Mic-Array Treiber](https://github.com/respeaker/seeed-voicecard) installieren
 * Vordefinierte `asound` Konfiguration setzen
 
 Die Ausführung des Skripts kann relativ lange dauern. Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
