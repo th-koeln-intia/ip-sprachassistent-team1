@@ -74,7 +74,7 @@ Auch wenn der Sprachassistent offline arbeitet, ist es für die Einrichtung notw
 
 Sobald der Raspberry Pi eine Internetverbindung hat, wird im Web-Interface von Rhasspy unter [http://raspberrypi:12101](http://raspberrypi:12101) ein Download-Hinweis angezeigt. Die erforderlichen Dateien lassen sich dann mit einem Knopfdruck herunterladen. Sobald der Download abgeschlossen ist, kann die Internetverbindung wieder getrennt werden.
 
-![Rhasspy Download](/assets/rhasspy_download.PNG)
+![Rhasspy Download](/assets/rhasspy_download.png)
 
 ## Wake-Word einrichten
 
