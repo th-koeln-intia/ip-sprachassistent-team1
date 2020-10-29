@@ -47,3 +47,18 @@ Dass Rhasspy mit einer anderen Abtastrate bzw. anderer Anzahl Kanälen nicht zur
 * **Nach einem Neustart braucht der Assistent lange um den ersten Sprachbefehl zu verarbeiten**
 
 Wenn unser Speech-To-Text Dienst das erste mal nach einem Start verwendet wird, dauert die Initaliserung dieses relativ lange. Künftige Sprachbefehle werden allerdings schneller verarbeitet. Es ist möglich den Dienst auf einen [Server mit besserer Leistung auszulagern](https://rhasspy.readthedocs.io/en/latest/speech-to-text/#remote-http-server) und somit die Initaliserungszeit und die Erkennungszeit zu verringern.
+
+* **Warum klappt das publishen von tts über Python an Hermes nicht?**
+
+Es könnte sich hierbei um einen kleinen Syntaxfehler innerhalb des JSONS handeln. Beispielsweise trat das Problem bei uns bei folgendem Code auf:
+
+```python
+publish.single("hermes/tts/say", "{'text': 'Okay'}", hostname="mosquitto") 
+```
+
+Hier lag das Problem daran, dass Strings in JSON immer mit einem " gekennzeichnet sein müssen anstatt eines '.
+Der funktionierende Code sah dann also so aus:
+
+```python
+publish.single("hermes/tts/say", '{"text": "Okay"}', hostname="mosquitto")
+```
