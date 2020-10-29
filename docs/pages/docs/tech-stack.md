@@ -47,7 +47,7 @@ Sprache transkribiert. Die Umwandlung erfolgt dabei komplett offline. Pocketsphi
 Feinabstimmung - insbesondere den Start- und Stopp-Zeitpunkt des Transkribierens.
 Das Wörterbuch sowie die entsprechende Aussprache lässt sich hier über Textdateien definieren und ergänzen.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-speech-to-text).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/speech-to-text).
 
 ### Fsticuffs
 
@@ -55,14 +55,14 @@ Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-speech-to
 gesprochen werden. Alle möglichen Befehle müssen definiert werden. Nach eigener Aussage ist Fsticuffs dafür extrem 
 performant.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-intent-recognition).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/intent-recognition).
 
 ### Espeak
 
 [Espeak](http://espeak.sourceforge.net/) ([Rhasspy GitHub](https://github.com/rhasspy/rhasspy-tts-cli-hermes)) ist ein 
 Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-text-to-speech).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/text-to-speech).
 
 ### Rhasspy (Dialogue Management)
 
