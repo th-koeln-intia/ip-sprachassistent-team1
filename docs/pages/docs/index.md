@@ -1,7 +1,7 @@
 ---
 title: Dokumentation
 permalink: /docs/
-subtitle: Dokumentation
+subtitle: Wie kann ich Deep Thought erweitern?
 layout: page
 show_sidebar: false
 menubar: docs_menu

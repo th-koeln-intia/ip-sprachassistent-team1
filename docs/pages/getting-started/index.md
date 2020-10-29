@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 permalink: /getting-started/
-subtitle: Getting Started
+subtitle: Wie lege ich los?
 layout: page
 show_sidebar: false
 menubar: getting-started_menu
