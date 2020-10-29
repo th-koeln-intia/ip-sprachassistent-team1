@@ -1,7 +1,7 @@
 ---
 title: Tech-Stack
 permalink: /docs/tech-stack/
-subtitle: Tech-Stack
+subtitle: Welche Technik steckt hinter Deep Thoguht?
 layout: page
 show_sidebar: false
 menubar: docs_menu
@@ -47,7 +47,7 @@ Sprache transkribiert. Die Umwandlung erfolgt dabei komplett offline. Pocketsphi
 Feinabstimmung - insbesondere den Start- und Stopp-Zeitpunkt des Transkribierens.
 Das Wörterbuch sowie die entsprechende Aussprache lässt sich hier über Textdateien definieren und ergänzen.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-speech-to-text).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/speech-to-text).
 
 ### Fsticuffs
 
@@ -55,14 +55,14 @@ Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-speech-to
 gesprochen werden. Alle möglichen Befehle müssen definiert werden. Nach eigener Aussage ist Fsticuffs dafür extrem 
 performant.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-intent-recognition).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/intent-recognition).
 
 ### Espeak
 
 [Espeak](http://espeak.sourceforge.net/) ([Rhasspy GitHub](https://github.com/rhasspy/rhasspy-tts-cli-hermes)) ist ein 
 Text-To-Speech Dienst. Er bietet Stimmunterstützung für verschiedene Sprachen.
 
-Die Entwicklungsdokumentation dazu findet sich [hier](/docs/features/#-text-to-speech).
+Die Entwicklungsdokumentation dazu findet sich [hier](/results/text-to-speech).
 
 ### Rhasspy (Dialogue Management)
 
@@ -106,7 +106,7 @@ eine Übersicht über die MQTT Topics und ermöglicht es, eigene Nachrichten zu 
 
 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) ist ein Service, der es ermöglicht smarte Geräte, die auf der [Zigbee Spezifikation](https://zigbeealliance.org/) basieren über MQTT Nachrichten zu verwenden. 
 
-Wir verwenden den Service um eine (oder mehrere) Lampe über den Sprachassistenten anzusteuern. Der Entwicklungsprozess ist [hier](/docs/features/#-lichtsteuerung) beschrieben.
+Wir verwenden den Service um eine (oder mehrere) Lampe über den Sprachassistenten anzusteuern. Der Entwicklungsprozess ist [hier](/docs/features/light) beschrieben.
 
 ## Node-Red
 
@@ -159,7 +159,7 @@ Lokale Testversion hosten:
 ```sh
 export JEKYLL_VERSION=3.8
 cd ./docs
-docker run --rm -p 4000:4000 --volume="/$(PWD):/srv/jekyll" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll serve
+docker run --rm -p 4000:4000 --volume="/$(PWD):/srv/jekyll" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll serve --force-polling
 ```
 
 Die Dokumentation ist anschließend unter [http://localhost:4000](http://localhost:4000) aufrufbar.

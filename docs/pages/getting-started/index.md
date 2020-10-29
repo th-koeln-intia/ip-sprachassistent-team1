@@ -13,3 +13,4 @@ Einführung zu dem Projekt Deep Thought.
 Inhalt:
 * [Einführung](/getting-started/introduction)
 * [Installation](/getting-started/installation)
+* [Sprachbefehle](/getting-started/voice-commands)
