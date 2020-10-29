@@ -7,7 +7,7 @@ show_sidebar: false
 menubar: docs_menu
 ---
 
-## Bekannte Probleme und Lösungen
+# Bekannte Probleme und Lösungen
 
 * **Meine Dokumentationsseite ist Lokal erreichbar, allerdings nicht wenn sie von GitHub deployt wird**
 

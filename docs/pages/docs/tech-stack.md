@@ -169,3 +169,18 @@ Die Dokumentation ist anschließend unter [http://localhost:4000](http://localho
 Die API welche die Logik der Intents steuert wird mit dem Python-Framework [Flask](https://flask.palletsprojects.com/en/1.1.x/) umgesetzt. Wir haben bei der Implementierung der API drauf geachtet die einzelnen Features (Lichtsteuerung, Wecker, etc.) in einzelne Module zu schreiben.
 
 
+# Entwicklungswerkzeuge
+
+## Visual Studio Code
+
+Die einfachste Möglichkeit um direkt auf dem Raspberry Pi zu entwickeln gibt es mit [Visual Studio Code](https://code.visualstudio.com/) in Kombination mit den Folgenden Addons um Medienbrüche zu vermeiden:
+
+### Remote - SSH
+[Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) bietet eine einfache Möglichkeit über Visual Studio Code direkt auf den Raspberry Pi zuzugreifen. So kann man auf das Dateisystem und auf die Kommandozeile zugreifen.
+
+### Remote - Containers mit Docker
+Mit [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) und [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) ist es möglich die Docker-Umgebung, die sich auf dem Raspberry Pi befindet direkt in Visual Studio zu verwalten.
+
+### Python
+Sollte man am Python-Code arbeiten wollen, ist das [Python Addon](https://marketplace.visualstudio.com/items?itemName=ms-python.python) ein nützlicher Helfer.
+

@@ -7,6 +7,8 @@ show_sidebar: false
 menubar: results_menu
 ---
 
+# 💻 API
+
 Wir haben uns dazu entschlossen die Features mittels einer API umzusetzen und die einzelnen Features in seperate Python-Module auszulagern. 
 
 Zuerst hatten wir die Überlegung einzelne Python-Funktionen über das Node-Red Addon [pynodered](https://github.com/ghislainp/pynodered) verfügbar zu machen, nach einem kurzen Test hat sich aber herausgestellt, dass diese Bibliothek nichts anderes macht als eine Python-Funktion über eine Web-API freizugeben. Weil die Dokumentation hierzu nicht wirklich umfangreich ist und sich eine Einbindung in einen Docker-Container als nicht trivial erwiesen hat, haben wir uns dazu entschlossen eine eigene Web-API zu entwickeln. Die Entscheidung für eine Web-API fiel insofern leicht, als dass wir bereits Erfahrung mit Web-APIs gesammelt haben und eine einfache Integration in Node-Red gegeben ist.

@@ -39,7 +39,7 @@ Das Skript führt die folgenden Schritte durch:
 * Nutzer `pi` zur docker-Gruppe hinzufügen
 * [docker-compose](https://pypi.org/project/docker-compose/) installieren
 * [Respeaker 4-Mic-Array Treiber](https://github.com/respeaker/seeed-voicecard) installieren
-* Vordefinierte `asound` Konfiguration setzen
+* Vordefinierte [asound.conf](https://github.com/th-koeln-intia/ip-sprachassistent-team1/blob/master/docker/conf/asound.conf) Konfiguration setzen
 
 Die Ausführung des Skripts kann relativ lange dauern. Nach der installation ist ein Neustart mittels `sudo reboot` notwendig, das Skript führt diesen nicht von alleine aus.
 
@@ -150,22 +150,22 @@ Weitere Gruppen können hier zwar definiert und über MQTT verwendet werden, all
 Damit die Lampen gruppenweise angesteuert werden können, müssen diese den Gruppen über ihre ID zugeordnet werden, das sähe dann für das obige Beispiel weiterführend so aus:
 
 ```yml
-'1':
+'1': #Gruppen-ID
     friendly_name: living_room
     devices:
         - '0x123456789abcdef0'
-'2':
+'2': #Gruppen-ID
     friendly_name: bathroom
     devices:
         - '0x123456789abcdef1'
         - '0x123456789abcdef2'
-'3':
+'3': #Gruppen-ID
     friendly_name: balcony
     devices:
         - '0x123456789abcdef3'
 ```
 
-Wichtig ist hier, dass die numerische Gruppen-ID eindeutig ist.
+Wichtig ist hier, dass die Gruppen-ID zum einen numerisch und eindeutig ist.
 
 ## Rhasspy trainieren
 
