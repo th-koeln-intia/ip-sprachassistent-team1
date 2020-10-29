@@ -8,8 +8,8 @@ menubar: results_menu
 ---
 
 Auf den Folgenden Seiten finden sich die Entwicklungsprozesse der Entwicklung von Deep Thought.
+Hier werden wir dokumentieren, was uns während der Entwicklung aufgefallen ist, wie wir vorgegangen sind, was für Probleme aufgetreten sind und welche Entscheidungen wir getroffen haben.
 
-Inhalt:
 
 # 📖 Inhaltsverzeichnis
 
