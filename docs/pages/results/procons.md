@@ -32,7 +32,7 @@ Unsere Implementation bietet eine sehr zuverlässige Erkennung der jeweiligen In
 Deep Thought wurde für eine Docker-Umgebung entwickelt, wodurch wir eine einfache Isolation des Sprachassistenten und leichte Bereitstellung auf mehreren Endgeräten bieten. Die Installation der nativen Abhängigkeiten erfolgt über ein Skript nahezu komplett automatisiert.
 
 ## Offline-Betrieb
-Deep Thought kann komplett offline betrieben werden, es ist für den Betrieb keine Internetverbindung erforderlich. Lediglich während der Installation ist aus aus Komfortgründen notwendig kurzfrisitig eine Internetverbindung aufzubauen. 
+Deep Thought kann komplett offline betrieben werden, es ist für den Betrieb keine Internetverbindung erforderlich. Lediglich während der Installation ist aus Komfortgründen notwendig kurzfrisitig eine Internetverbindung aufzubauen. 
 
 ## Datenschutz
 Die Daten sind sicher, jegliche Kommunikation (Mit Ausnahme der Wake-Word Aufnahmen) wird nicht persistiert und auch nicht für ein eigenes Sprachmustertraining verwendet. 
