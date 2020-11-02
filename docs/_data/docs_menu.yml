@@ -18,6 +18,8 @@
           link: /docs/features/noisecancelling
         - name: API
           link: /docs/features/api
+    - name: Weiterentwicklung der API
+      link: /docs/api/
     - name: Troubleshooting
       link: /docs/troubleshooting/
         

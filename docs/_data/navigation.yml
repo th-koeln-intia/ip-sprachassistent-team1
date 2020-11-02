@@ -12,12 +12,14 @@
   dropdown:
     - name: Übersicht
       link: /docs/
-    - name: Features
-      link: /docs/features/
-    - name: Troubleshooting
-      link: /docs/troubleshooting/
     - name: Tech-Stack
       link: /docs/tech-stack/
+    - name: Features
+      link: /docs/features/
+    - name: Weiterentwicklung der API
+      link: /docs/api/
+    - name: Troubleshooting
+      link: /docs/troubleshooting/
 - name: Entwicklungergebnisse
   link: /results/
   dropdown:

@@ -13,6 +13,10 @@ Auf den Folgenden Seiten befindet sich die Entwicklungsdokumentation des Spracha
 
 Hier wird genauer darauf eingegangen wie die einzelnen Features implementiert wurden und vorallem wie man diese erweitert. Man erfährt beispielsweise detailliert wie man einen neuen Raum zur Lichtsteuerung hinzufügt oder wie man einen eigenen Weckton zu den verfügbaren Wecktönen hinzufügt.
 
+## Starten mit der Weiterentwicklung
+
+Wie man am besten startet, wenn man eine Neuentwicklung für Deep Thought plant.
+
 ## Troubleshooting
 
 Wenn während der Verwendung oder der Erweiterung von Deep Thought Probleme auftreten, bietet dieser Bereich eine erste Anlaufstelle. Hier haben wir alle größeren Probleme und deren Lösungen erläutert, denen wir während der Entwicklung begegnet sind. Zusätzlich dazu gibt es unter [Entwicklungsergebnisse](/results/) noch einen [FAQ-Bereich](/results/faq/) für allgemeine Fragen.
