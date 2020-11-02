@@ -65,6 +65,7 @@ services:
         privileged: true
     flask:
         container_name: flask
+        restart: unless-stopped
         build: 
             context: ../src/
             dockerfile: ../docker/flask/Dockerfile
