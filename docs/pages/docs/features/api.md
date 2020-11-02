@@ -9,15 +9,118 @@ menubar: docs_menu
 
 # 💻 API
 
-## Lichtsteuerung
+## Lichtsteuerung & Wecker
 
-Es gibt eine eigens entwickelte API für die Lichtsteuerung.
+Es gibt eine eigens entwickelte API für die Lichtsteuerung und den Wecker.
 
 ### Unit-Tests
 
 Die API besitzt eigene Unit-Tests zur Gewährleistung der Funktionalität. Zum ausführen der Tests einfach Das Kommando `pytest` unterhalb des Verzeichnisses [/src/api](https://github.com/th-koeln-intia/ip-sprachassistent-team1/tree/master/src/api) ausführen. 
 
 ### Endpunkte
+
+#### `GET: /alarm`
+
+Liefert ein Array aller gespeicherten Wecker.
+
+```json
+[
+    {
+        "id": 0,
+        "hours": 11,
+        "minutes": 11,
+        "active": 1,
+        "sound": 1
+    }
+]
+```
+
+#### `POST: /alarm`
+
+Speichert einen Wecker in der Datenbank. Sollte bereits ein Wecker mit der ID existieren, wird dieser ersetzt. Als Rückgabewert erhält man alle Wecker, die nach dem Speichern in der Datenbank stehen. Folgende Eingabeparameter werden erwartet:
+
+**Request Parameter**
+
+| Key                   | Datentyp  | Beispiel  |
+| --------------------- | ----------------------|
+| id (required)         | Integer   | 0         |
+| hours (required)      | Integer   | 11        |
+| minutes (required)    | Integer   | 11        |
+| active (required)     | 0 oder 1  | 1         |
+| sound (required)      | Integer   | 1         |
+
+**Response**
+
+```json
+[
+    {
+        "id": 0,
+        "hours": 11,
+        "minutes": 11,
+        "active": 1,
+        "sound": 1
+    }
+]
+```
+
+#### `DELETE: /alarm`
+
+Löscht einen Wecker aus der Datenbank. Als Rückgabewert erhält man alle Wecker, die nach dem Löschen in der Datenbank stehen. Folgende Eingabeparameter werden erwartet:
+
+**Request Parameter**
+
+| Key                   | Datentyp  | Beispiel  |
+| --------------------- | ----------------------|
+| id (required)         | Integer   | 0         |
+
+**Response**
+
+```json
+[
+    {
+        "id": 0,
+        "hours": 11,
+        "minutes": 11,
+        "active": 1,
+        "sound": 1
+    }
+]
+```
+
+#### `POST: /alarm/stop`
+
+Stoppt den Alarm anhand der mitgelieferten ID. Folgende Eingabeparameter werden erwartet:
+
+**Request Parameter**
+
+| Key                   | Datentyp  | Beispiel  |
+| --------------------- | ----------------------|
+| id (required)         | Integer   | 0         |
+
+**Response**
+
+```json
+"success"
+```
+
+#### `POST: /alarm/sound`
+
+Setzt den Weckton für einen bestimmten Wecker. **Achtung** Der Weckton gilt nur für diesen Wecker. Sollte der Wecker gelöscht werden und ein neuer erstellt werden, erhält dieser wieder den Weckton mit dem Wert 1. Folgende Eingabeparameter werden erwartet:
+
+**Request Parameter**
+
+| Key                   | Datentyp  | Beispiel  |
+| --------------------- | ----------------------|
+| id (required)         | Integer   | 0         |
+| sound (required)      | Integer   | 2         |
+
+**Response**
+
+```json
+"success"
+```
+
+
 
 #### `/lights/set`
 
