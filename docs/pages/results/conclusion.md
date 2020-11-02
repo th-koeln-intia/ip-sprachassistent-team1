@@ -81,4 +81,4 @@ Insgesamt haben wir die Entwicklung sehr positiv erfahren. Sobald man sich in di
 
 ## Support
 
-Grundsätzlich werden alle Dienste noch weiterentwickelt, allerdings arbeiten die Entwickler von Pocketsphinx an einer neue Bibliothek [Vosk](https://github.com/alphacep/vosk-api). 
+Grundsätzlich werden alle Dienste noch weiterentwickelt, allerdings arbeiten die Entwickler von Pocketsphinx an einer neue Bibliothek [Vosk](https://github.com/alphacep/vosk-api). Es ist möglich, dass hier in Zukunft der Support nachlassen wird.
