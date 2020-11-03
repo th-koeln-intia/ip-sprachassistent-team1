@@ -36,6 +36,7 @@ Allerdings müssen wir durch unsere implementierte Hintergrundgeräuschreduzieru
 
 Während der Entwicklung ist kein Dienst abgestürzt und allgemein scheint Rhasspy über eine art "Monitoring" der einzelnen Dienste zu verfügen und würde etwaige nicht erreichbare Dienste neu starten. 
 Unsere Docker-Umgebung ist ähnlich ausgelegt, wir verwenden die Restart-Policy `unless-stopped`, wodurch die Container nur dann beendet werden, wenn sie händisch gestoppt werden. Selbst bei einem Neustart des Raspberry Pis starten die Container wieder und es ist kein manuelles Starten nötig.
+Ein Absturz der Dienste ist uns während der Entwicklung nicht aufgefallen.
 
 ## Datenschutz
 
@@ -70,15 +71,18 @@ Die Logitech Z120 Lautsprecher wiederum funktionieren überhaupt nicht gut: Hier
 
 ## Sicherheit
 
-In usnerer Implementierung haben wir den Faktor Sicherheit nicht intensiv behandelt - lediglich im Docker-Networking Port-Mapping betrieben.
+In unserer Implementierung haben wir den Faktor Sicherheit nicht intensiv behandelt - lediglich im Docker-Networking Port-Mapping betrieben.
 Der MQTT-Broker ist von außerhalb erreichbar und eröffnet hier einen Angriffspunkt, denn man kann beliebige Nachrichten lesen und schreiben. Hier wäre ein notwendiger Schritt einen passwortgeschützten Zugang einzurichten.
 Ähnlich sieht es bei Node-Red und Rhasspy aus. Die jeweiligen Web-Interfaces sind von außen erreichbar und lassen sich ohne Authentifizierung bedienen.
-Zu guter letzt ist auch der gesamte Raspberry Pi mit den Standard-Zugangsdaten über SSH erreichbar - bevor man das System produktiv einsetzt sollte man hier also noch nacharbeiten.
+Zu guter Letzt ist auch der gesamte Raspberry Pi mit den Standard-Zugangsdaten über SSH erreichbar - bevor man das System produktiv einsetzt sollte man hier also noch nacharbeiten.
 
 ## Lernkurve
 
 Insgesamt haben wir die Entwicklung sehr positiv erfahren. Sobald man sich in die Service-Struktur von Rhasspy sowie dem Hermes-Protokoll eingearbeitet hat, fiel die Entwicklung sehr leicht und ging schnell von der Hand. Ebenso konnte man vieles durch Trial-and-Error ausprobieren ohne befürchten zu müssen, dass man einen Fehler produziert.
+Der Aufwand für die Implementierung hielt sich auch im Rahmen, wir sind kaum in Probleme mit den Diensten selbst geraten, die das Erreichen des Projektziels negativ beeinflusst haben.
 
 ## Support
 
 Grundsätzlich werden alle Dienste noch weiterentwickelt, allerdings arbeiten die Entwickler von Pocketsphinx an einer neue Bibliothek [Vosk](https://github.com/alphacep/vosk-api). Es ist möglich, dass hier in Zukunft der Support nachlassen wird.
+Was man hier auch noch beachten muss ist, dass die mitgelieferten Dienste von Rhasspy nicht immer auf den aktuellsten Stand sind, denn der Entwickler implementiert die jeweiligen Dienste selbst für das Hermes-Protokoll.
+Um Rhasspy selbst hat sich aber eine sehr aktive und relativ große Community gebildet. In dem [Forum](https://community.rhasspy.org/) scheint man schnell Hilfe zu bekommen.
