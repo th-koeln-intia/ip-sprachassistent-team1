@@ -47,6 +47,7 @@ Das Dialoge-Management von Rhasspy garantiert, dass lediglich der Wake-Word Dien
 
 Durch Rhasspy zieht sich eine dezentrale Struktur, was viele Möglichkeiten zur Erweiterung bietet. Die Integration neuer Kommandos ist sehr leicht, vorrausgesetzt man hat sich in die verwendete Grammatik eingearbeitet und sich Gedanken über die mögliche Struktur der Sprachbefehle macht. Hier gibt es allerdings keine technologische Einschränkung.
 Durch die Struktur der MQTT-Nachrichten sollte es auch gut möglich sein eigene Dienste zu entwickeln.
+Unsere entwickelte API lässt sich auch leicht erweitern, wobei man hier nicht an die API gebunden ist, es ist auch möglich andere Lösungen zur Integration zu entwickeln.
 
 ## Lizenz
 
