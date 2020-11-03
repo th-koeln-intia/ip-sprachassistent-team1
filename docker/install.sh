@@ -6,6 +6,7 @@ if [[ "$EUID" -ne 0 ]]
 fi
 
 raspi-config nonint do_spi 0
+timedatectl set-timezone Europe/Berlin
 apt-get -y update
 apt-get -y upgrade
 apt-get install -y git libffi-dev libssl-dev python3 python3-pip

@@ -34,6 +34,7 @@ sudo ./docker/install.sh
 
 Das Skript führt die folgenden Schritte durch:
 * SPI auf dem Raspberry Pi aktiveren
+* Zeitzone des Pis auf Europe/Berlin stellen
 * [Git](https://packages.debian.org/de/buster/git), [python3](https://packages.debian.org/de/buster/python3), [python3-pip](https://packages.debian.org/de/buster/python3-pip), [libffi-dev](https://packages.debian.org/de/buster/libffi-dev), [libssl-dev](https://packages.debian.org/de/buster/libssl-dev) installieren
 * [Docker](https://get.docker.com) installieren
 * Nutzer `pi` zur docker-Gruppe hinzufügen
