@@ -50,3 +50,7 @@ Damit das Wake-Word erkannt wird, muss dieses von jeder Person, die den Sprachas
 
 ## Text-To-Speech stimme ist künstlich
 Die Stimme der verwendeten Text-To-Speech Implementierung ist sehr künstlich, denn sie wird auf Basis der Eingabephoneme synthetisiert. Teilweise ist es schwierig zu die Ausgabe zu verstehen, wenn man nicht weiß was genau gesprochen wird.
+
+## Rhasspy-Silence nicht optimiert
+
+In unserer Recherche bzgl. der Hintgergrundgeräuschreduzierung sind wir auf den Dienst [rhasspy-silence](https://github.com/rhasspy/rhasspy-silence) gestoßen, der möglicherweise noch einige Verbesserungen in der Konfiguration für die Bedienbarkeit und Zuverlässigkeit des Sprachassistenten bietet. Wir konnten die Parameter im Detail aber nicht testen.
